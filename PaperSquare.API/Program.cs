@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.Data.Data;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,8 @@ var logger = new LoggerConfiguration()
 
 builder.Services.AddControllers();
 builder.Services.ApiVersioningConfiguration();
+builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevBase")));
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +42,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-Log.CloseAndFlush();
-
 app.Run();
+
+Log.CloseAndFlush();

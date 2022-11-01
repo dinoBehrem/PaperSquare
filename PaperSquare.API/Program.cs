@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.API.Infrastructure.Auth;
+using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.Data.Data;
 using Serilog;
@@ -23,7 +25,11 @@ builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlSer
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.SwaggerGenConfig();
+
+builder.Services.AddIdentityConfig(builder.Configuration);
+builder.Services.AddAuthenticationConfig(builder.Configuration);
+builder.Services.AddAuthorizationConfig(builder.Configuration);
 
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 

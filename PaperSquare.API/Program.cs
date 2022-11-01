@@ -29,6 +29,8 @@ builder.Services.SwaggerGenConfig();
 
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
+builder.Services.AddAuthorizationConfig(builder.Configuration);
+
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();

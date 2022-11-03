@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.Core\PaperSquare.Core.csproj" />
     <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
+    <ProjectReference Include="..\PaperSquare.Infrastructure\PaperSquare.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

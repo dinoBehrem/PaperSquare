@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using PaperSquare.Infrastructure.Features.JWT;
 using System.Text;
 
 namespace PaperSquare.API.Infrastructure.Auth
@@ -8,6 +9,17 @@ namespace PaperSquare.API.Infrastructure.Auth
     {
         public static IServiceCollection AddAuthenticationConfig(this IServiceCollection services, IConfiguration configuration)
         {
+            var tokenConfigurationSection = configuration.GetSection(nameof(TokenConfiguration));
+            var tokenConfiguration = tokenConfigurationSection.Get<TokenConfiguration>();
+
+            services.Configure<TokenConfiguration>(tokenConfigurationSection);
+
+            services.Configure<TokenConfiguration>(options =>
+            {
+                options.SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenConfiguration.SecretKey));
+                options.SigningCredentials = new SigningCredentials(options.SecurityKey, SecurityAlgorithms.HmacSha256);
+            });
+
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;

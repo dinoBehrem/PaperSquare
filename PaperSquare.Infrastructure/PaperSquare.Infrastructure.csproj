@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PaperSquare.Core\PaperSquare.Core.csproj" />
-    <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+    <PackageReference Include="Ardalis.Result" Version="4.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Nesto\" />
+    <ProjectReference Include="..\PaperSquare.Core\PaperSquare.Core.csproj" />
+    <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
   </ItemGroup>
 
 </Project>

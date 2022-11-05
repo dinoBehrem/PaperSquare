@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
@@ -27,10 +28,10 @@ builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlSer
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SwaggerGenConfig();
 
+builder.Services.AppServices();
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig(builder.Configuration);
-
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 var app = builder.Build();

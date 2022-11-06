@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.JWT
 {
-    public class AuthResponse
+    public class TokenResource
     {
-        public TokenResource AccessToken { get; set; }
-        public TokenResource RefreshToken { get; set; }
+        public string Token { get; set; }
+        public DateTime Expiriation { get; set; }
     }
 }

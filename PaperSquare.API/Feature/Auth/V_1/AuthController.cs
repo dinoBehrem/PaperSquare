@@ -1,10 +1,14 @@
 ﻿using Ardalis.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.Core.Models.Identity;
+using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.Auth;
+using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.Auth.Validators;
 using PaperSquare.Infrastructure.Features.JWT;
 using System.Net.Mime;
@@ -17,10 +21,14 @@ namespace PaperSquare.API.Feature.Auth.V_1
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _authService = authService;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         #region GET
@@ -28,7 +36,7 @@ namespace PaperSquare.API.Feature.Auth.V_1
         [HttpPost("login")]
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResource))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login([FromBody] LoginInsertRequest request)
         {
@@ -38,7 +46,7 @@ namespace PaperSquare.API.Feature.Auth.V_1
             }
 
             var validator = new LoginInsertRequestValidator().Validate(request);
-            
+
             if (!validator.IsValid)
             {
                 return BadRequest(new { errors = validator.Errors.Select(err => err.ErrorMessage) });
@@ -51,13 +59,34 @@ namespace PaperSquare.API.Feature.Auth.V_1
                 return BadRequest(new { errors = result.Errors.ToList() });
             }
 
-            return Ok(new { username = request.Username, password = request.Password });
+            return Ok(result.Value);
         }
 
         #endregion GET
 
         #region POST
 
+        [HttpPost("refresh-token")]
+        [MapToApiVersion(ApiVersions.V_1)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResource))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Token))
+            {
+                return BadRequest(new { message = "Invalid token!" });
+            }
+
+            var result = await _authService.RefreshToken(request);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { errors = result.Errors });
+            }
+
+            return Ok(result.Value);
+        }
 
         #endregion POST
     }

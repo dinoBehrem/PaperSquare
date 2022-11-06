@@ -3,13 +3,9 @@ using Ardalis.Result;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
+using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.Auth
 {
@@ -18,15 +14,18 @@ namespace PaperSquare.Infrastructure.Features.Auth
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
         public AuthService(
-            SignInManager<User> signInManager, 
+            SignInManager<User> signInManager,
             ITokenService tokenService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IRefreshTokenService refreshTokenService)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
             _userManager = userManager;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Result<AuthResponse>> Login(LoginInsertRequest request)
@@ -61,9 +60,53 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             claims.AddRange(roles.Select(role => new Claim("Role", role)));
 
-            var token = await _tokenService.BuildToken(claims);
+            var accesToken = await _tokenService.BuildToken(claims);
 
-            return token;
+            var refreshToken = await _tokenService.BuildRefreshToken(user);
+
+            var authResponse = new AuthResponse()
+            {
+                AccessToken = accesToken,
+                RefreshToken = refreshToken
+            };
+
+            return authResponse;
+        }
+
+        public async Task<Result<AuthResponse>> RefreshToken(RefreshTokenRequest request)
+        {
+            Guard.Against.Null(request, nameof(request));
+
+            var token = await _refreshTokenService.GetToken(request.Token);
+
+            if (token is null)
+            {
+                return Result<AuthResponse>.Error("Refresh token doesn`t exist!");
+            }
+
+            var user = await _userManager.FindByNameAsync(token.UserId);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>()
+            {
+                new Claim("Id", user.Id)
+            };
+
+            claims.AddRange(roles.Select(role => new Claim("Role", role)));
+
+            var accesToken = await _tokenService.BuildToken(claims);
+
+            var refreshToken = await _tokenService.BuildRefreshToken(user);
+
+            var authResponse = new AuthResponse()
+            {
+                AccessToken = accesToken,
+                RefreshToken = refreshToken
+            };
+
+            await _refreshTokenService.MarkAsInvalid(token);
+
+            return authResponse;
         }
 
         private bool IsValidUser(User user)

@@ -9,6 +9,7 @@ namespace PaperSquare.API.Infrastructure.AppServices
         {
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }

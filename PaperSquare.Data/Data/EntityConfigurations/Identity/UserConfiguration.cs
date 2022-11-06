@@ -19,6 +19,7 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
             builder.HasMany(user => user.Logins).WithOne(login => login.User).HasForeignKey(userLogin => userLogin.UserId).IsRequired();
             builder.HasMany(user => user.Roles).WithOne(role => role.User).HasForeignKey(userRole => userRole.UserId).IsRequired();
             builder.HasMany(user => user.Tokens).WithOne(token => token.User).HasForeignKey(userToken => userToken.UserId).IsRequired();
+            builder.HasMany(user => user.RefreshTokens).WithOne(token => token.User).HasForeignKey(userToken => userToken.UserId).IsRequired();
         }
     }
 }

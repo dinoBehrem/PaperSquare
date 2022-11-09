@@ -11,6 +11,7 @@ namespace PaperSquare.Core.Models.Identity
             Roles = new HashSet<UserRole>();
             Logins = new HashSet<UserLogin>();
             Tokens = new HashSet<UserToken>();
+            RefreshTokens = new HashSet<RefreshToken>();
         }
 
         public string Firstname { get; set; }
@@ -24,5 +25,6 @@ namespace PaperSquare.Core.Models.Identity
         public ICollection<UserRole> Roles { get; set; }
         public ICollection<UserLogin> Logins{ get; set; }
         public ICollection<UserToken> Tokens { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

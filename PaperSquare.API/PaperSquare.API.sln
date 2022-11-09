@@ -5,9 +5,11 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.API", "PaperSquare.API.csproj", "{942C9503-C91D-4880-8897-83C064CF3D64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.Core", "..\PaperSquare.Core\PaperSquare.Core.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Core", "..\PaperSquare.Core\PaperSquare.Core.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.Data", "..\PaperSquare.Data\PaperSquare.Data.csproj", "{3602F3D4-4418-4832-B95B-10E3BB4CD21E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Data", "..\PaperSquare.Data\PaperSquare.Data.csproj", "{3602F3D4-4418-4832-B95B-10E3BB4CD21E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.Infrastructure", "..\PaperSquare.Infrastructure\PaperSquare.Infrastructure.csproj", "{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3602F3D4-4418-4832-B95B-10E3BB4CD21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3602F3D4-4418-4832-B95B-10E3BB4CD21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3602F3D4-4418-4832-B95B-10E3BB4CD21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

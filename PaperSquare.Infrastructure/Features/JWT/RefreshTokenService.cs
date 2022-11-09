@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.JWT
 {

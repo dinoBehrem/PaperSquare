@@ -1,5 +1,6 @@
 ﻿using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.JWT;
+using PaperSquare.Infrastructure.Features.UserManagement;
 
 namespace PaperSquare.API.Infrastructure.AppServices
 {
@@ -10,6 +11,7 @@ namespace PaperSquare.API.Infrastructure.AppServices
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IRefreshTokenService, RefreshTokenService>();
+            services.AddTransient<IUserService, UserService>();
 
             return services;
         }

@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using PaperSquare.API.Feature.Auth.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.Auth.Validators
 {
@@ -12,7 +7,10 @@ namespace PaperSquare.Infrastructure.Features.Auth.Validators
     {
         public LoginInsertRequestValidator()
         {
-            RuleFor(x => x.Username).NotEmpty();
+            RuleFor(x => x.Username)
+                .NotEmpty()
+                .WithMessage("Username is required!");
+
             RuleFor(x => x.Password)
                 .NotEmpty()
                 .MinimumLength(LoginInsertRequestOptions.PasswordLength)

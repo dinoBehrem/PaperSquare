@@ -4,6 +4,7 @@ using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.Data.Data;
+using PaperSquare.Infrastructure.Profiles;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,7 @@ builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlSer
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SwaggerGenConfig();
 
+builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AppServices();
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);

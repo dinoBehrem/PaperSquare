@@ -15,7 +15,7 @@ using System.Net.Mime;
 
 namespace PaperSquare.API.Feature.Auth.V_1
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController : ControllerBase
@@ -32,6 +32,9 @@ namespace PaperSquare.API.Feature.Auth.V_1
         }
 
         #region GET
+        #endregion GET
+
+        #region POST
 
         [HttpPost("login")]
         [MapToApiVersion(ApiVersions.V_1)]
@@ -60,11 +63,7 @@ namespace PaperSquare.API.Feature.Auth.V_1
             }
 
             return Ok(result.Value);
-        }
-
-        #endregion GET
-
-        #region POST
+        }               
 
         [HttpPost("refresh-token")]
         [MapToApiVersion(ApiVersions.V_1)]

@@ -25,10 +25,10 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
             _mapper = mapper;
         }
 
-        public async Task<Result> CreateUserAsync(UserRegistrationRequest request)
+        public async Task<Result> CreateUserAsync(UserRegistrationDto request)
         {
             Guard.Against.Null(request, nameof(request));
-            
+
             var user = _mapper.Map<User>(request);
 
             SetDefaultsForUser(user);
@@ -38,14 +38,14 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
                 return Result.Error("Password and confirm password doesn`t match!");
             }
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
             {
                 return Result.Error(result.Errors.Select(err => err.Description).ToArray());
             }
 
-            result = await _userManager.AddToRoleAsync(user, Roles.User);
+            result = await _userManager.AddToRoleAsync(user, Roles.RegisteredUser);
 
             if (!result.Succeeded)
             {
@@ -54,12 +54,19 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
                 return Result.Error(result.Errors.Select(err => err.Description).ToArray());
             }
 
-            return Result.Success();  
+            return Result.Success();
+        }
+
+        public async Task<Result<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            var users = await _users.ToListAsync();
+
+            return Result.Success(_mapper.Map<IEnumerable<UserDto>>(users));
         }
 
         #region Utils
 
-        private bool CheckIfPasswordsMatch(UserRegistrationRequest request)
+        private bool CheckIfPasswordsMatch(UserRegistrationDto request)
         {
             return request.Password == request.ConfirmPassword;
         }

@@ -13,7 +13,8 @@ namespace PaperSquare.Infrastructure.Profiles
     {
         public UserProfile()
         {
-            CreateMap<UserRegistrationRequest, User>();
+            CreateMap<UserRegistrationDto, User>();
+            CreateMap<User, UserDto>();
         }
     }
 }

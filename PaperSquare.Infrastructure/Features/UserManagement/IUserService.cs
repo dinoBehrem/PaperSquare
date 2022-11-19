@@ -10,6 +10,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 {
     public interface IUserService
     {
-        Task<Result> CreateUserAsync(UserRegistrationRequest request);
+        Task<Result> CreateUserAsync(UserRegistrationDto request);
+        Task<Result<IEnumerable<UserDto>>> GetAllUsers();
     }
 }

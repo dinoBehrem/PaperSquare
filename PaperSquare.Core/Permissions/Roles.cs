@@ -10,7 +10,7 @@ namespace PaperSquare.Core.Permissions
     {
         public const string Admin = nameof(Admin);
         public const string Editor = nameof(Editor);
-        public const string User = nameof(User);
+        public const string RegisteredUser = nameof(RegisteredUser);
         public const string Guest = nameof(Guest);
     }
 }

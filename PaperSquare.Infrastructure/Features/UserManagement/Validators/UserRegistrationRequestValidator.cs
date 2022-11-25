@@ -3,7 +3,7 @@ using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement.Validators
 {
-    public class UserRegistrationRequestValidator : AbstractValidator<UserRegistrationDto>
+    public class UserRegistrationRequestValidator : AbstractValidator<UserInsertDto>
     {
         public UserRegistrationRequestValidator()
         {

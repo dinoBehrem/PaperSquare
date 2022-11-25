@@ -10,10 +10,10 @@ using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.Auth.Validators;
-using PaperSquare.Infrastructure.Features.JWT;
+using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Net.Mime;
 
-namespace PaperSquare.API.Feature.Auth.V_1
+namespace PaperSquare.API.Features.Auth.V_1
 {
     [Route("api/auth")]
     [ApiController]

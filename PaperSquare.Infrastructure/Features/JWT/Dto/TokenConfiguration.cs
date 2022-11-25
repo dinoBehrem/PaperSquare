@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaperSquare.Infrastructure.Features.JWT
+namespace PaperSquare.Infrastructure.Features.JWT.Dto
 {
     public class TokenConfiguration
     {

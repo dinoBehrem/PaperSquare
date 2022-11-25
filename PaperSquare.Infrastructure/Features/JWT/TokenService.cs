@@ -3,6 +3,7 @@ using Ardalis.Result;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PaperSquare.Core.Models.Identity;
+using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

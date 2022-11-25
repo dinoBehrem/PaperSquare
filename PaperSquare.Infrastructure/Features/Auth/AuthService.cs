@@ -5,6 +5,7 @@ using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
+using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Security.Claims;
 
 namespace PaperSquare.Infrastructure.Features.Auth

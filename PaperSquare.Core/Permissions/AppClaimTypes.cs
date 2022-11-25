@@ -9,9 +9,9 @@ namespace PaperSquare.Core.Permissions
 {
     public class AppClaimTypes
     {
-        public static readonly string UserName = ClaimTypes.Name;
-        public static readonly string Email = ClaimTypes.Email;
-        public static readonly string Id = ClaimTypes.NameIdentifier;
-        public static readonly string Role = ClaimTypes.Role;
+        public static readonly string UserName = nameof(UserName);
+        public static readonly string Email = nameof(Email);
+        public static readonly string Id = nameof(Id);
+        public static readonly string Role = nameof(Role);
     }
 }

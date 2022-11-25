@@ -30,7 +30,45 @@ namespace PaperSquare.API.Controllers.V_1
 
             return CreatedAtAction(nameof(Insert), result.Value);
         }
+        
+        [HttpPost("update")]
+        [MapToApiVersion(ApiVersions.V_1)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public virtual async Task<IActionResult> Update(TType id, [FromBody] TUpdate update)
+        {
+            var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Update(id, update);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Errors);
+            }
+
+            return Ok(result.Value);
+        }
 
         #endregion POST
+
+        #region DELETE
+
+        [HttpDelete("delete")]
+        [MapToApiVersion(ApiVersions.V_1)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public virtual async Task<IActionResult> Delete(TType id)
+        {
+            var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Delete(id);
+
+            if (!result.IsSuccess)
+            {
+                return NotFound(result.Errors);
+            }
+
+            return Ok(result.Value);
+        }
+
+        #endregion DELETE
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement
 {
-    public interface IUserService: ICommandService<UserDto, UserSearchDto, string, UserInsertDto, UserInsertDto>
+    public interface IUserService: ICommandService<UserDto, UserSearchDto, string, UserInsertDto, UserUpdateDto>
     {
     }
 }

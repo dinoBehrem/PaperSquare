@@ -3,6 +3,7 @@ using Ardalis.Result;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
@@ -11,14 +12,15 @@ using PaperSquare.Infrastructure.Shared;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement
 {
-    public class UserService: CRUDService<User, UserDto, string, UserSearchDto, UserInsertDto, UserInsertDto>, IUserService
+    public class UserService: CRUDService<User, UserDto, string, UserSearchDto, UserInsertDto, UserUpdateDto>, IUserService
     {
         private readonly UserManager<User> _userManager;
-
-        public UserService(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper): base(paperSquareDbContext, mapper)
+        private readonly ICurrentUser _currentUser;
+        public UserService(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper, ICurrentUser currentUser) : base(paperSquareDbContext, mapper)
         {
             _userManager = userManager;
-        }       
+            _currentUser = currentUser;
+        }
 
         public override async Task<Result<UserDto>> Insert(UserInsertDto insert)
         {
@@ -51,7 +53,48 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             return Result.SuccessWithMessage("User successfully added!");
         }
-        
+
+        public override async Task<Result<UserDto>> Update(string type, UserUpdateDto update)
+        {
+            Guard.Against.Null(update, nameof(update));
+
+            if (type != _currentUser.Id)
+            {
+                return Result.Error("You don`t have permissions to edit!");
+            }
+
+            var user = await _entities.FindAsync(type);
+
+            if (user is null)
+            {
+                return Result.NotFound("User not found!");
+            }
+
+            user.LastUpdated = DateTime.UtcNow;
+
+            _mapper.Map(update, user); 
+
+            await _dbContext.SaveChangesAsync();
+
+            return Result.Success(_mapper.Map<UserDto>(user));
+        }
+
+        public override async Task<Result<UserDto>> Delete(string type)
+        {
+            var user = await _entities.FindAsync(type);
+
+            if (user is null)
+            {
+                return Result.NotFound("User not found!");
+            }
+
+            user.IsDeleted = true;
+
+            await _dbContext.SaveChangesAsync();
+
+            return Result.Success(_mapper.Map<UserDto>(user));
+        }
+
         #region Utils
 
         private bool CheckIfPasswordsMatch(UserInsertDto request)

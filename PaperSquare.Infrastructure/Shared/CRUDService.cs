@@ -18,7 +18,7 @@ namespace PaperSquare.Infrastructure.Shared
                     where TEntity: class where TModel : class where TSearch : SearchDto where TInsert : class where TUpdate : class
     {
         public CRUDService(PaperSquareDbContext dbContext, IMapper mapper): base(dbContext, mapper){}
-
+               
         public virtual async Task<Result<TModel>> Insert(TInsert insert)
         {
             Guard.Against.Null(insert, nameof(insert));
@@ -32,7 +32,7 @@ namespace PaperSquare.Infrastructure.Shared
             return Result.Success(_mapper.Map<TModel>(entity), "Entity successfully added!");
         }
 
-        public virtual async Task<Result<TModel>> Update(TType type, TInsert update)
+        public virtual async Task<Result<TModel>> Update(TType type, TUpdate update)
         {
             Guard.Against.Null(update, nameof(update));
             Guard.Against.Null(type, nameof(type));
@@ -41,7 +41,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.Error("Entity not found!");
+                return Result.NotFound("Entity not found!");
             }
 
             _mapper.Map(update, entity);
@@ -50,5 +50,24 @@ namespace PaperSquare.Infrastructure.Shared
 
             return Result.Success(_mapper.Map<TModel>(entity), "Entity successfully updated!");
         }
+
+        public virtual async Task<Result<TModel>> Delete(TType type)
+        {
+            // TO DO: Check for user permissions for entity deleteion
+
+            var entity = await _entities.FindAsync(type);
+
+            if (entity is null)
+            {
+                return Result.NotFound("Entity not found!");
+            }
+
+            _entities.Remove(entity);
+
+            await _dbContext.SaveChangesAsync();
+
+            return Result.Success(_mapper.Map<TModel>(entity));
+        }
+
     }
 }

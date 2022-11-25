@@ -11,6 +11,7 @@ namespace PaperSquare.Infrastructure.Shared
     public interface ICommandService<TModel, TSearch, TType, TInsert, TUpdate> : IQueryService<TModel, TSearch, TType> where TModel : class where TSearch : SearchDto where TInsert : class where TUpdate : class
     {
         Task<Result<TModel>> Insert(TInsert insert);
-        Task<Result<TModel>> Update(TType type,TInsert update);
+        Task<Result<TModel>> Update(TType type, TUpdate update);
+        Task<Result<TModel>> Delete(TType type);
     }
 }

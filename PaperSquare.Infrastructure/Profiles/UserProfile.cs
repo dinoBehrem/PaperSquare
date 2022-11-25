@@ -14,6 +14,7 @@ namespace PaperSquare.Infrastructure.Profiles
         public UserProfile()
         {
             CreateMap<UserInsertDto, User>();
+            CreateMap<UserUpdateDto, User>();
             CreateMap<User, UserDto>();
         }
     }

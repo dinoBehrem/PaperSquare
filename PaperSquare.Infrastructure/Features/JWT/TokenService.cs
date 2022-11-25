@@ -20,6 +20,7 @@ namespace PaperSquare.Infrastructure.Features.JWT
         private readonly TokenConfiguration _tokenConfiguration;
         private readonly IRefreshTokenService _refreshTokenService;
 
+
         public TokenService(
             IOptions<TokenConfiguration> tokenConfiguration, 
             IRefreshTokenService refreshTokenService)
@@ -41,13 +42,11 @@ namespace PaperSquare.Infrastructure.Features.JWT
                 expires: expiriation, 
                 signingCredentials: _tokenConfiguration.SigningCredentials);
 
-            TokenResource authResponse = new TokenResource()
+            return new TokenResource()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiriation = expiriation
             };
-
-            return authResponse;
         }
 
         public async Task<TokenResource> BuildRefreshToken(User user)

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
+using PaperSquare.API.Infrastructure.HttpContext;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.Data.Data;
@@ -35,6 +36,7 @@ builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig(builder.Configuration);
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+builder.Services.CurrentPrincipalAccessorConfig();
 
 var app = builder.Build();
 

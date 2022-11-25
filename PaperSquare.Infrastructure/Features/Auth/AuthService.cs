@@ -3,6 +3,7 @@ using Ardalis.Result;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
+using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
 using System.Security.Claims;
@@ -55,10 +56,12 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             var claims = new List<Claim>()
             {
-                new Claim("Id", user.Id)
+                new Claim(AppClaimTypes.Id, user.Id),
+                new Claim(AppClaimTypes.UserName, user.UserName),
+                new Claim(AppClaimTypes.Email, user.Email)
             };
 
-            claims.AddRange(roles.Select(role => new Claim("Role", role)));
+            claims.AddRange(roles.Select(role => new Claim(AppClaimTypes.Role, role)));
 
             var accesToken = await _tokenService.BuildToken(claims);
 

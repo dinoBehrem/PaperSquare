@@ -1,4 +1,5 @@
 ﻿using PaperSquare.Core.Models.Identity;
+using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using PaperSquare.Infrastructure.Features.JWT;
+using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Text;
 
 namespace PaperSquare.API.Infrastructure.Auth

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement.Dto
 {
-    public record UserRegistrationDto
+    public record UserInsertDto
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

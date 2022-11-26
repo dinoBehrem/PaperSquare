@@ -8,10 +8,10 @@ namespace PaperSquare.API.Infrastructure.AppServices
     {
         public static IServiceCollection AppServices(this IServiceCollection services)
         {
-            services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<ITokenService, TokenService>();
-            services.AddTransient<IRefreshTokenService, RefreshTokenService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

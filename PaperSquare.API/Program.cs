@@ -37,6 +37,7 @@ builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig(builder.Configuration);
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 builder.Services.CurrentPrincipalAccessorConfig();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -46,6 +47,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(options => options
+                       .AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 

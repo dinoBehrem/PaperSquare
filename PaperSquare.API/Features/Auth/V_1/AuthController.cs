@@ -17,30 +17,25 @@ namespace PaperSquare.API.Features.Auth.V_1
 {
     [Route("api/auth")]
     [ApiController]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
 
-        public AuthController(IAuthService authService, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _userManager = userManager;
-            _roleManager = roleManager;
         }
-
-        #region GET
-        #endregion GET
 
         #region POST
 
         [HttpPost("login")]
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResource))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginInsertRequest request)
         {
             if (!ModelState.IsValid)
@@ -59,7 +54,7 @@ namespace PaperSquare.API.Features.Auth.V_1
 
             if (!result.IsSuccess)
             {
-                return BadRequest(new { errors = result.Errors.ToList() });
+                return NotFound(new { errors = result.Errors.ToList() });
             }
 
             return Ok(result.Value);
@@ -68,8 +63,9 @@ namespace PaperSquare.API.Features.Auth.V_1
         [HttpPost("refresh-token")]
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResource))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             if (string.IsNullOrWhiteSpace(request.Token))
@@ -85,6 +81,17 @@ namespace PaperSquare.API.Features.Auth.V_1
             }
 
             return Ok(result.Value);
+        }
+
+
+        [HttpGet("refresh-token-test")]
+        [MapToApiVersion(ApiVersions.V_1)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize]
+        public async Task<IActionResult> RefreshTokenTest()
+        {
+            return Ok(new { message = "Refresh token working"});
         }
 
         #endregion POST

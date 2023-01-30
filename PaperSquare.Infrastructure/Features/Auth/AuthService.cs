@@ -88,7 +88,12 @@ namespace PaperSquare.Infrastructure.Features.Auth
                 return Result<AuthResponse>.Error("Refresh token doesn`t exist!");
             }
 
-            var user = await _userManager.FindByNameAsync(token.UserId);
+            if (!token.IsValid)
+            {
+                return Result<AuthResponse>.Error("Refresh token is not valid!");
+            }
+
+            var user = await _userManager.FindByIdAsync(token.UserId);
             var roles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>()

@@ -74,7 +74,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
                 RefreshToken = refreshToken
             };
 
-            return authResponse;
+            return Result<AuthResponse>.Success(authResponse);
         }
 
         public async Task<Result<AuthResponse>> RefreshToken(RefreshTokenRequest request)
@@ -115,7 +115,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             await _refreshTokenService.MarkAsInvalid(token);
 
-            return authResponse;
+            return Result<AuthResponse>.Success(authResponse);
         }
 
         private bool IsValidUser(User user)

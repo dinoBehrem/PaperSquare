@@ -83,7 +83,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             var token = await _refreshTokenService.GetToken(request.Token);
 
-            if (token is null)
+            if (token is null || !token.IsValid)
             {
                 return Result<AuthResponse>.Error("Refresh token doesn`t exist!");
             }

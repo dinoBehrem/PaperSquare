@@ -61,7 +61,7 @@ namespace PaperSquare.API.Features.Auth.V_1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Token))
+            if (!IsValidToken(request.Token))
             {
                 return BadRequest(new { message = "Invalid token!" });
             }
@@ -87,5 +87,14 @@ namespace PaperSquare.API.Features.Auth.V_1
         //}
 
         #endregion POST
+
+        #region Utils
+
+        private bool IsValidToken(string token)
+        {
+            return !string.IsNullOrWhiteSpace(token);
+        }
+
+        #endregion Utils
     }
 }

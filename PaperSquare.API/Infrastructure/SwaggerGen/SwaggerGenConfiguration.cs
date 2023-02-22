@@ -42,6 +42,8 @@ namespace PaperSquare.API.Infrastructure.SwaggerGen
                  });
             });
 
+            services.ConfigureOptions<ConfigureSwaggerOptions>();
+
             return services;
         }
     }

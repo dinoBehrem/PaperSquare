@@ -19,6 +19,8 @@ var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 
+builder.Host.UseSerilog(logger);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -35,7 +37,6 @@ builder.Services.AppServices();
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig(builder.Configuration);
-builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
 
@@ -47,6 +48,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseCors(options => options
                        .AllowAnyOrigin()

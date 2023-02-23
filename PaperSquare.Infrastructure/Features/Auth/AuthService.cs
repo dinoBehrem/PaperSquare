@@ -50,7 +50,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (!result.Succeeded)
             {
-                return Result<AuthResponse>.Error("Incorrect username or password!!");
+                return Result<AuthResponse>.Error("Incorrect username or password!");
             }
 
             var roles = await _userManager.GetRolesAsync(user);

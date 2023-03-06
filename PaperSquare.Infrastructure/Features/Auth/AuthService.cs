@@ -85,11 +85,6 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (token is null || !token.IsValid)
             {
-                return Result<AuthResponse>.Error("Refresh token doesn`t exist!");
-            }
-
-            if (!token.IsValid)
-            {
                 return Result<AuthResponse>.Error("Refresh token is not valid!");
             }
 

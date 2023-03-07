@@ -10,6 +10,7 @@ namespace PaperSquare.Infrastructure.Features.JWT
         private readonly PaperSquareDbContext _context;
 
         protected DbSet<RefreshToken> RefreshTokens => _context.Set<RefreshToken>();
+
         public RefreshTokenService(PaperSquareDbContext context)
         {
             _context = context;

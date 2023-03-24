@@ -66,3 +66,5 @@ app.MapControllers();
 app.Run();
 
 Log.CloseAndFlush();
+
+public partial class Program { }

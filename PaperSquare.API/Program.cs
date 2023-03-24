@@ -9,6 +9,7 @@ using PaperSquare.Infrastructure.Profiles;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
@@ -26,7 +27,6 @@ builder.Host.UseSerilog(logger);
 builder.Services.AddControllers();
 builder.Services.ApiVersioningConfiguration();
 builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevBase")));
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

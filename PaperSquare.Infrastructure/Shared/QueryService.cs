@@ -23,23 +23,27 @@ namespace PaperSquare.Infrastructure.Shared
         {
             var entities = ApplyFilters(_entities, search);
 
-            return Result.Success(_mapper.Map<IEnumerable<TModel>>(entities.ToPagedList(search.Page, search.PageSize)));
+            var pagedEntities = _mapper.Map<IEnumerable<TModel>>(entities.ToPagedList(search.Page, search.PageSize));
+
+            return Result.Success(pagedEntities);
         }
 
         public virtual async Task<Result<TModel>> GetById(TType id)
         {
             var entity = await _entities.FindAsync(id);
-            
-            return Result.Success(_mapper.Map<TModel>(entity));
+
+            var mappedEntity = _mapper.Map<TModel>(entity);
+
+            return Result.Success(mappedEntity);
         }
 
-        #region Virtual
+        #region Utils
 
         public virtual IQueryable<TEntity> ApplyFilters(IQueryable<TEntity> query, TSearch search = null)
         {
             return query;
         }
 
-        #endregion Virtual
+        #endregion Utils
     }
 }

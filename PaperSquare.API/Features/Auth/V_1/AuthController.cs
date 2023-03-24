@@ -17,7 +17,7 @@ namespace PaperSquare.API.Features.Auth.V_1
 {
     [Route("api/auth")]
     [ApiController]
-    //[AllowAnonymous]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -33,16 +33,10 @@ namespace PaperSquare.API.Features.Auth.V_1
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login([FromBody] LoginInsertRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var validator = new LoginInsertRequestValidator().Validate(request);
 
             if (!validator.IsValid)
@@ -65,10 +59,9 @@ namespace PaperSquare.API.Features.Auth.V_1
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [AllowAnonymous]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Token))
+            if (!IsValidToken(request.Token))
             {
                 return BadRequest(new { message = "Invalid token!" });
             }
@@ -83,17 +76,25 @@ namespace PaperSquare.API.Features.Auth.V_1
             return Ok(result.Value);
         }
 
-
-        [HttpGet("refresh-token-test")]
-        [MapToApiVersion(ApiVersions.V_1)]
-        [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize]
-        public async Task<IActionResult> RefreshTokenTest()
-        {
-            return Ok(new { message = "Refresh token working"});
-        }
+        //[HttpGet("refresh-token-test")]
+        //[MapToApiVersion(ApiVersions.V_1)]
+        //[Produces(MediaTypeNames.Application.Json)]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[Authorize]
+        //public async Task<IActionResult> RefreshTokenTest()
+        //{
+        //    return Ok(new { message = "Refresh token working"});
+        //}
 
         #endregion POST
+
+        #region Utils
+
+        private bool IsValidToken(string token)
+        {
+            return !string.IsNullOrWhiteSpace(token);
+        }
+
+        #endregion Utils
     }
 }

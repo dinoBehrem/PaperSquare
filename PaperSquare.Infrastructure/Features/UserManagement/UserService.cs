@@ -28,12 +28,12 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             var user = _mapper.Map<User>(insert);
 
-            SetDefaultsForUser(user);
-
             if (!CheckIfPasswordsMatch(insert))
             {
                 return Result.Error("Password and confirm password doesn`t match!");
             }
+                        
+            SetDefaultsForUser(user);
 
             var result = await _userManager.CreateAsync(user, insert.Password);
 
@@ -46,24 +46,22 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!result.Succeeded)
             {
-                await _dbContext.Database.RollbackTransactionAsync();
-
                 return Result.Error(result.Errors.Select(err => err.Description).ToArray());
             }
 
             return Result.SuccessWithMessage("User successfully added!");
         }
 
-        public override async Task<Result<UserDto>> Update(string type, UserUpdateDto update)
+        public override async Task<Result<UserDto>> Update(string userId, UserUpdateDto update)
         {
             Guard.Against.Null(update, nameof(update));
 
-            if (type != _currentUser.Id)
+            if (!HasPermissionToUpdate(userId))
             {
-                return Result.Error("You don`t have permissions to edit!");
+                return Result.Unauthorized();
             }
 
-            var user = await _entities.FindAsync(type);
+            var user = await _entities.FindAsync(userId);
 
             if (user is null)
             {
@@ -79,9 +77,9 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
             return Result.Success(_mapper.Map<UserDto>(user));
         }
 
-        public override async Task<Result<UserDto>> Delete(string type)
+        public override async Task<Result<UserDto>> Delete(string userId)
         {
-            var user = await _entities.FindAsync(type);
+            var user = await _entities.FindAsync(userId);
 
             if (user is null)
             {
@@ -123,6 +121,11 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
             }
 
             return filteredQuery;
+        }
+
+        private bool HasPermissionToUpdate(string userId)
+        {
+            return userId == _currentUser.Id;
         }
 
         #endregion Utils

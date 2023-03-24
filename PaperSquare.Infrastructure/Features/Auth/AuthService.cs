@@ -50,7 +50,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (!result.Succeeded)
             {
-                return Result<AuthResponse>.Error("Incorrect username or password!!");
+                return Result<AuthResponse>.Error("Incorrect username or password!");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -74,7 +74,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
                 RefreshToken = refreshToken
             };
 
-            return authResponse;
+            return Result<AuthResponse>.Success(authResponse);
         }
 
         public async Task<Result<AuthResponse>> RefreshToken(RefreshTokenRequest request)
@@ -83,12 +83,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             var token = await _refreshTokenService.GetToken(request.Token);
 
-            if (token is null)
-            {
-                return Result<AuthResponse>.Error("Refresh token doesn`t exist!");
-            }
-
-            if (!token.IsValid)
+            if (token is null || !token.IsValid)
             {
                 return Result<AuthResponse>.Error("Refresh token is not valid!");
             }
@@ -115,7 +110,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             await _refreshTokenService.MarkAsInvalid(token);
 
-            return authResponse;
+            return Result<AuthResponse>.Success(authResponse);
         }
 
         private bool IsValidUser(User user)

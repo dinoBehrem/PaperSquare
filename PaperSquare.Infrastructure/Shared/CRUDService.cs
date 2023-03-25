@@ -29,7 +29,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             await _dbContext.SaveChangesAsync();
 
-            return Result.Success(_mapper.Map<TModel>(entity), "Entity successfully added!");
+            return Result.Success(_mapper.Map<TModel>(entity), $"{typeof(TEntity).Name} successfully added!");
         }
 
         public virtual async Task<Result<TModel>> Update(TType type, TUpdate update)
@@ -41,14 +41,14 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.NotFound("Entity not found!");
+                return Result.NotFound($"{typeof(TEntity).Name} not found!");
             }
 
             _mapper.Map(update, entity);
 
             await _dbContext.SaveChangesAsync();
 
-            return Result.Success(_mapper.Map<TModel>(entity), "Entity successfully updated!");
+            return Result.Success(_mapper.Map<TModel>(entity), $"{typeof(TEntity).Name} successfully updated!");
         }
 
         public virtual async Task<Result<TModel>> Delete(TType type)
@@ -59,7 +59,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.NotFound("Entity not found!");
+                return Result.NotFound($"{typeof(TEntity).Name} not found!");
             }
 
             _entities.Remove(entity);

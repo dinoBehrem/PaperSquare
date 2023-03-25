@@ -36,6 +36,11 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                     {
                         appContext.Database.EnsureCreated();
 
+                        if (appContext.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+                        {
+                            appContext.Database.Migrate();
+                        }
+
                         UsersSeedData(appContext);
                     }
                     catch (Exception ex)

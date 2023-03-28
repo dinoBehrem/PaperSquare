@@ -250,7 +250,8 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
                 ConfirmPassword = "john123",
             };
 
-            const string passwordsDoesntMatchMessage = "Password and confirm password doesn`t match!";
+            const string passwordsDoesntMatchMessage = "Passwords doesn`t match!";
+
             // Act
 
             var serviceResult = await _userService.Insert(userInsertData);

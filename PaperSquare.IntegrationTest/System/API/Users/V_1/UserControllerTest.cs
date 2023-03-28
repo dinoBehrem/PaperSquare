@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -52,13 +53,14 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadFromJsonAsync(typeof(IEnumerable<UserDto>));
+            var content = await response.Content.ReadFromJsonAsync<IEnumerable<UserDto>>();
 
             // Assert
 
             Assert.NotNull(response);
             Assert.True(response.StatusCode == HttpStatusCode.OK);
-            Assert.True(((IEnumerable<UserDto>)content).Count() <= pageSize);
+            Assert.NotNull(content);
+            Assert.True(content?.Count() <= pageSize);
         }
 
         #endregion GetAll
@@ -85,13 +87,13 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadFromJsonAsync(typeof(UserDto));
+            var content = await response.Content.ReadFromJsonAsync<UserDto>();
 
             // Assert
 
             Assert.NotNull(response);
             Assert.True(response.StatusCode == HttpStatusCode.OK);
-            Assert.NotNull((UserDto)content);
+            Assert.NotNull(content);
         }
 
         [Fact]
@@ -122,8 +124,112 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
             Assert.True(response.StatusCode == HttpStatusCode.NotFound);
             Assert.NotNull(content);
             Assert.True(content.Contains(responseMessage));
-        }               
+        }
 
         #endregion GetById
+
+        #region Insert
+
+        [Fact]
+        public async void Insert_ValidData_ReturnsUserDtoWithStatus201()
+        {
+            // Arrange
+
+            const string _action = "/insert";
+
+            var requestBody = new Dictionary<string, string>()
+            {
+                { "firstname" , "John" },
+                { "lastname" , "Doe" },
+                { "email" , "johnDoe@email.com" },
+                { "username" , "johnDoe" },
+                { "password" , "johnDoe1!" },
+                { "confirmPassword" , "johnDoe1!" }
+            };
+
+            var httpContent = JsonContent.Create(requestBody);
+
+            // Act 
+
+            var response = await _client.PostAsync(_path + _action, httpContent);
+
+            response.EnsureSuccessStatusCode();
+
+            var content = response.Content.ReadFromJsonAsync<UserDto>();
+
+            // Assert
+
+            Assert.NotNull(content);
+            Assert.True(response.StatusCode == HttpStatusCode.Created);
+            Assert.NotNull(content);
+        }
+        
+        [Fact]
+        public async void Insert_InvalidData_ReturnsErrorWithStatus400()
+        {
+            // Arrange
+
+            const string _action = "/insert";
+
+            var requestBody = new Dictionary<string, string>()
+            {
+                { "firstname" , "John" },
+                { "lastname" , "Doe" },
+                { "email" , "johnDoe@email.com" },
+                { "username" , "johnDoe" },
+                { "password" , "johnDoe1!" },
+                { "confirmPassword" , "johnDoe!1" }
+            };
+
+            var httpContent = JsonContent.Create(requestBody);
+
+            const string errorMessage = "Passwords doesn`t match!";
+
+            // Act 
+
+            var response = await _client.PostAsync(_path + _action, httpContent);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            // Assert
+
+            Assert.NotNull(content);
+            Assert.True(response.StatusCode == HttpStatusCode.BadRequest);
+            Assert.NotNull(content);
+            Assert.Contains(errorMessage, content);
+        }
+        
+        [Fact]
+        public async void Insert_InvalidData_ReturnsInternalServerErrorWithStatus500()
+        {
+            // Arrange
+
+            const string _action = "/insert";
+
+            var requestBody = new Dictionary<string, string>()
+            {
+                { "firstname" , "John" },
+                { "lastname" , "Doe" },
+                { "email" , "johnDoe@email.com" },
+                { "username" , "johnDoe" },
+                { "password" , "johnDoe1!" },
+                { "confirmPassword" , "johnDoe1!" }
+            };
+
+            var httpContent = JsonContent.Create(requestBody);
+
+            // Act 
+
+            var response = await _client.PostAsync(_path + _action, httpContent);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            // Assert
+
+            Assert.NotNull(content);
+            Assert.True(response.StatusCode == HttpStatusCode.InternalServerError);
+        }
+
+        #endregion Insert
     }
 }

@@ -30,7 +30,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!CheckIfPasswordsMatch(insert))
             {
-                return Result.Error("Password and confirm password doesn`t match!");
+                return Result.Error("Passwords doesn`t match!");
             }
                         
             SetDefaultsForUser(user);

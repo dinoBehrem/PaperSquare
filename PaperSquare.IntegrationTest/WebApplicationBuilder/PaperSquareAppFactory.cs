@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Writers;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using PaperSquare.Core.Models.Identity;
+using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 
 namespace PaperSquare.IntegrationTest.WebApplicationBuilder
@@ -18,7 +20,7 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<PaperSquareDbContext>));
 
 
-                if (descriptor != null) 
+                if (descriptor != null)
                 {
                     services.Remove(descriptor);
                 }
@@ -28,9 +30,9 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
 
                 var sp = services.BuildServiceProvider();
 
-                using(var scope  = sp.CreateScope())
-                
-                using(var appContext =  scope.ServiceProvider.GetRequiredService<PaperSquareDbContext>())
+                using (var scope = sp.CreateScope())
+
+                using (var appContext = scope.ServiceProvider.GetRequiredService<PaperSquareDbContext>())
                 {
                     try
                     {
@@ -42,13 +44,14 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                         }
 
                         UsersSeedData(appContext);
+                        RolesSeedData(appContext);
                     }
                     catch (Exception ex)
                     {
 
                         throw;
                     }
-                }    
+                }
             });
 
             base.ConfigureWebHost(builder);
@@ -70,6 +73,37 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
 
                 }
             }
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async void RolesSeedData(PaperSquareDbContext dbContext)
+        {
+            if (await dbContext.Roles.CountAsync() <= 0)
+            {
+                dbContext.Roles.AddRange(
+                    new Role()
+                    {
+                        Name = Roles.Admin,
+                        NormalizedName = Roles.Admin.ToUpper()
+                    },
+                    new Role()
+                    {
+                        Name = Roles.RegisteredUser,
+                        NormalizedName = Roles.RegisteredUser.ToUpper()
+                    },
+                    new Role()
+                    {
+                        Name = Roles.Guest,
+                        NormalizedName = Roles.Guest.ToUpper()
+                    },
+                    new Role()
+                    {
+                        Name = Roles.Editor,
+                        NormalizedName = Roles.Editor.ToUpper()
+                    });
+            }
+
             await dbContext.SaveChangesAsync();
         }
     }

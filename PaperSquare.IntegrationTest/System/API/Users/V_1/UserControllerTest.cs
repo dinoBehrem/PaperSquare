@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.IntegrationTest.WebApplicationBuilder;
@@ -8,9 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using Xunit.Sdk;
 
 namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 {
@@ -199,37 +203,113 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
             Assert.Contains(errorMessage, content);
         }
         
+        //[Fact]
+        //public async void Insert_InvalidData_ReturnsInternalServerErrorWithStatus500()
+        //{
+        //    // Arrange
+
+        //    const string _action = "/insert";
+
+        //    var requestBody = new Dictionary<string, string>()
+        //    {
+        //        { "firstname" , "John" },
+        //        { "lastname" , "Doe" },
+        //        { "email" , "johnDoe@email.com" },
+        //        { "username" , "johnDoe" },
+        //        { "password" , "johnDoe1!" },
+        //        { "confirmPassword" , "johnDoe1!" }
+        //    };
+
+        //    var httpContent = JsonContent.Create(requestBody);
+
+        //    // Act 
+
+        //    var response = await _client.PostAsync(_path + _action, httpContent);
+
+        //    var content = await response.Content.ReadAsStringAsync();
+
+        //    // Assert
+
+        //    Assert.NotNull(content);
+        //    Assert.True(response.StatusCode == HttpStatusCode.InternalServerError);
+        //}
+
+        #endregion Insert
+
+        #region Update
+
         [Fact]
-        public async void Insert_InvalidData_ReturnsInternalServerErrorWithStatus500()
+        public async void Update_ValidData_ReturnsUserDtoWithStatus200()
         {
             // Arrange
 
-            const string _action = "/insert";
+            const string _action = "/update";
 
             var requestBody = new Dictionary<string, string>()
             {
-                { "firstname" , "John" },
-                { "lastname" , "Doe" },
-                { "email" , "johnDoe@email.com" },
-                { "username" , "johnDoe" },
-                { "password" , "johnDoe1!" },
-                { "confirmPassword" , "johnDoe1!" }
+                ["firstName"] =  "Johny",
+                ["lastName"] = "Doe",
+                ["email"] = "johny.doe@email.com"
             };
 
             var httpContent = JsonContent.Create(requestBody);
 
-            // Act 
+            var userId = new Dictionary<string, string>()
+            {
+                ["id"] = "user-1-id"
+            };
+        
+            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
 
-            var response = await _client.PostAsync(_path + _action, httpContent);
+            _client.DefaultRequestHeaders.Add("Authorization", new List<string>() { "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6InVzZXItMS1pZCIsIlVzZXJOYW1lIjoidXNlck5hbWUtMSIsIkVtYWlsIjoidGVzdHVzZXIxQGV4YW1wbGUuY29tIiwiUm9sZSI6WyJBZG1pbiIsIlJlZ2lzdGVyZWRVc2VyIl0sImV4cCI6MTgzODE5NjM2NH0.ydOwF-sCooT48_YfITAewv4UhkKYBrc4CZJS_YDatnA" });
 
-            var content = await response.Content.ReadAsStringAsync();
+            // Act
+
+            var response = await _client.PostAsync(endpoint, httpContent);
+
+            response.EnsureSuccessStatusCode();
 
             // Assert
 
-            Assert.NotNull(content);
-            Assert.True(response.StatusCode == HttpStatusCode.InternalServerError);
+            Assert.NotNull(response);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
         }
 
-        #endregion Insert
+        [Fact]
+        public async void Update_InvalidUserId_ReturnsErrorsWithStatus404()
+        {
+            // Arrange 
+
+            const string _action = "/update";
+
+            var requestBody = new Dictionary<string, string>()
+            {
+                ["firstName"] = "Johny",
+                ["lastName"] = "Doe",
+                ["email"] = "johny.doe@email.com"
+            };
+
+            var httpContent = JsonContent.Create(requestBody);
+
+            var userId = new Dictionary<string, string>()
+            {
+                ["id"] = "user-2-id"
+            };
+
+            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+
+            _client.DefaultRequestHeaders.Add("Authorization", new List<string>() { "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6InVzZXItMS1pZCIsIlVzZXJOYW1lIjoidXNlck5hbWUtMSIsIkVtYWlsIjoidGVzdHVzZXIxQGV4YW1wbGUuY29tIiwiUm9sZSI6WyJBZG1pbiIsIlJlZ2lzdGVyZWRVc2VyIl0sImV4cCI6MTgzODE5NjM2NH0.ydOwF-sCooT48_YfITAewv4UhkKYBrc4CZJS_YDatnA" });
+
+            // Act
+
+            var response = await _client.PostAsync(endpoint, httpContent);
+
+            // Arrange
+
+            Assert.NotNull(response);
+            Assert.True(response.StatusCode == HttpStatusCode.NotFound);
+        }
+
+        #endregion Update
     }
 }

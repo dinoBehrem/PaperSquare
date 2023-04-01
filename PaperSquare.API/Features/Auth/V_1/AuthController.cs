@@ -17,7 +17,6 @@ namespace PaperSquare.API.Features.Auth.V_1
 {
     [Route("api/auth")]
     [ApiController]
-    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -35,6 +34,7 @@ namespace PaperSquare.API.Features.Auth.V_1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponse))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginInsertRequest request)
         {
             var validator = new LoginInsertRequestValidator().Validate(request);
@@ -75,16 +75,6 @@ namespace PaperSquare.API.Features.Auth.V_1
 
             return Ok(result.Value);
         }
-
-        //[HttpGet("refresh-token-test")]
-        //[MapToApiVersion(ApiVersions.V_1)]
-        //[Produces(MediaTypeNames.Application.Json)]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[Authorize]
-        //public async Task<IActionResult> RefreshTokenTest()
-        //{
-        //    return Ok(new { message = "Refresh token working"});
-        //}
 
         #endregion POST
 

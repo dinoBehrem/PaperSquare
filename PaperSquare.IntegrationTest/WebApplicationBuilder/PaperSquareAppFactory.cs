@@ -66,9 +66,14 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                     dbContext.Users.Add(new User()
                     {
                         Id = $"user-{i}-id",
+                        UserName = $"userName-{i}",
                         Firstname = $"First name -- {i}",
                         Lastname = $"Last name -- {i}",
-                        Email = $"testuser{i}@example.com"
+                        Email = $"testuser{i}@example.com",
+                        PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                        SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                        ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                        EmailConfirmed = true
                     });
 
                 }
@@ -84,24 +89,48 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                 dbContext.Roles.AddRange(
                     new Role()
                     {
+                        Id = $"role-{Roles.Admin}",
                         Name = Roles.Admin,
                         NormalizedName = Roles.Admin.ToUpper()
                     },
                     new Role()
                     {
+                        Id = $"role-{Roles.RegisteredUser}",
                         Name = Roles.RegisteredUser,
                         NormalizedName = Roles.RegisteredUser.ToUpper()
                     },
                     new Role()
                     {
+                        Id = $"role-{Roles.Guest}",
                         Name = Roles.Guest,
                         NormalizedName = Roles.Guest.ToUpper()
                     },
                     new Role()
                     {
+                        Id = $"role-{Roles.Editor}",
                         Name = Roles.Editor,
                         NormalizedName = Roles.Editor.ToUpper()
                     });
+            }
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        private async void UserRolesSeedData(PaperSquareDbContext dbContext)
+        {
+            if(await dbContext.UserRoles.CountAsync() <= 0)
+            {
+                dbContext.UserRoles.AddRange(
+                    new UserRole()
+                {
+                    RoleId = "role-Admin",
+                    UserId = "user-1-id"
+                }, 
+                    new UserRole()
+                {
+                    RoleId = "role-RegisteredUser",
+                    UserId = "user-1-id"
+                });
             }
 
             await dbContext.SaveChangesAsync();

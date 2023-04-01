@@ -2,6 +2,7 @@
 using Ardalis.Result;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Models.Identity;
@@ -16,6 +17,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
     {
         private readonly UserManager<User> _userManager;
         private readonly ICurrentUser _currentUser;
+
         public UserService(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper, ICurrentUser currentUser) : base(paperSquareDbContext, mapper)
         {
             _userManager = userManager;

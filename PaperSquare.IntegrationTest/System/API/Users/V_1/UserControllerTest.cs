@@ -261,7 +261,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         
             var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
 
-            _client.DefaultRequestHeaders.Add("Authorization", new List<string>() { "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6InVzZXItMS1pZCIsIlVzZXJOYW1lIjoidXNlck5hbWUtMSIsIkVtYWlsIjoidGVzdHVzZXIxQGV4YW1wbGUuY29tIiwiUm9sZSI6WyJBZG1pbiIsIlJlZ2lzdGVyZWRVc2VyIl0sImV4cCI6MTgzODE5NjM2NH0.ydOwF-sCooT48_YfITAewv4UhkKYBrc4CZJS_YDatnA" });
+            EnsureAuthorizationIsAdded();
 
             // Act
 
@@ -298,7 +298,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
 
-            _client.DefaultRequestHeaders.Add("Authorization", new List<string>() { "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6InVzZXItMS1pZCIsIlVzZXJOYW1lIjoidXNlck5hbWUtMSIsIkVtYWlsIjoidGVzdHVzZXIxQGV4YW1wbGUuY29tIiwiUm9sZSI6WyJBZG1pbiIsIlJlZ2lzdGVyZWRVc2VyIl0sImV4cCI6MTgzODE5NjM2NH0.ydOwF-sCooT48_YfITAewv4UhkKYBrc4CZJS_YDatnA" });
+            EnsureAuthorizationIsAdded();
 
             // Act
 
@@ -311,5 +311,73 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         }
 
         #endregion Update
+
+        #region Delete
+
+        [Fact]
+        public async void Delete_ValidUser_ReturnsUserDtoWithStatus200()
+        {
+            // Arrange 
+
+            const string _action = "/delete";
+
+            var userId = new Dictionary<string, string>()
+            {
+                ["id"] = "user-2-id"
+            };
+
+            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+
+            EnsureAuthorizationIsAdded();
+
+            // Act
+
+            var response = await _client.DeleteAsync(endpoint);
+
+            response.EnsureSuccessStatusCode();
+
+            // Assert
+
+            Assert.NotNull(response);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+        }
+        
+        
+        [Fact]
+        public async void Delete_InvalidUser_ReturnsErrorsWithStatus404()
+        {
+            // Arrange 
+
+            const string _action = "/delete";
+
+            var userId = new Dictionary<string, string>()
+            {
+                ["id"] = "user-102-id"
+            };
+
+            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+
+            EnsureAuthorizationIsAdded();
+
+            // Act
+
+            var response = await _client.DeleteAsync(endpoint);
+
+            // Assert
+
+            Assert.NotNull(response);
+            Assert.True(response.StatusCode == HttpStatusCode.NotFound);
+        }
+
+        #endregion Delete
+
+        #region Utils
+
+        private void EnsureAuthorizationIsAdded()
+        {
+            _client.DefaultRequestHeaders.Add("Authorization", new List<string>() { "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6InVzZXItMS1pZCIsIlVzZXJOYW1lIjoidXNlck5hbWUtMSIsIkVtYWlsIjoidGVzdHVzZXIxQGV4YW1wbGUuY29tIiwiUm9sZSI6WyJBZG1pbiIsIlJlZ2lzdGVyZWRVc2VyIl0sImV4cCI6MTgzODE5NjM2NH0.ydOwF-sCooT48_YfITAewv4UhkKYBrc4CZJS_YDatnA" });
+        }
+
+        #endregion Utils
     }
 }

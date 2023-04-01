@@ -363,6 +363,12 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
 
             var userId = "user-1-id";
 
+            var userRoles = new List<string>() { Roles.RegisteredUser, Roles.Admin };
+
+            _currentUser.Setup(_ => _.Id).Returns(userId);
+
+            _currentUser.Setup(_ => _.Roles).Returns(userRoles.ToArray());
+
             // Act
 
             var serviceResult = await _userService.Delete(userId);

@@ -21,7 +21,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
     public class UserControllerTest : IClassFixture<PaperSquareAppFactory<Program>>
     {
         private readonly HttpClient _client;
-        private const string _path = "/api/user";
+        private const string PATH = "/api/user";
 
         public UserControllerTest(PaperSquareAppFactory<Program> factory)
         {
@@ -35,7 +35,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arange
 
-            const string _action = "/get-all";
+            const string ACTION = "/get-all";
 
             var page = 1;
             var pageSize = 1;
@@ -49,7 +49,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
                 ["PageSize"] = pageSize.ToString()
             };
             
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, queryParameters);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, queryParameters);
 
             // Act 
 
@@ -76,14 +76,14 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange 
 
-            const string _action = "/get-by-id";
+            const string ACTION = "/get-by-id";
 
             var queryParameters = new Dictionary<string, string>()
             {
                 ["id"] = "user-1-id",
             };
 
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, queryParameters);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, queryParameters);
 
             // Act 
 
@@ -105,14 +105,14 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange 
 
-            const string _action = "/get-by-id";
+            const string ACTION = "/get-by-id";
 
             var queryParameters = new Dictionary<string, string>()
             {
                 ["id"] = "user1id",
             };
 
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, queryParameters);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, queryParameters);
 
             var responseMessage = "User not found!";
 
@@ -139,23 +139,23 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange
 
-            const string _action = "/insert";
+            const string ACTION = "/insert";
 
             var requestBody = new Dictionary<string, string>()
             {
-                { "firstname" , "John" },
-                { "lastname" , "Doe" },
-                { "email" , "johnDoe@email.com" },
-                { "username" , "johnDoe" },
-                { "password" , "johnDoe1!" },
-                { "confirmPassword" , "johnDoe1!" }
+                ["firstname"] = "John",
+                ["lastname"] = "Doe",
+                ["email"] = "johnDoe@email.com",
+                ["username"] = "johnDoe",
+                ["password"] = "johnDoe1!",
+                ["confirmPassword"] = "johnDoe1!"
             };
 
             var httpContent = JsonContent.Create(requestBody);
 
             // Act 
 
-            var response = await _client.PostAsync(_path + _action, httpContent);
+            var response = await _client.PostAsync(PATH + ACTION, httpContent);
 
             response.EnsureSuccessStatusCode();
 
@@ -173,16 +173,16 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange
 
-            const string _action = "/insert";
+            const string ACTION = "/insert";
 
             var requestBody = new Dictionary<string, string>()
             {
-                { "firstname" , "John" },
-                { "lastname" , "Doe" },
-                { "email" , "johnDoe@email.com" },
-                { "username" , "johnDoe" },
-                { "password" , "johnDoe1!" },
-                { "confirmPassword" , "johnDoe!1" }
+                ["firstname"] = "John",
+                ["lastname"] = "Doe",
+                ["email"] = "johnDoe@email.com",
+                ["username"] = "johnDoe",
+                ["password"] = "johnDoe1!",
+                ["confirmPassword"] = "johnDoe!1"
             };
 
             var httpContent = JsonContent.Create(requestBody);
@@ -191,7 +191,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             // Act 
 
-            var response = await _client.PostAsync(_path + _action, httpContent);
+            var response = await _client.PostAsync(PATH + ACTION, httpContent);
 
             var content = await response.Content.ReadAsStringAsync();
 
@@ -203,37 +203,6 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
             Assert.Contains(errorMessage, content);
         }
         
-        //[Fact]
-        //public async void Insert_InvalidData_ReturnsInternalServerErrorWithStatus500()
-        //{
-        //    // Arrange
-
-        //    const string _action = "/insert";
-
-        //    var requestBody = new Dictionary<string, string>()
-        //    {
-        //        { "firstname" , "John" },
-        //        { "lastname" , "Doe" },
-        //        { "email" , "johnDoe@email.com" },
-        //        { "username" , "johnDoe" },
-        //        { "password" , "johnDoe1!" },
-        //        { "confirmPassword" , "johnDoe1!" }
-        //    };
-
-        //    var httpContent = JsonContent.Create(requestBody);
-
-        //    // Act 
-
-        //    var response = await _client.PostAsync(_path + _action, httpContent);
-
-        //    var content = await response.Content.ReadAsStringAsync();
-
-        //    // Assert
-
-        //    Assert.NotNull(content);
-        //    Assert.True(response.StatusCode == HttpStatusCode.InternalServerError);
-        //}
-
         #endregion Insert
 
         #region Update
@@ -243,7 +212,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange
 
-            const string _action = "/update";
+            const string ACTION = "/update";
 
             var requestBody = new Dictionary<string, string>()
             {
@@ -259,7 +228,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
                 ["id"] = "user-1-id"
             };
         
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, userId);
 
             EnsureAuthorizationIsAdded();
 
@@ -280,7 +249,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange 
 
-            const string _action = "/update";
+            const string ACTION = "/update";
 
             var requestBody = new Dictionary<string, string>()
             {
@@ -296,7 +265,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
                 ["id"] = "user-2-id"
             };
 
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, userId);
 
             EnsureAuthorizationIsAdded();
 
@@ -319,14 +288,14 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange 
 
-            const string _action = "/delete";
+            const string ACTION = "/delete";
 
             var userId = new Dictionary<string, string>()
             {
                 ["id"] = "user-2-id"
             };
 
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, userId);
 
             EnsureAuthorizationIsAdded();
 
@@ -348,14 +317,14 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
         {
             // Arrange 
 
-            const string _action = "/delete";
+            const string ACTION = "/delete";
 
             var userId = new Dictionary<string, string>()
             {
                 ["id"] = "user-102-id"
             };
 
-            var endpoint = QueryHelpers.AddQueryString(_path + _action, userId);
+            var endpoint = QueryHelpers.AddQueryString(PATH + ACTION, userId);
 
             EnsureAuthorizationIsAdded();
 

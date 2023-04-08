@@ -250,7 +250,8 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
                 ConfirmPassword = "john123",
             };
 
-            const string passwordsDoesntMatchMessage = "Password and confirm password doesn`t match!";
+            const string passwordsDoesntMatchMessage = "Passwords doesn`t match!";
+
             // Act
 
             var serviceResult = await _userService.Insert(userInsertData);
@@ -361,6 +362,12 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
             // Arrange
 
             var userId = "user-1-id";
+
+            var userRoles = new List<string>() { Roles.RegisteredUser, Roles.Admin };
+
+            _currentUser.Setup(_ => _.Id).Returns(userId);
+
+            _currentUser.Setup(_ => _.Roles).Returns(userRoles.ToArray());
 
             // Act
 

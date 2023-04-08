@@ -2,6 +2,7 @@
 using Ardalis.Result;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Models.Identity;
@@ -16,6 +17,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
     {
         private readonly UserManager<User> _userManager;
         private readonly ICurrentUser _currentUser;
+
         public UserService(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper, ICurrentUser currentUser) : base(paperSquareDbContext, mapper)
         {
             _userManager = userManager;
@@ -30,7 +32,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!CheckIfPasswordsMatch(insert))
             {
-                return Result.Error("Password and confirm password doesn`t match!");
+                return Result.Error("Passwords doesn`t match!");
             }
                         
             SetDefaultsForUser(user);
@@ -81,9 +83,14 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
         {
             var user = await _entities.FindAsync(userId);
 
-            if (user is null)
+            if (!IsvalidUser(user))
             {
                 return Result.NotFound("User not found!");
+            }
+            
+            if (!HasPermissionToDelete())
+            {
+                return Result.Unauthorized();
             }
 
             user.IsDeleted = true;
@@ -126,6 +133,16 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
         private bool HasPermissionToUpdate(string userId)
         {
             return userId == _currentUser.Id;
+        }
+
+        private bool IsvalidUser(User? user)
+        {
+            return user is not null;
+        }
+
+        private bool HasPermissionToDelete()
+        {
+            return _currentUser.Roles.Any(r => r == Roles.Admin);
         }
 
         #endregion Utils

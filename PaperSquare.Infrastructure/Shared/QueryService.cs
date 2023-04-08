@@ -32,6 +32,11 @@ namespace PaperSquare.Infrastructure.Shared
         {
             var entity = await _entities.FindAsync(id);
 
+            if (entity is null)
+            {
+                return Result.NotFound($"{typeof(TEntity).Name} not found!");
+            }
+
             var mappedEntity = _mapper.Map<TModel>(entity);
 
             return Result.Success(mappedEntity);

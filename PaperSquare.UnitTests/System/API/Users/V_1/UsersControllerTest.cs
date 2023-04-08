@@ -97,7 +97,7 @@ namespace PaperSquare.UnitTests.System.API.Users.V_1
         }
 
         [Fact]
-        public async void GetById_InvalidResult_ResturnsBadRequest()
+        public async void GetById_InvalidResult_ResturnsNotFoundResult()
         {
             // Arrange
 
@@ -114,7 +114,7 @@ namespace PaperSquare.UnitTests.System.API.Users.V_1
             // Assert
 
             Assert.NotNull(endpointResult); 
-            Assert.IsType<BadRequestObjectResult>(endpointResult);
+            Assert.IsType<NotFoundObjectResult>(endpointResult);
         }
 
         #endregion GetById

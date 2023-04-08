@@ -43,7 +43,7 @@ namespace PaperSquare.API.Controllers.V_1
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [AllowAnonymous]
         public virtual async Task<IActionResult> GetById([FromQuery] TType id)
         {
@@ -51,7 +51,7 @@ namespace PaperSquare.API.Controllers.V_1
 
             if (!result.IsSuccess)
             {
-                return BadRequest(result.Errors);
+                return NotFound(result.Errors);
             }
 
             return Ok(result.Value);

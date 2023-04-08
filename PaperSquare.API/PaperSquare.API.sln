@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Data", "..\Pape
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Infrastructure", "..\PaperSquare.Infrastructure\PaperSquare.Infrastructure.csproj", "{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.UnitTests", "..\PaperSquare.UnitTests\PaperSquare.UnitTests.csproj", "{530BCD9D-15B4-4DC8-A748-FD4FE149F042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.UnitTests", "..\PaperSquare.UnitTests\PaperSquare.UnitTests.csproj", "{530BCD9D-15B4-4DC8-A748-FD4FE149F042}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.IntegrationTest", "..\PaperSquare.IntegrationTest\PaperSquare.IntegrationTest.csproj", "{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5F73FFE-3CFA-4B83-B317-3206F23347FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{530BCD9D-15B4-4DC8-A748-FD4FE149F042} = {B5F73FFE-3CFA-4B83-B317-3206F23347FC}
+		{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D} = {B5F73FFE-3CFA-4B83-B317-3206F23347FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F66A398-BB57-4B7F-84A5-8D9E1156692E}

@@ -11,7 +11,7 @@ using PaperSquare.Data.Data;
 
 namespace PaperSquare.IntegrationTest.WebApplicationBuilder
 {
-    public class PaperSquareAppFactory<TEntryPoiint> : WebApplicationFactory<Program> where TEntryPoiint : Program
+    public class PaperSquareAppFactory<TEntryPoint> : WebApplicationFactory<Program> where TEntryPoint : Program
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

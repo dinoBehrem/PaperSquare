@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.HttpContext;
+using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.API.Middlewares.RateLimiting;
@@ -42,8 +43,10 @@ builder.Services.AddAuthorizationConfig(builder.Configuration);
 builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
 builder.Services.AddRateLimiting(builder.Configuration);
+builder.Services.AddExceptionConfig();
 
 var app = builder.Build();
+
 
 app.UseIpRateLimiting();
 
@@ -67,6 +70,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddlewareHandlers();
 
 app.Run();
 

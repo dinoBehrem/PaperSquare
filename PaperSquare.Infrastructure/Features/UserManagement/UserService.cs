@@ -10,6 +10,7 @@ using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.Infrastructure.Shared;
+using PaperSquare.Infrastructure.Exceptions;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement
 {
@@ -67,7 +68,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (user is null)
             {
-                return Result.NotFound("User not found!");
+                throw new NotFoundEntityException("User not found!", typeof(User));
             }
 
             user.LastUpdated = DateTime.UtcNow;

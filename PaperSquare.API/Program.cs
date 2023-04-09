@@ -1,9 +1,11 @@
+using AspNetCoreRateLimit;
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.HttpContext;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.API.Middlewares.RateLimiting;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Profiles;
 using Serilog;
@@ -39,8 +41,11 @@ builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig(builder.Configuration);
 builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
+builder.Services.AddRateLimiting(builder.Configuration);
 
 var app = builder.Build();
+
+app.UseIpRateLimiting();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

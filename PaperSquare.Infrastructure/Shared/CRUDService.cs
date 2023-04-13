@@ -41,7 +41,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.NotFound($"{typeof(TEntity).Name} not found!");
+                throw new NotFoundException($"Entity with id: {type} not found!", typeof(TEntity).Name);
             }
 
             _mapper.Map(update, entity);
@@ -59,7 +59,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.NotFound($"{typeof(TEntity).Name} not found!");
+                throw new NotFoundException($"Entity with id: {type} not found!", typeof(TEntity).Name);
             }
 
             _entities.Remove(entity);

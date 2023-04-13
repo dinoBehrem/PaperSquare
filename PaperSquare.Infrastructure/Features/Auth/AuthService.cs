@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
+using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
@@ -38,19 +39,19 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (!IsValidUser(user))
             {
-                return Result<AuthResponse>.Error("It`s not a valid account!");
+                throw new NotFoundException($"User with username: '{request.Username}' not found!", typeof(User).Name);
             }
 
             if (!await _signInManager.CanSignInAsync(user))
             {
-                return Result<AuthResponse>.Error("You haven`t confirmed your account!");
+                throw new ErrorException("You haven`t confirmed your account!");
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, true);
 
             if (!result.Succeeded)
             {
-                return Result<AuthResponse>.Error("Incorrect username or password!");
+                throw new ErrorException("Incorrect username or password!");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -85,7 +86,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (token is null || !token.IsValid)
             {
-                return Result<AuthResponse>.Error("Refresh token is not valid!");
+                throw new ErrorException("You haven`t confirmed your account!");
             }
 
             var user = await _userManager.FindByIdAsync(token.UserId);

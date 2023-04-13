@@ -1,7 +1,9 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Data;
+using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Extensions;
 using PaperSquare.Infrastructure.Shared.Dto;
 
@@ -34,7 +36,7 @@ namespace PaperSquare.Infrastructure.Shared
 
             if (entity is null)
             {
-                return Result.NotFound($"{typeof(TEntity).Name} not found!");
+                throw new NotFoundEntityException($"{typeof(TEntity).Name} not found!", typeof(TEntity));
             }
 
             var mappedEntity = _mapper.Map<TModel>(entity);

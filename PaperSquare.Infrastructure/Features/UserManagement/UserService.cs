@@ -33,7 +33,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!CheckIfPasswordsMatch(insert))
             {
-                return Result.Error("Passwords doesn`t match!");
+                throw new ErrorException("Passwords doesn`t match!");
             }
                         
             SetDefaultsForUser(user);
@@ -42,14 +42,14 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!result.Succeeded)
             {
-                return Result.Error(result.Errors.Select(err => err.Description).ToArray());
+                throw new IdentityResultErrorException(result.Errors.Select(err => err.Description).ToArray());
             }
 
             result = await _userManager.AddToRoleAsync(user, Roles.RegisteredUser);
 
             if (!result.Succeeded)
             {
-                return Result.Error(result.Errors.Select(err => err.Description).ToArray());
+                throw new IdentityResultErrorException(result.Errors.Select(err => err.Description).ToArray());
             }
 
             return Result.SuccessWithMessage("User successfully added!");
@@ -61,7 +61,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!HasPermissionToUpdate(userId))
             {
-                return Result.Unauthorized();
+                throw new UnatuhorizedAccessException("Permission denied!");
             }
 
             var user = await _entities.FindAsync(userId);
@@ -86,12 +86,12 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!IsvalidUser(user))
             {
-                return Result.NotFound("User not found!");
+                throw new NotFoundEntityException("User not found!", typeof(User));
             }
             
             if (!HasPermissionToDelete())
             {
-                return Result.Unauthorized();
+                throw new UnatuhorizedAccessException("Permission denied!");
             }
 
             user.IsDeleted = true;

@@ -89,27 +89,27 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
                 dbContext.Roles.AddRange(
                     new Role()
                     {
-                        Id = $"role-{Roles.Admin}",
-                        Name = Roles.Admin,
-                        NormalizedName = Roles.Admin.ToUpper()
+                        Id = $"role-{AppRoles.ADMIN}",
+                        Name = AppRoles.ADMIN,
+                        NormalizedName = AppRoles.ADMIN.ToUpper()
                     },
                     new Role()
                     {
-                        Id = $"role-{Roles.RegisteredUser}",
-                        Name = Roles.RegisteredUser,
-                        NormalizedName = Roles.RegisteredUser.ToUpper()
+                        Id = $"role-{AppRoles.REGISTERED_USER}",
+                        Name = AppRoles.REGISTERED_USER,
+                        NormalizedName = AppRoles.REGISTERED_USER.ToUpper()
                     },
                     new Role()
                     {
-                        Id = $"role-{Roles.Guest}",
-                        Name = Roles.Guest,
-                        NormalizedName = Roles.Guest.ToUpper()
+                        Id = $"role-{AppRoles.GUEST}",
+                        Name = AppRoles.GUEST,
+                        NormalizedName = AppRoles.GUEST.ToUpper()
                     },
                     new Role()
                     {
-                        Id = $"role-{Roles.Editor}",
-                        Name = Roles.Editor,
-                        NormalizedName = Roles.Editor.ToUpper()
+                        Id = $"role-{AppRoles.EDITOR}",
+                        Name = AppRoles.EDITOR,
+                        NormalizedName = AppRoles.EDITOR.ToUpper()
                     });
             }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PaperSquare.Data.Data;
 
@@ -11,9 +12,10 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230417201928_DatabaseSeed")]
+    partial class DatabaseSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -73,7 +73,15 @@ app.MapControllers();
 
 app.UseMiddlewareHandlers();
 
+app.MigrateDatabase();
+
 app.Run();
+
+
+if (app.Environment.IsDevelopment())
+{
+    
+}
 
 Log.CloseAndFlush();
 

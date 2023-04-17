@@ -160,7 +160,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
 
             _userManager.Setup(_ => _.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
             
-            _userManager.Setup(_ => _.AddToRoleAsync(It.IsAny<User>(), Roles.RegisteredUser)).ReturnsAsync(IdentityResult.Success);
+            _userManager.Setup(_ => _.AddToRoleAsync(It.IsAny<User>(), AppRoles.REGISTERED_USER)).ReturnsAsync(IdentityResult.Success);
 
             const string successMessage = "User successfully added!";
 
@@ -192,7 +192,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
 
             _userManager.Setup(_ => _.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
 
-            _userManager.Setup(_ => _.AddToRoleAsync(It.IsAny<User>(), Roles.RegisteredUser)).ReturnsAsync(IdentityResult.Failed());
+            _userManager.Setup(_ => _.AddToRoleAsync(It.IsAny<User>(), AppRoles.REGISTERED_USER)).ReturnsAsync(IdentityResult.Failed());
 
             // Act
 
@@ -363,7 +363,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement
 
             var userId = "user-1-id";
 
-            var userRoles = new List<string>() { Roles.RegisteredUser, Roles.Admin };
+            var userRoles = new List<string>() { AppRoles.REGISTERED_USER, AppRoles.ADMIN };
 
             _currentUser.Setup(_ => _.Id).Returns(userId);
 

@@ -14,9 +14,9 @@ namespace PaperSquare.API.Infrastructure.Auth
                 .Build();
 
                 //options.AddPolicy(Permission.FullAccess, builder => builder.RequireRole(Roles.Admin));
-                options.AddPolicy(Permission.FullAccess, policy => policy.RequireClaim("role", Roles.Admin));
-                options.AddPolicy(Permission.PartialAccess, builder => builder.RequireClaim("role", Roles.Admin, Roles.Editor));
-                options.AddPolicy(Permission.RegisteredUser, builder => builder.RequireClaim("role", Roles.RegisteredUser));
+                options.AddPolicy(Permission.FullAccess, policy => policy.RequireClaim("role", AppRoles.ADMIN));
+                options.AddPolicy(Permission.PartialAccess, builder => builder.RequireClaim("role", AppRoles.ADMIN, AppRoles.EDITOR));
+                options.AddPolicy(Permission.RegisteredUser, builder => builder.RequireClaim("role", AppRoles.REGISTERED_USER));
             });
 
             return services;

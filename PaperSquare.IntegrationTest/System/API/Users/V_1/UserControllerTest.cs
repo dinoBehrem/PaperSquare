@@ -1,20 +1,8 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using PaperSquare.API.Feature.Auth.Dto;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.IntegrationTest.WebApplicationBuilder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using Xunit.Sdk;
 
 namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 {

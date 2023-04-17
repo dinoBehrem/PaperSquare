@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PaperSquare.Core.Models.Identity;
+using PaperSquare.Data.Generators;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Identity
 {
@@ -11,6 +12,8 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
             builder.ToTable(nameof(UserRole));
             builder.HasOne(userRole => userRole.User).WithMany(user => user.Roles).HasForeignKey(userRole => userRole.UserId).IsRequired();
             builder.HasOne(userRole => userRole.Role).WithMany(role => role.Roles).HasForeignKey(userRole => userRole.RoleId).IsRequired();
+
+            builder.HasData(UserRoleGenerator.Generator.UserRoles);
         }
     }
 }

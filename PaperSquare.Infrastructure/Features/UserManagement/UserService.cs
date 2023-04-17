@@ -45,7 +45,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
                 throw new IdentityResultErrorException(result.Errors.Select(err => err.Description).ToArray());
             }
 
-            result = await _userManager.AddToRoleAsync(user, Roles.RegisteredUser);
+            result = await _userManager.AddToRoleAsync(user, AppRoles.REGISTERED_USER);
 
             if (!result.Succeeded)
             {
@@ -143,7 +143,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
         private bool HasPermissionToDelete()
         {
-            return _currentUser.Roles.Any(r => r == Roles.Admin);
+            return _currentUser.Roles.Any(r => r == AppRoles.ADMIN);
         }
 
         #endregion Utils

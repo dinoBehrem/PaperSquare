@@ -82,7 +82,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             _userManager.Setup(_ => _.FindByNameAsync(loginInsertRequest.Username)).ReturnsAsync(user);
 
-            _userManager.Setup(_ => _.GetRolesAsync(user)).ReturnsAsync(new List<string>() { Roles.RegisteredUser });
+            _userManager.Setup(_ => _.GetRolesAsync(user)).ReturnsAsync(new List<string>() { AppRoles.REGISTERED_USER });
 
             _signInManager.Setup(_ => _.CanSignInAsync(user)).ReturnsAsync(true);
 
@@ -266,7 +266,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             _userManager.Setup(_ => _.FindByIdAsync(refreshToken.UserId)).ReturnsAsync(user);
 
-            _userManager.Setup(_ => _.GetRolesAsync(user)).ReturnsAsync(new List<string>() { Roles.RegisteredUser });
+            _userManager.Setup(_ => _.GetRolesAsync(user)).ReturnsAsync(new List<string>() { AppRoles.REGISTERED_USER });
 
             _tokenService.Setup(_ => _.BuildToken(claims)).ReturnsAsync(tokenResource);
 

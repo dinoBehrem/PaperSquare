@@ -8,7 +8,11 @@ namespace PaperSquare.Data.Data
 {
     public class PaperSquareDbContext: IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        public PaperSquareDbContext(DbContextOptions<PaperSquareDbContext> options) : base(options){}
+        public PaperSquareDbContext(DbContextOptions<PaperSquareDbContext> options) : base(options)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

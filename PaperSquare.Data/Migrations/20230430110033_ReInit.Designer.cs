@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Data.Data;
 
 #nullable disable
@@ -12,37 +12,38 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    [Migration("20230417201928_DatabaseSeed")]
-    partial class DatabaseSeed
+    [Migration("20230430110033_ReInit")]
+    partial class ReInit
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.RefreshToken", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("Expires")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsValid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -54,55 +55,54 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("Role", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = "642e7f53-0381-4651-833b-f0d9d53d0e4d",
-                            ConcurrencyStamp = "75fabf07-07a8-4ed0-b480-bfb7953b5fd6",
+                            Id = "9813ad52-51e2-431b-8116-2e77fdf79b33",
+                            ConcurrencyStamp = "c413c738-8402-49ea-a52e-0db396a612a5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3589c061-1c60-43ff-ae06-5da838058dee",
-                            ConcurrencyStamp = "41126c3d-4044-4f0c-bc81-9d7f60389ac8",
+                            Id = "f6b5c6c9-3f5c-4a91-bc4d-a91825243fba",
+                            ConcurrencyStamp = "cbe1b56d-c28d-4023-95ff-ed835870fbc4",
                             Name = "RegisteredUser",
                             NormalizedName = "REGISTEREDUSER"
                         },
                         new
                         {
-                            Id = "4ded5da6-4674-41cf-a83c-74fe04d869bb",
-                            ConcurrencyStamp = "a51dee12-0345-402c-8c9b-7b81147f6605",
+                            Id = "9709d04b-71b0-4874-9ca1-bc4e70e64298",
+                            ConcurrencyStamp = "df7e8015-80c9-4428-8372-74ce0e6e16e8",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "3f5e5a7f-cff6-49a8-b615-9391572b313c",
-                            ConcurrencyStamp = "3f3c5af8-e9c3-45ba-87bd-9fc3e2b3f134",
+                            Id = "c2444b71-c794-4e42-8ec9-25a65ff3abeb",
+                            ConcurrencyStamp = "2cb2edf4-0574-4285-b7f6-c827d2906d6b",
                             Name = "Guest",
                             NormalizedName = "GUEST"
                         });
@@ -112,19 +112,19 @@ namespace PaperSquare.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -136,75 +136,75 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Firstname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastUpdated")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Lastname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -213,451 +213,450 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("User", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = "2550335c-068d-491a-ae46-8b0064199ea1",
+                            Id = "1a7726f8-de89-465e-a761-6f7597a8d6bd",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1971, 12, 9, 1, 30, 8, 78, DateTimeKind.Unspecified).AddTicks(294),
+                            BirthDate = new DateTime(1991, 7, 6, 19, 11, 8, 899, DateTimeKind.Unspecified).AddTicks(6738),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2011, 10, 7, 17, 20, 12, 716, DateTimeKind.Unspecified).AddTicks(5722),
-                            Email = "Jeffery_Hartmann24@hotmail.com",
+                            CreationDate = new DateTime(2017, 4, 22, 23, 41, 11, 275, DateTimeKind.Unspecified).AddTicks(1470),
+                            Email = "Matt_Kemmer@yahoo.com",
                             EmailConfirmed = false,
-                            Firstname = "Jeffery",
-                            IsDeleted = true,
-                            Lastname = "Hartmann",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "JEFFERY_HARTMANN24@HOTMAIL.COM",
-                            NormalizedUserName = "JEFFERY_HARTMANN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Jeffery_Hartmann"
-                        },
-                        new
-                        {
-                            Id = "3e5ab3a2-b627-437a-a13b-6b5cf131c911",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1972, 4, 8, 7, 41, 9, 465, DateTimeKind.Unspecified).AddTicks(100),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2018, 7, 30, 12, 53, 26, 125, DateTimeKind.Unspecified).AddTicks(9824),
-                            Email = "Adah_Lockman@yahoo.com",
-                            EmailConfirmed = true,
-                            Firstname = "Adah",
+                            Firstname = "Matt",
                             IsDeleted = false,
-                            Lastname = "Lockman",
+                            Lastname = "Kemmer",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADAH_LOCKMAN@YAHOO.COM",
-                            NormalizedUserName = "ADAH_LOCKMAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Adah_Lockman"
-                        },
-                        new
-                        {
-                            Id = "964dd0dc-31cc-4a0a-b4a5-cdbb06893899",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1973, 6, 24, 15, 8, 38, 549, DateTimeKind.Unspecified).AddTicks(5328),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2019, 1, 22, 21, 51, 55, 602, DateTimeKind.Unspecified).AddTicks(272),
-                            Email = "Blanca7@yahoo.com",
-                            EmailConfirmed = true,
-                            Firstname = "Blanca",
-                            IsDeleted = false,
-                            Lastname = "Green",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "BLANCA7@YAHOO.COM",
-                            NormalizedUserName = "BLANCA_GREEN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Blanca_Green"
-                        },
-                        new
-                        {
-                            Id = "f7bc439c-8551-45fd-aba9-7d99b4219f36",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1978, 7, 25, 6, 14, 18, 825, DateTimeKind.Unspecified).AddTicks(9913),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2016, 7, 29, 7, 18, 53, 218, DateTimeKind.Unspecified).AddTicks(1106),
-                            Email = "Gunner_Hand55@yahoo.com",
-                            EmailConfirmed = true,
-                            Firstname = "Gunner",
-                            IsDeleted = false,
-                            Lastname = "Hand",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "GUNNER_HAND55@YAHOO.COM",
-                            NormalizedUserName = "GUNNER_HAND",
+                            NormalizedEmail = "MATT_KEMMER@YAHOO.COM",
+                            NormalizedUserName = "MATT_KEMMER",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Gunner_Hand"
+                            UserName = "Matt_Kemmer"
                         },
                         new
                         {
-                            Id = "cf33fd83-c484-4fb4-9b73-a85c2a20e232",
+                            Id = "b5a7f7b0-a408-4bc2-b7a3-4ef6a04a30cd",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1993, 6, 2, 15, 51, 3, 566, DateTimeKind.Unspecified).AddTicks(7650),
+                            BirthDate = new DateTime(1988, 4, 5, 2, 54, 32, 425, DateTimeKind.Unspecified).AddTicks(3585),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2018, 1, 21, 1, 37, 19, 771, DateTimeKind.Unspecified).AddTicks(8484),
-                            Email = "Hank_Altenwerth97@gmail.com",
+                            CreationDate = new DateTime(2019, 8, 9, 9, 50, 14, 223, DateTimeKind.Unspecified).AddTicks(4152),
+                            Email = "Sarina_Olson@gmail.com",
                             EmailConfirmed = true,
-                            Firstname = "Hank",
-                            IsDeleted = true,
-                            Lastname = "Altenwerth",
+                            Firstname = "Sarina",
+                            IsDeleted = false,
+                            Lastname = "Olson",
                             LockoutEnabled = false,
-                            NormalizedEmail = "HANK_ALTENWERTH97@GMAIL.COM",
-                            NormalizedUserName = "HANK_ALTENWERTH",
+                            NormalizedEmail = "SARINA_OLSON@GMAIL.COM",
+                            NormalizedUserName = "SARINA_OLSON",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Hank_Altenwerth"
+                            UserName = "Sarina_Olson"
                         },
                         new
                         {
-                            Id = "c0dfc08e-a6d1-4700-9784-c60d8f1efdbb",
+                            Id = "e411687a-67b5-47b7-bac5-443d814341f4",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1978, 2, 1, 18, 47, 51, 457, DateTimeKind.Unspecified).AddTicks(2742),
+                            BirthDate = new DateTime(1989, 7, 22, 10, 4, 24, 926, DateTimeKind.Unspecified).AddTicks(7982),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2018, 6, 18, 18, 28, 34, 41, DateTimeKind.Unspecified).AddTicks(4941),
-                            Email = "Opal_Herzog46@hotmail.com",
-                            EmailConfirmed = true,
-                            Firstname = "Opal",
-                            IsDeleted = false,
-                            Lastname = "Herzog",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "OPAL_HERZOG46@HOTMAIL.COM",
-                            NormalizedUserName = "OPAL_HERZOG",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Opal_Herzog"
-                        },
-                        new
-                        {
-                            Id = "5695cd4b-9832-4fab-8eef-497cb93bec68",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1992, 4, 20, 18, 50, 17, 490, DateTimeKind.Unspecified).AddTicks(6464),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 8, 6, 2, 37, 48, 501, DateTimeKind.Unspecified).AddTicks(4784),
-                            Email = "Kelley_Boehm88@yahoo.com",
+                            CreationDate = new DateTime(2010, 7, 14, 19, 45, 16, 505, DateTimeKind.Unspecified).AddTicks(155),
+                            Email = "Austin_Brekke93@gmail.com",
                             EmailConfirmed = false,
-                            Firstname = "Kelley",
-                            IsDeleted = false,
-                            Lastname = "Boehm",
+                            Firstname = "Austin",
+                            IsDeleted = true,
+                            Lastname = "Brekke",
                             LockoutEnabled = false,
-                            NormalizedEmail = "KELLEY_BOEHM88@YAHOO.COM",
-                            NormalizedUserName = "KELLEY_BOEHM",
+                            NormalizedEmail = "AUSTIN_BREKKE93@GMAIL.COM",
+                            NormalizedUserName = "AUSTIN_BREKKE",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Kelley_Boehm"
+                            UserName = "Austin_Brekke"
                         },
                         new
                         {
-                            Id = "f1e6b85f-1dab-4efa-b735-71bdf38963e0",
+                            Id = "ecc02ce1-8fe0-41dc-8daa-52e6f6c8ccb3",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1994, 11, 17, 15, 31, 28, 611, DateTimeKind.Unspecified).AddTicks(4040),
+                            BirthDate = new DateTime(2000, 10, 30, 1, 44, 29, 435, DateTimeKind.Unspecified).AddTicks(968),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 2, 11, 20, 53, 17, 528, DateTimeKind.Unspecified).AddTicks(8472),
-                            Email = "Wilson.Renner56@hotmail.com",
-                            EmailConfirmed = true,
-                            Firstname = "Wilson",
-                            IsDeleted = true,
-                            Lastname = "Renner",
+                            CreationDate = new DateTime(2014, 2, 7, 20, 7, 11, 161, DateTimeKind.Unspecified).AddTicks(9676),
+                            Email = "Sunny22@hotmail.com",
+                            EmailConfirmed = false,
+                            Firstname = "Sunny",
+                            IsDeleted = false,
+                            Lastname = "Waters",
                             LockoutEnabled = false,
-                            NormalizedEmail = "WILSON.RENNER56@HOTMAIL.COM",
-                            NormalizedUserName = "WILSON_RENNER",
+                            NormalizedEmail = "SUNNY22@HOTMAIL.COM",
+                            NormalizedUserName = "SUNNY_WATERS",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Wilson_Renner"
+                            UserName = "Sunny_Waters"
                         },
                         new
                         {
-                            Id = "4382aafd-e084-4889-b4d4-23224fdd8cf0",
+                            Id = "fba78b4e-ff35-4a74-b5e6-769a51948b5d",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(2000, 3, 30, 4, 50, 18, 451, DateTimeKind.Unspecified).AddTicks(2456),
+                            BirthDate = new DateTime(1964, 6, 28, 9, 54, 41, 767, DateTimeKind.Unspecified).AddTicks(9018),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2019, 4, 19, 1, 43, 50, 896, DateTimeKind.Unspecified).AddTicks(977),
-                            Email = "Addie_Cummings@hotmail.com",
-                            EmailConfirmed = false,
-                            Firstname = "Addie",
+                            CreationDate = new DateTime(2011, 7, 19, 8, 42, 46, 888, DateTimeKind.Unspecified).AddTicks(6936),
+                            Email = "Benton83@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Benton",
                             IsDeleted = true,
-                            Lastname = "Cummings",
+                            Lastname = "Osinski",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADDIE_CUMMINGS@HOTMAIL.COM",
-                            NormalizedUserName = "ADDIE_CUMMINGS",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Addie_Cummings"
-                        },
-                        new
-                        {
-                            Id = "085f3d5f-7d3e-4500-8709-400c19fd5810",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1971, 5, 24, 5, 17, 50, 710, DateTimeKind.Unspecified).AddTicks(5228),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2014, 9, 15, 17, 49, 4, 714, DateTimeKind.Unspecified).AddTicks(435),
-                            Email = "Caleb76@yahoo.com",
-                            EmailConfirmed = false,
-                            Firstname = "Caleb",
-                            IsDeleted = false,
-                            Lastname = "Parisian",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CALEB76@YAHOO.COM",
-                            NormalizedUserName = "CALEB_PARISIAN",
+                            NormalizedEmail = "BENTON83@GMAIL.COM",
+                            NormalizedUserName = "BENTON_OSINSKI",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Caleb_Parisian"
+                            UserName = "Benton_Osinski"
                         },
                         new
                         {
-                            Id = "ca500cf5-44ba-4cc0-85c7-58dd000c252a",
+                            Id = "a895c874-59d1-40ff-868c-9d9a4a7a1957",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1960, 1, 28, 2, 49, 8, 375, DateTimeKind.Unspecified).AddTicks(237),
+                            BirthDate = new DateTime(1975, 11, 29, 5, 52, 13, 484, DateTimeKind.Unspecified).AddTicks(2035),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 7, 17, 15, 56, 32, 700, DateTimeKind.Unspecified).AddTicks(7782),
-                            Email = "Jordi_Rutherford@yahoo.com",
-                            EmailConfirmed = true,
-                            Firstname = "Jordi",
+                            CreationDate = new DateTime(2018, 6, 3, 19, 14, 22, 407, DateTimeKind.Unspecified).AddTicks(5900),
+                            Email = "Garry_Ryan@hotmail.com",
+                            EmailConfirmed = false,
+                            Firstname = "Garry",
                             IsDeleted = true,
-                            Lastname = "Rutherford",
+                            Lastname = "Ryan",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JORDI_RUTHERFORD@YAHOO.COM",
-                            NormalizedUserName = "JORDI_RUTHERFORD",
+                            NormalizedEmail = "GARRY_RYAN@HOTMAIL.COM",
+                            NormalizedUserName = "GARRY_RYAN",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Jordi_Rutherford"
+                            UserName = "Garry_Ryan"
                         },
                         new
                         {
-                            Id = "2bc3f791-5ae6-4380-98f5-861397b6a9bd",
+                            Id = "646cb87b-3078-40b7-9910-6f042aea6390",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1985, 10, 3, 15, 51, 48, 814, DateTimeKind.Unspecified).AddTicks(5077),
+                            BirthDate = new DateTime(1973, 7, 11, 20, 51, 2, 496, DateTimeKind.Unspecified).AddTicks(7749),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2012, 1, 24, 18, 9, 30, 252, DateTimeKind.Unspecified).AddTicks(7400),
-                            Email = "Gloria.Kozey@yahoo.com",
+                            CreationDate = new DateTime(2017, 7, 30, 1, 13, 56, 633, DateTimeKind.Unspecified).AddTicks(6500),
+                            Email = "Felicity.Durgan84@hotmail.com",
                             EmailConfirmed = true,
-                            Firstname = "Gloria",
-                            IsDeleted = false,
-                            Lastname = "Kozey",
+                            Firstname = "Felicity",
+                            IsDeleted = true,
+                            Lastname = "Durgan",
                             LockoutEnabled = false,
-                            NormalizedEmail = "GLORIA.KOZEY@YAHOO.COM",
-                            NormalizedUserName = "GLORIA_KOZEY",
+                            NormalizedEmail = "FELICITY.DURGAN84@HOTMAIL.COM",
+                            NormalizedUserName = "FELICITY_DURGAN",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Felicity_Durgan"
+                        },
+                        new
+                        {
+                            Id = "e943557a-81af-457b-b9b6-9cd8fc273b28",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1990, 5, 14, 19, 42, 37, 595, DateTimeKind.Unspecified).AddTicks(5170),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2014, 2, 8, 16, 54, 35, 358, DateTimeKind.Unspecified).AddTicks(5384),
+                            Email = "Laurence29@yahoo.com",
+                            EmailConfirmed = false,
+                            Firstname = "Laurence",
+                            IsDeleted = true,
+                            Lastname = "Abernathy",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "LAURENCE29@YAHOO.COM",
+                            NormalizedUserName = "LAURENCE_ABERNATHY",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Gloria_Kozey"
+                            UserName = "Laurence_Abernathy"
                         },
                         new
                         {
-                            Id = "3cc1671c-1fe9-40af-bc37-9d5b848af786",
+                            Id = "ffba4dae-5045-4cfc-b6e9-8c2e4cd1e8f9",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(2000, 2, 11, 22, 12, 50, 213, DateTimeKind.Unspecified).AddTicks(1524),
+                            BirthDate = new DateTime(1978, 12, 23, 6, 28, 34, 346, DateTimeKind.Unspecified).AddTicks(6695),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2011, 2, 7, 9, 7, 49, 587, DateTimeKind.Unspecified).AddTicks(5866),
-                            Email = "Cecelia26@yahoo.com",
+                            CreationDate = new DateTime(2018, 12, 6, 10, 30, 25, 864, DateTimeKind.Unspecified).AddTicks(5599),
+                            Email = "Stephany92@yahoo.com",
                             EmailConfirmed = true,
-                            Firstname = "Cecelia",
+                            Firstname = "Stephany",
                             IsDeleted = false,
-                            Lastname = "Towne",
+                            Lastname = "Frami",
                             LockoutEnabled = false,
-                            NormalizedEmail = "CECELIA26@YAHOO.COM",
-                            NormalizedUserName = "CECELIA_TOWNE",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Cecelia_Towne"
-                        },
-                        new
-                        {
-                            Id = "ae110ccb-ed7e-45cc-b707-8c376418ec85",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1982, 2, 14, 17, 28, 57, 50, DateTimeKind.Unspecified).AddTicks(2277),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2016, 6, 5, 3, 42, 38, 116, DateTimeKind.Unspecified).AddTicks(6896),
-                            Email = "Brian.Barrows99@yahoo.com",
-                            EmailConfirmed = false,
-                            Firstname = "Brian",
-                            IsDeleted = true,
-                            Lastname = "Barrows",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "BRIAN.BARROWS99@YAHOO.COM",
-                            NormalizedUserName = "BRIAN_BARROWS",
+                            NormalizedEmail = "STEPHANY92@YAHOO.COM",
+                            NormalizedUserName = "STEPHANY_FRAMI",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Brian_Barrows"
+                            UserName = "Stephany_Frami"
                         },
                         new
                         {
-                            Id = "1c06c32f-9e53-4144-a286-13ddc0ae70e4",
+                            Id = "1f9ff0c1-72d5-45b7-9150-b9bf5e4f7c12",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1993, 10, 19, 14, 38, 13, 769, DateTimeKind.Unspecified).AddTicks(2146),
+                            BirthDate = new DateTime(1970, 3, 21, 13, 31, 27, 233, DateTimeKind.Unspecified).AddTicks(3292),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 6, 16, 22, 37, 15, 292, DateTimeKind.Unspecified).AddTicks(6103),
-                            Email = "Alessandra.Jones11@yahoo.com",
-                            EmailConfirmed = false,
-                            Firstname = "Alessandra",
-                            IsDeleted = false,
-                            Lastname = "Jones",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ALESSANDRA.JONES11@YAHOO.COM",
-                            NormalizedUserName = "ALESSANDRA_JONES",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Alessandra_Jones"
-                        },
-                        new
-                        {
-                            Id = "ebd178de-f3a2-4d18-8cc5-07d594f22e3e",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1973, 5, 7, 2, 21, 23, 613, DateTimeKind.Unspecified).AddTicks(4596),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2013, 3, 31, 22, 9, 43, 932, DateTimeKind.Unspecified).AddTicks(3673),
-                            Email = "Vida73@hotmail.com",
-                            EmailConfirmed = false,
-                            Firstname = "Vida",
-                            IsDeleted = true,
-                            Lastname = "Cremin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "VIDA73@HOTMAIL.COM",
-                            NormalizedUserName = "VIDA_CREMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Vida_Cremin"
-                        },
-                        new
-                        {
-                            Id = "5f5a3af0-61e4-4289-b6c1-15542204c249",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1995, 8, 4, 7, 22, 14, 237, DateTimeKind.Unspecified).AddTicks(9722),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2010, 4, 18, 13, 53, 55, 789, DateTimeKind.Unspecified).AddTicks(912),
-                            Email = "Anissa.Cruickshank@yahoo.com",
+                            CreationDate = new DateTime(2018, 7, 26, 22, 49, 17, 335, DateTimeKind.Unspecified).AddTicks(578),
+                            Email = "Chanel_Carroll41@hotmail.com",
                             EmailConfirmed = true,
-                            Firstname = "Anissa",
-                            IsDeleted = false,
-                            Lastname = "Cruickshank",
+                            Firstname = "Chanel",
+                            IsDeleted = true,
+                            Lastname = "Carroll",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ANISSA.CRUICKSHANK@YAHOO.COM",
-                            NormalizedUserName = "ANISSA_CRUICKSHANK",
+                            NormalizedEmail = "CHANEL_CARROLL41@HOTMAIL.COM",
+                            NormalizedUserName = "CHANEL_CARROLL",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Anissa_Cruickshank"
+                            UserName = "Chanel_Carroll"
                         },
                         new
                         {
-                            Id = "99b3115f-c93d-4b1a-a940-db6ee9057cb6",
+                            Id = "76c92c3a-11df-4b2f-8e6a-0b3c88844b16",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1965, 12, 16, 4, 48, 39, 76, DateTimeKind.Unspecified).AddTicks(9217),
+                            BirthDate = new DateTime(1964, 2, 7, 1, 17, 9, 207, DateTimeKind.Unspecified).AddTicks(3460),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 10, 31, 6, 57, 27, 190, DateTimeKind.Unspecified).AddTicks(3310),
-                            Email = "Joey60@yahoo.com",
+                            CreationDate = new DateTime(2010, 3, 20, 4, 46, 43, 42, DateTimeKind.Unspecified).AddTicks(8824),
+                            Email = "Angeline2@gmail.com",
                             EmailConfirmed = false,
-                            Firstname = "Joey",
+                            Firstname = "Angeline",
                             IsDeleted = false,
-                            Lastname = "Ward",
+                            Lastname = "Wiegand",
                             LockoutEnabled = false,
-                            NormalizedEmail = "JOEY60@YAHOO.COM",
-                            NormalizedUserName = "JOEY_WARD",
+                            NormalizedEmail = "ANGELINE2@GMAIL.COM",
+                            NormalizedUserName = "ANGELINE_WIEGAND",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Joey_Ward"
+                            UserName = "Angeline_Wiegand"
                         },
                         new
                         {
-                            Id = "a77a3b36-c3f4-4355-a388-4dd7ae96e6ea",
+                            Id = "e6bbcaf1-b10d-4635-8c31-0d68bb3736f3",
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(2000, 9, 10, 17, 48, 25, 857, DateTimeKind.Unspecified).AddTicks(8624),
+                            BirthDate = new DateTime(1999, 4, 21, 21, 10, 37, 989, DateTimeKind.Unspecified).AddTicks(9590),
                             ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2015, 10, 16, 5, 20, 34, 909, DateTimeKind.Unspecified).AddTicks(1664),
-                            Email = "Oceane_Hauck80@yahoo.com",
+                            CreationDate = new DateTime(2014, 10, 23, 5, 17, 10, 238, DateTimeKind.Unspecified).AddTicks(9798),
+                            Email = "Orion_Sporer@yahoo.com",
                             EmailConfirmed = true,
-                            Firstname = "Oceane",
-                            IsDeleted = true,
-                            Lastname = "Hauck",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "OCEANE_HAUCK80@YAHOO.COM",
-                            NormalizedUserName = "OCEANE_HAUCK",
-                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                            TwoFactorEnabled = false,
-                            UserName = "Oceane_Hauck"
-                        },
-                        new
-                        {
-                            Id = "48b69414-5fa3-4919-ae68-8c9dd2b5294a",
-                            AccessFailedCount = 0,
-                            BirthDate = new DateTime(1997, 10, 1, 4, 52, 19, 838, DateTimeKind.Unspecified).AddTicks(2228),
-                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                            CreationDate = new DateTime(2017, 6, 16, 5, 45, 4, 898, DateTimeKind.Unspecified).AddTicks(5348),
-                            Email = "Elmer.Metz61@gmail.com",
-                            EmailConfirmed = true,
-                            Firstname = "Elmer",
+                            Firstname = "Orion",
                             IsDeleted = false,
-                            Lastname = "Metz",
+                            Lastname = "Sporer",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ELMER.METZ61@GMAIL.COM",
-                            NormalizedUserName = "ELMER_METZ",
+                            NormalizedEmail = "ORION_SPORER@YAHOO.COM",
+                            NormalizedUserName = "ORION_SPORER",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Orion_Sporer"
+                        },
+                        new
+                        {
+                            Id = "3bf4e986-0502-49f8-84d9-d841697995e5",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1967, 10, 25, 15, 53, 18, 0, DateTimeKind.Unspecified).AddTicks(8330),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2016, 11, 16, 11, 6, 51, 130, DateTimeKind.Unspecified).AddTicks(9206),
+                            Email = "Fritz30@hotmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Fritz",
+                            IsDeleted = true,
+                            Lastname = "Kessler",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FRITZ30@HOTMAIL.COM",
+                            NormalizedUserName = "FRITZ_KESSLER",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Fritz_Kessler"
+                        },
+                        new
+                        {
+                            Id = "7a085da8-d9da-48e1-ad98-c04afd1c52af",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(2001, 8, 9, 11, 49, 44, 655, DateTimeKind.Unspecified).AddTicks(7244),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2014, 10, 10, 16, 10, 24, 309, DateTimeKind.Unspecified).AddTicks(1198),
+                            Email = "Reece11@hotmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Reece",
+                            IsDeleted = true,
+                            Lastname = "Effertz",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "REECE11@HOTMAIL.COM",
+                            NormalizedUserName = "REECE_EFFERTZ",
                             PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
                             PhoneNumber = "Bogus.DataSets.PhoneNumbers",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
                             TwoFactorEnabled = false,
-                            UserName = "Elmer_Metz"
+                            UserName = "Reece_Effertz"
+                        },
+                        new
+                        {
+                            Id = "e7c4be97-1121-481a-a6ca-c4a502a745c6",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1978, 1, 10, 12, 58, 41, 764, DateTimeKind.Unspecified).AddTicks(1551),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2015, 6, 9, 5, 27, 40, 654, DateTimeKind.Unspecified).AddTicks(9094),
+                            Email = "Viviane67@yahoo.com",
+                            EmailConfirmed = false,
+                            Firstname = "Viviane",
+                            IsDeleted = false,
+                            Lastname = "Fadel",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VIVIANE67@YAHOO.COM",
+                            NormalizedUserName = "VIVIANE_FADEL",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Viviane_Fadel"
+                        },
+                        new
+                        {
+                            Id = "0eee7038-6751-45d5-a434-3223ac0546f1",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1988, 6, 6, 23, 18, 46, 180, DateTimeKind.Unspecified).AddTicks(3380),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2016, 11, 24, 23, 6, 55, 512, DateTimeKind.Unspecified).AddTicks(4438),
+                            Email = "Jaron.Abshire80@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Jaron",
+                            IsDeleted = false,
+                            Lastname = "Abshire",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JARON.ABSHIRE80@GMAIL.COM",
+                            NormalizedUserName = "JARON_ABSHIRE",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Jaron_Abshire"
+                        },
+                        new
+                        {
+                            Id = "de37d74b-d253-43da-b3b8-4330f6252df0",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1986, 12, 14, 1, 43, 41, 162, DateTimeKind.Unspecified).AddTicks(856),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2013, 5, 1, 20, 8, 56, 661, DateTimeKind.Unspecified).AddTicks(7879),
+                            Email = "Meredith_Gleichner@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Meredith",
+                            IsDeleted = false,
+                            Lastname = "Gleichner",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MEREDITH_GLEICHNER@GMAIL.COM",
+                            NormalizedUserName = "MEREDITH_GLEICHNER",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Meredith_Gleichner"
+                        },
+                        new
+                        {
+                            Id = "fdb2d0e6-60a1-47b1-b661-d68442ea4ad2",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1967, 1, 28, 7, 47, 45, 593, DateTimeKind.Unspecified).AddTicks(677),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2013, 9, 10, 2, 11, 23, 967, DateTimeKind.Unspecified).AddTicks(5331),
+                            Email = "Jayne_Williamson@yahoo.com",
+                            EmailConfirmed = true,
+                            Firstname = "Jayne",
+                            IsDeleted = false,
+                            Lastname = "Williamson",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "JAYNE_WILLIAMSON@YAHOO.COM",
+                            NormalizedUserName = "JAYNE_WILLIAMSON",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Jayne_Williamson"
+                        },
+                        new
+                        {
+                            Id = "7fab3eab-31f1-46f4-9726-644c9b44f992",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1982, 3, 7, 18, 29, 55, 414, DateTimeKind.Unspecified).AddTicks(1450),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2017, 8, 6, 4, 9, 52, 581, DateTimeKind.Unspecified).AddTicks(7388),
+                            Email = "Mallory.Nolan37@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Mallory",
+                            IsDeleted = true,
+                            Lastname = "Nolan",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MALLORY.NOLAN37@GMAIL.COM",
+                            NormalizedUserName = "MALLORY_NOLAN",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Mallory_Nolan"
+                        },
+                        new
+                        {
+                            Id = "9536000e-3ddc-452f-8d28-fb784442fdc8",
+                            AccessFailedCount = 0,
+                            BirthDate = new DateTime(1972, 8, 16, 23, 40, 9, 163, DateTimeKind.Unspecified).AddTicks(3928),
+                            ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
+                            CreationDate = new DateTime(2015, 8, 25, 11, 41, 28, 273, DateTimeKind.Unspecified).AddTicks(5264),
+                            Email = "Rosalee0@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "Rosalee",
+                            IsDeleted = true,
+                            Lastname = "Muller",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ROSALEE0@GMAIL.COM",
+                            NormalizedUserName = "ROSALEE_MULLER",
+                            PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
+                            PhoneNumber = "Bogus.DataSets.PhoneNumbers",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
+                            TwoFactorEnabled = false,
+                            UserName = "Rosalee_Muller"
                         });
                 });
 
@@ -665,19 +664,19 @@ namespace PaperSquare.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -689,17 +688,17 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -711,10 +710,10 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserRole", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -725,119 +724,119 @@ namespace PaperSquare.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "2550335c-068d-491a-ae46-8b0064199ea1",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "1a7726f8-de89-465e-a761-6f7597a8d6bd",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         },
                         new
                         {
-                            UserId = "3e5ab3a2-b627-437a-a13b-6b5cf131c911",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "b5a7f7b0-a408-4bc2-b7a3-4ef6a04a30cd",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "964dd0dc-31cc-4a0a-b4a5-cdbb06893899",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "e411687a-67b5-47b7-bac5-443d814341f4",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "f7bc439c-8551-45fd-aba9-7d99b4219f36",
-                            RoleId = "3589c061-1c60-43ff-ae06-5da838058dee"
+                            UserId = "ecc02ce1-8fe0-41dc-8daa-52e6f6c8ccb3",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         },
                         new
                         {
-                            UserId = "cf33fd83-c484-4fb4-9b73-a85c2a20e232",
-                            RoleId = "3589c061-1c60-43ff-ae06-5da838058dee"
+                            UserId = "fba78b4e-ff35-4a74-b5e6-769a51948b5d",
+                            RoleId = "9813ad52-51e2-431b-8116-2e77fdf79b33"
                         },
                         new
                         {
-                            UserId = "c0dfc08e-a6d1-4700-9784-c60d8f1efdbb",
-                            RoleId = "4ded5da6-4674-41cf-a83c-74fe04d869bb"
+                            UserId = "a895c874-59d1-40ff-868c-9d9a4a7a1957",
+                            RoleId = "f6b5c6c9-3f5c-4a91-bc4d-a91825243fba"
                         },
                         new
                         {
-                            UserId = "5695cd4b-9832-4fab-8eef-497cb93bec68",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "646cb87b-3078-40b7-9910-6f042aea6390",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         },
                         new
                         {
-                            UserId = "f1e6b85f-1dab-4efa-b735-71bdf38963e0",
-                            RoleId = "4ded5da6-4674-41cf-a83c-74fe04d869bb"
+                            UserId = "e943557a-81af-457b-b9b6-9cd8fc273b28",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "4382aafd-e084-4889-b4d4-23224fdd8cf0",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "ffba4dae-5045-4cfc-b6e9-8c2e4cd1e8f9",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "085f3d5f-7d3e-4500-8709-400c19fd5810",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "1f9ff0c1-72d5-45b7-9150-b9bf5e4f7c12",
+                            RoleId = "f6b5c6c9-3f5c-4a91-bc4d-a91825243fba"
                         },
                         new
                         {
-                            UserId = "ca500cf5-44ba-4cc0-85c7-58dd000c252a",
-                            RoleId = "3589c061-1c60-43ff-ae06-5da838058dee"
+                            UserId = "76c92c3a-11df-4b2f-8e6a-0b3c88844b16",
+                            RoleId = "9813ad52-51e2-431b-8116-2e77fdf79b33"
                         },
                         new
                         {
-                            UserId = "2bc3f791-5ae6-4380-98f5-861397b6a9bd",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "e6bbcaf1-b10d-4635-8c31-0d68bb3736f3",
+                            RoleId = "f6b5c6c9-3f5c-4a91-bc4d-a91825243fba"
                         },
                         new
                         {
-                            UserId = "3cc1671c-1fe9-40af-bc37-9d5b848af786",
-                            RoleId = "3589c061-1c60-43ff-ae06-5da838058dee"
+                            UserId = "3bf4e986-0502-49f8-84d9-d841697995e5",
+                            RoleId = "f6b5c6c9-3f5c-4a91-bc4d-a91825243fba"
                         },
                         new
                         {
-                            UserId = "ae110ccb-ed7e-45cc-b707-8c376418ec85",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "7a085da8-d9da-48e1-ad98-c04afd1c52af",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         },
                         new
                         {
-                            UserId = "1c06c32f-9e53-4144-a286-13ddc0ae70e4",
-                            RoleId = "3589c061-1c60-43ff-ae06-5da838058dee"
+                            UserId = "e7c4be97-1121-481a-a6ca-c4a502a745c6",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         },
                         new
                         {
-                            UserId = "ebd178de-f3a2-4d18-8cc5-07d594f22e3e",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "0eee7038-6751-45d5-a434-3223ac0546f1",
+                            RoleId = "9813ad52-51e2-431b-8116-2e77fdf79b33"
                         },
                         new
                         {
-                            UserId = "5f5a3af0-61e4-4289-b6c1-15542204c249",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "de37d74b-d253-43da-b3b8-4330f6252df0",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "99b3115f-c93d-4b1a-a940-db6ee9057cb6",
-                            RoleId = "3f5e5a7f-cff6-49a8-b615-9391572b313c"
+                            UserId = "fdb2d0e6-60a1-47b1-b661-d68442ea4ad2",
+                            RoleId = "9813ad52-51e2-431b-8116-2e77fdf79b33"
                         },
                         new
                         {
-                            UserId = "a77a3b36-c3f4-4355-a388-4dd7ae96e6ea",
-                            RoleId = "642e7f53-0381-4651-833b-f0d9d53d0e4d"
+                            UserId = "7fab3eab-31f1-46f4-9726-644c9b44f992",
+                            RoleId = "9709d04b-71b0-4874-9ca1-bc4e70e64298"
                         },
                         new
                         {
-                            UserId = "48b69414-5fa3-4919-ae68-8c9dd2b5294a",
-                            RoleId = "4ded5da6-4674-41cf-a83c-74fe04d869bb"
+                            UserId = "9536000e-3ddc-452f-8d28-fb784442fdc8",
+                            RoleId = "c2444b71-c794-4e42-8ec9-25a65ff3abeb"
                         });
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserToken", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 

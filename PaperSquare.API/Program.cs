@@ -29,7 +29,7 @@ builder.Host.UseSerilog(logger);
 
 builder.Services.AddControllers();
 builder.Services.ApiVersioningConfiguration();
-builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevBase")));
+builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DevBase")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

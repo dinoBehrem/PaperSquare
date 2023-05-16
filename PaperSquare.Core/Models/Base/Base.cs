@@ -8,6 +8,6 @@ namespace PaperSquare.Core.Models.Base
 {
     public abstract class Base
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
     }
 }

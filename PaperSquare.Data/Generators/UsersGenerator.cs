@@ -20,7 +20,6 @@ namespace PaperSquare.Data.Generators
         // Generates password for all users with value Password!1
         private const string PASSWORD_HASH = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==";
         private const string SECURITY_STAMP = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN";
-        private const string CONCURRENCY_STAMP = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce";
 
         private UsersGenerator()
         {
@@ -38,14 +37,16 @@ namespace PaperSquare.Data.Generators
                 .RuleFor(u => u.Email, (f, u) => f.Internet.Email(u.Firstname, u.Lastname))
                 .RuleFor(u => u.NormalizedEmail, (f, u) => u.Email.ToUpper())
                 .RuleFor(u => u.EmailConfirmed, f => f.Random.Bool())
-                .RuleFor(u => u.PhoneNumber, f => f.Phone.ToString())
+                .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(u => u.PhoneNumberConfirmed, f => f.Random.Bool())
                 .RuleFor(u => u.BirthDate, f => f.Date.Between(new DateTime(1960, 1, 1), new DateTime(2003, 1, 1)))
                 .RuleFor(u => u.IsDeleted, f => f.Random.Bool())
-                .RuleFor(u => u.CreationDate, f => f.Date.Between(new DateTime(2010, 1, 1), new DateTime(2020, 1, 1)))
+                .RuleFor(u => u.CreatedOnUtc, f => f.Date.Between(new DateTime(2010, 1, 1), new DateTime(2020, 1, 1)))
+                .RuleFor(u => u.CreatedBy, (_, u) => u.Id)
+                .RuleFor(u => u.LastModifiedBy, (_, u) => null)
                 .RuleFor(u => u.PasswordHash, _ => PASSWORD_HASH)
                 .RuleFor(u => u.SecurityStamp, _ => SECURITY_STAMP)
-                .RuleFor(u => u.ConcurrencyStamp, _ => CONCURRENCY_STAMP);
+                .RuleFor(u => u.ConcurrencyStamp, _ => Guid.NewGuid().ToString());
         }
 
         public List<User> InitUsersData()

@@ -71,7 +71,8 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
                 throw new NotFoundEntityException("User not found!", typeof(User));
             }
 
-            user.LastUpdated = DateTime.UtcNow;
+            user.LastModifiedOnUtc = DateTime.UtcNow;
+            user.LastModifiedBy = _currentUser.Id;
 
             _mapper.Map(update, user); 
 
@@ -110,7 +111,7 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
         private void SetDefaultsForUser(User user)
         {
-            user.CreationDate = DateTime.UtcNow;
+            user.CreatedOnUtc = DateTime.UtcNow;
             user.BirthDate = DateTime.UtcNow;
         }
 

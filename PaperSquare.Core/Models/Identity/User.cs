@@ -18,13 +18,15 @@ namespace PaperSquare.Core.Models.Identity
         public string Lastname { get; set; }
         public DateTime BirthDate { get; set; }
         public bool IsDeleted { get ; set; }
-        public DateTime CreationDate { get; set; }
-        public DateTime? LastUpdated { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedOnUtc { get; set; }
+        public string? LastModifiedBy { get; set; }
+        public DateTime? LastModifiedOnUtc { get; set; }
 
         public ICollection<UserClaim> Claims { get; set; }
         public ICollection<UserRole> Roles { get; set; }
         public ICollection<UserLogin> Logins{ get; set; }
         public ICollection<UserToken> Tokens { get; set; }
-        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

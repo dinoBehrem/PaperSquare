@@ -8,7 +8,9 @@ namespace PaperSquare.Core.Infrastructure
 {
     public interface IEntityStateTracking
     {
-        DateTime CreationDate { get; set; }
-        DateTime? LastUpdated { get; set; }
+        string CreatedBy { get; set; }
+        DateTime CreatedOnUtc { get; set; }
+        string? LastModifiedBy { get; set; }
+        DateTime? LastModifiedOnUtc { get; set; }
     }
 }

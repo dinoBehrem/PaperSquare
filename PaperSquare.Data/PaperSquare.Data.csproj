@@ -27,8 +27,4 @@
     <ProjectReference Include="..\PaperSquare.Core\PaperSquare.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

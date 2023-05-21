@@ -39,7 +39,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (!IsValidUser(user))
             {
-                throw new NotFoundException($"User with username: '{request.Username}' not found!", typeof(User).Name);
+                throw new NotFoundEntityException($"User with username: '{request.Username}' not found!", typeof(User));
             }
 
             if (!await _signInManager.CanSignInAsync(user))

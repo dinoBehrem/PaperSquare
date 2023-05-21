@@ -27,7 +27,6 @@ namespace PaperSquare.API.Middlewares.Exceptions
 
             var errorResponse = new ApiErrorResponse()
             {
-                Source = exception.TargetSite?.DeclaringType?.FullName,
                 Exception = exception.Message,
                 SupportMesage = $"Provide the Error Id: {errorId} to the support team for further analysis."
             };

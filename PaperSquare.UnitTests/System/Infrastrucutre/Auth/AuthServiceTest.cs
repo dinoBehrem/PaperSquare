@@ -1,22 +1,17 @@
 ﻿using Ardalis.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
+using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 {
@@ -126,16 +121,20 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             _userManager.Setup(_ => _.FindByNameAsync(loginInsertRequest.Username)).ReturnsAsync(user);
 
-            // Act
+            try
+            {
+                // Act
 
-            var serviceResult = await _authService.Login(loginInsertRequest);
+                var serviceResult = await _authService.Login(loginInsertRequest);
+            }
+            catch (NotFoundEntityException exc)
+            {
+                // Assert
 
-            // Assert
-
-            Assert.NotNull(serviceResult);
-            Assert.IsType<Result<AuthResponse>>(serviceResult);
-            Assert.True(!serviceResult.IsSuccess);
-            Assert.True(serviceResult.Status == ResultStatus.Error);
+                Assert.IsType<NotFoundEntityException>(exc);
+                Assert.True(exc.Type == typeof(User));
+                Assert.True(exc.StatusCode == HttpStatusCode.NotFound);
+            }
         }
 
         [Fact]

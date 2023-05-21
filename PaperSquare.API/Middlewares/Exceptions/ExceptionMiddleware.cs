@@ -53,9 +53,9 @@ namespace PaperSquare.API.Middlewares.Exceptions
                     errorResponse.Messages.Add($"You are not authorized to access resource!");
                     break;
                 
-                case ErrorException exc:
+                case BadRequestException exc:
                     errorResponse.StatusCode = HttpStatusCode.BadRequest;
-                    errorResponse.Messages.Add($"Error at code execution!");
+                    errorResponse.Messages.Add($"Error at code execution! Error message: {exc.Message}");
                     break;
                     
                 case IdentityResultErrorException exc:

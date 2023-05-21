@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Exceptions
 {
-    public class ErrorException: Exception
+    public class ErrorException: CustomException
     {
         public ErrorException(string message): base(message)
         {

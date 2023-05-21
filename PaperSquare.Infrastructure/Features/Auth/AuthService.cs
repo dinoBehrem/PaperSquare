@@ -44,14 +44,14 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (!await _signInManager.CanSignInAsync(user))
             {
-                throw new ErrorException("You haven`t confirmed your account!");
+                throw new BadRequestException("You haven`t confirmed your account!");
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, true);
 
             if (!result.Succeeded)
             {
-                throw new ErrorException("Incorrect username or password!");
+                throw new BadRequestException("Incorrect username or password!");
             }
 
             var roles = await _userManager.GetRolesAsync(user);
@@ -86,7 +86,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             if (token is null || !token.IsValid)
             {
-                throw new ErrorException("You haven`t confirmed your account!");
+                throw new BadRequestException("You haven`t confirmed your account!");
             }
 
             var user = await _userManager.FindByIdAsync(token.UserId);

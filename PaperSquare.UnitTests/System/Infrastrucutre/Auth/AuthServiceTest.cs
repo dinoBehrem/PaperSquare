@@ -99,7 +99,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
         }
 
         [Fact]
-        public async void Login_InvalidUser_ReturnsResultError()
+        public async void Login_InvalidUser_ThrowsNotFoundException()
         {
             // Arrange
 
@@ -138,7 +138,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
         }
 
         [Fact]
-        public async void Login_SignInFailed_ReturnsResultError()
+        public async void Login_SignInFailed_ThrowsBadRequestException()
         {
             // Arrange
 
@@ -162,20 +162,24 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             _signInManager.Setup(_ => _.CanSignInAsync(user)).ReturnsAsync(false);
 
-            // Act
+            try
+            {
+                // Act
 
-            var serviceResult = await _authService.Login(loginInsertRequest);
+                var serviceResult = await _authService.Login(loginInsertRequest);
+            }
+            catch (BadRequestException exc)
+            {
+                // Assert
 
-            // Assert
-
-            Assert.NotNull(serviceResult);
-            Assert.IsType<Result<AuthResponse>>(serviceResult);
-            Assert.True(!serviceResult.IsSuccess);
-            Assert.True(serviceResult.Status == ResultStatus.Error);
+                Assert.IsType<BadRequestException>(exc);
+                Assert.True(exc.StatusCode == HttpStatusCode.BadRequest);
+                Assert.True(exc.Message == "You haven`t confirmed your account!");
+            }
         }
 
         [Fact]
-        public async void Login_PasswordDoesntMatch_ReturnsResultError()
+        public async void Login_PasswordDoesntMatch_ThrowsBadRequestException()
         {
             // Arrange
 
@@ -203,16 +207,20 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             _signInManager.Setup(_ => _.CheckPasswordSignInAsync(user, loginInsertRequest.Password, true)).ReturnsAsync(signInResult);
 
-            // Act
+            try
+            {
+                // Act
 
-            var serviceResult = await _authService.Login(loginInsertRequest);
+                var serviceResult = await _authService.Login(loginInsertRequest);
+            }
+            catch (BadRequestException exc)
+            {
+                // Assert
 
-            // Assert
-
-            Assert.NotNull(serviceResult);
-            Assert.IsType<Result<AuthResponse>>(serviceResult);
-            Assert.True(!serviceResult.IsSuccess);
-            Assert.True(serviceResult.Status == ResultStatus.Error);
+                Assert.IsType<BadRequestException>(exc);
+                Assert.True(exc.StatusCode == HttpStatusCode.BadRequest);
+                Assert.True(exc.Message == "Incorrect username or password!");
+            }
         }
 
         #endregion Login
@@ -304,17 +312,22 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 UserId = Guid.NewGuid().ToString()
             };
 
-            _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);                 
-            // Act 
+            _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);
 
-            var serviceResult = await _authService.RefreshToken(refreshTokenRequest);
+            try
+            {
+                // Act
 
-            // Assert
+                var serviceResult = await _authService.RefreshToken(refreshTokenRequest);
+            }
+            catch (BadRequestException exc)
+            {
+                // Assert
 
-            Assert.NotNull(serviceResult);
-            Assert.IsType<Result<AuthResponse>>(serviceResult);
-            Assert.True(!serviceResult.IsSuccess);
-            Assert.True(serviceResult.Status == ResultStatus.Error);
+                Assert.IsType<BadRequestException>(exc);
+                Assert.True(exc.StatusCode == HttpStatusCode.BadRequest);
+                Assert.True(exc.Message == "You haven`t confirmed your account!");
+            }
         }
 
         #endregion RefreshToken

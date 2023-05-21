@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Infrastructure.Versioning;
-using PaperSquare.Infrastructure.Features.UserManagement.Dto;
+using PaperSquare.API.Middlewares.Exceptions;
+using PaperSquare.API.Shared;
 using PaperSquare.Infrastructure.Shared;
+using System.Net;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Controllers.V_1
@@ -25,36 +26,28 @@ namespace PaperSquare.API.Controllers.V_1
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiErrorResponse))]
         [AllowAnonymous]
         public virtual async Task<IActionResult> GetAll([FromQuery] TSearch searchDto)
         {
             var result = await _queryService.GetAll(searchDto);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return Ok(result.Value);
+            return Ok(new ApiResponse<IEnumerable<TModel>>(HttpStatusCode.OK, result.Value));
         }
         
         [HttpGet("get-by-id")]
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ApiErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiErrorResponse))]
         [AllowAnonymous]
         public virtual async Task<IActionResult> GetById([FromQuery] TType id)
         {
             var result = await _queryService.GetById(id);
 
-            if (!result.IsSuccess)
-            {
-                return NotFound(result.Errors);
-            }
-
-            return Ok(result.Value);
+            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
         }
 
         #endregion GET

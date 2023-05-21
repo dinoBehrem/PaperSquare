@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.API.Middlewares.Exceptions;
+using PaperSquare.API.Shared;
 using PaperSquare.Infrastructure.Shared;
 using PaperSquare.Infrastructure.Shared.Dto;
+using System.Net;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Controllers.V_1
@@ -18,34 +19,26 @@ namespace PaperSquare.API.Controllers.V_1
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ApiErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiErrorResponse))]
         public virtual async Task<IActionResult> Insert([FromBody] TInsert insert)
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Insert(insert);
 
-            if (!result.IsSuccess)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            return CreatedAtAction(nameof(Insert), result.Value);
+            return CreatedAtAction(nameof(Insert), new ApiResponse<TModel>(HttpStatusCode.Created, result.Value));
         }
         
         [HttpPost("update")]
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ApiErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiErrorResponse))]
         public virtual async Task<IActionResult> Update(TType id, [FromBody] TUpdate update)
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Update(id, update);
 
-            if (!result.IsSuccess)
-            {
-                return NotFound(result.Errors);
-            }
-
-            return Ok(result.Value);
+            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
         }
 
         #endregion POST
@@ -56,17 +49,13 @@ namespace PaperSquare.API.Controllers.V_1
         [MapToApiVersion(ApiVersions.V_1)]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ApiErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ApiErrorResponse))]
         public virtual async Task<IActionResult> Delete(TType id)
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Delete(id);
 
-            if (!result.IsSuccess)
-            {
-                return NotFound(result.Errors);
-            }
-
-            return Ok(result.Value);
+            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
         }
 
         #endregion DELETE

@@ -3,11 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Data.Data
 {
@@ -21,7 +16,10 @@ namespace PaperSquare.Data.Data
                 {
                     try
                     {
-                        dbContext.Database.Migrate();
+                        if (!app.Environment.IsEnvironment("Testing"))
+                        {
+                            dbContext.Database.Migrate();
+                        }
                     }
                     catch (Exception exc)
                     {

@@ -2,8 +2,6 @@
 using Ardalis.Result;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
@@ -42,14 +40,14 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
 
             if (!result.Succeeded)
             {
-                throw new IdentityResultErrorException(result.Errors.Select(err => err.Description).ToArray());
+                throw new IdentityResultErrorException("Failed to insert user!");
             }
 
             result = await _userManager.AddToRoleAsync(user, AppRoles.REGISTERED_USER);
 
             if (!result.Succeeded)
             {
-                throw new IdentityResultErrorException(result.Errors.Select(err => err.Description).ToArray());
+                throw new IdentityResultErrorException("Failed to assign role!");
             }
 
             return Result.SuccessWithMessage("User successfully added!");

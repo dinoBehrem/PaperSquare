@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Exceptions
 {
-    public class IdentityResultErrorException: Exception
+    public class IdentityResultErrorException: CustomException
     {
         public List<string> Messages { get; set; }
-        public IdentityResultErrorException(params string[] messages): base()
+        public IdentityResultErrorException(params string[] messages): base(messages.First())
         {
             Messages = messages.ToList();
         }

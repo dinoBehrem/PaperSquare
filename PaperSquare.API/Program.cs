@@ -16,11 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", false)
     .Build();
 
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
+    .WriteTo.Elasticsearch("http://localhost:9200", "papersquare-api", autoRegisterTemplate:true, numberOfReplicas:2, numberOfShards:2)
     .CreateLogger();
 
 builder.Host.UseSerilog(logger);
@@ -76,12 +77,6 @@ app.UseMiddlewareHandlers();
 app.MigrateDatabase();
 
 app.Run();
-
-
-if (app.Environment.IsDevelopment())
-{
-    
-}
 
 Log.CloseAndFlush();
 

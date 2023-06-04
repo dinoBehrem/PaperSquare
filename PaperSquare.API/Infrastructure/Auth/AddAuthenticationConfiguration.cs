@@ -27,7 +27,6 @@ namespace PaperSquare.API.Infrastructure.Auth
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
 
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {

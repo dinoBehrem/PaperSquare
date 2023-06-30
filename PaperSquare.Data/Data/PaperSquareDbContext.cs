@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Models.Domain;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Generators;
 using System.Reflection;
@@ -13,6 +14,8 @@ namespace PaperSquare.Data.Data
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
         }
+
+        public virtual DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

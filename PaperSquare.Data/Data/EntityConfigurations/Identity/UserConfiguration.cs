@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Generators;
-using Serilog;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Identity
 {
@@ -22,8 +21,6 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
             builder.HasMany(user => user.Roles).WithOne(role => role.User).HasForeignKey(userRole => userRole.UserId).IsRequired();
             builder.HasMany(user => user.Tokens).WithOne(token => token.User).HasForeignKey(userToken => userToken.UserId).IsRequired();
             builder.HasMany(user => user.RefreshTokens).WithOne(token => token.User).HasForeignKey(userToken => userToken.UserId).IsRequired();
-
-            builder.HasData(UsersGenerator.Generator.Users);
         }
     }
 }

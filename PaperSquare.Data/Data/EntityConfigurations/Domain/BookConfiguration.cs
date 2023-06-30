@@ -14,8 +14,12 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
             builder.Property(b => b.Description).IsRequired(false);
             builder.Property(b => b.PublicationDate).IsRequired();
             builder.Property(b => b.Format).IsRequired();
-            builder.Property(b => b.Edition).IsRequired(false);
             builder.Property(b => b.Language).IsRequired(false);
+
+            builder.HasOne(b => b.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

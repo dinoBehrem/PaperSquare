@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Models.Domain;
 using PaperSquare.Core.Models.Identity;
-using PaperSquare.Data.Generators;
 using System.Reflection;
 
 namespace PaperSquare.Data.Data
@@ -16,6 +15,7 @@ namespace PaperSquare.Data.Data
         }
 
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Author> Authors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

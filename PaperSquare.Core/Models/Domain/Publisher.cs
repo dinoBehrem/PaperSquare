@@ -3,23 +3,16 @@ using PaperSquare.Core.Models.Base;
 
 namespace PaperSquare.Core.Models.Domain
 {
-    public class Book: BaseEntity, IAuditableEntity
+    public class Publisher: BaseEntity, IAuditableEntity
     {
         #region Properties
 
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime PublicationDate { get; set; }
-       
+        public string Name { get; set; }
+        public string? Descritpion { get; set; }
+
         #endregion Properties
 
         #region Navigation
-
-        public Author Author { get; set; }
-        public string AuthorId { get; set; }
-
-        public BookSeries? Series { get; set; }
-        public string? SeriesId { get; set; }
 
         public ICollection<BookPublisher>? Publishings { get; set; }
 

@@ -19,6 +19,8 @@ namespace PaperSquare.Data.Data
         public virtual DbSet<BookSeries> BookSeries { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<BookPublisher> BookPublishers { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<BookGenre> BookGenres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

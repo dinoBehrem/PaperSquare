@@ -21,6 +21,9 @@ namespace PaperSquare.Core.Models.Domain
         public Author Author { get; set; }
         public string AuthorId { get; set; }
 
+        public BookSeries? Series { get; set; }
+        public string? SeriesId { get; set; }
+
         #endregion Navigation
 
         #region Audit

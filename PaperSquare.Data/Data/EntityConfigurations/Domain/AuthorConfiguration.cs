@@ -17,7 +17,13 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
 
             builder.HasMany(a => a.Books)
                 .WithOne(b => b.Author)
-                .HasForeignKey(b => b.AuthorId);
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder.HasMany(a => a.BookSeries)
+                .WithOne(b => b.Author)
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

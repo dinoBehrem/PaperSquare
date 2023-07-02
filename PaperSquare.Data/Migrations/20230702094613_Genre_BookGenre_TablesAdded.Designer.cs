@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Data.Data;
@@ -11,9 +12,11 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230702094613_Genre_BookGenre_TablesAdded")]
+    partial class Genre_BookGenre_TablesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,34 +276,6 @@ namespace PaperSquare.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Publishers");
-                });
-
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGenre", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("GenreId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedOnUtc")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("UserId", "GenreId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("UserGenres");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.RefreshToken", b =>
@@ -583,7 +558,7 @@ namespace PaperSquare.Data.Migrations
                     b.HasOne("PaperSquare.Core.Models.Domain.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -619,25 +594,6 @@ namespace PaperSquare.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGenre", b =>
-                {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Genre", "Genre")
-                        .WithMany("Users")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
-                        .WithMany("Genres")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.RefreshToken", b =>
@@ -736,8 +692,6 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.Genre", b =>
                 {
                     b.Navigation("Books");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.Publisher", b =>
@@ -755,8 +709,6 @@ namespace PaperSquare.Data.Migrations
             modelBuilder.Entity("PaperSquare.Core.Models.Identity.User", b =>
                 {
                     b.Navigation("Claims");
-
-                    b.Navigation("Genres");
 
                     b.Navigation("Logins");
 

@@ -32,7 +32,7 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
             builder.HasMany(g => g.Genres)
                 .WithOne(bg => bg.Book)
                 .HasForeignKey(bg => bg.BookId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

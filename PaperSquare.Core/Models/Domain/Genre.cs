@@ -19,6 +19,7 @@ namespace PaperSquare.Core.Models.Domain
         #region Navigation
 
         public ICollection<BookGenre>? Books { get; set; }
+        public ICollection<UserGenre>? Users { get; set; }
 
         #endregion Navigation
 

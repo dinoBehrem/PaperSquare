@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PaperSquare.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Genres_BookGenres_TablesAdded : Migration
+    public partial class Genre_BookGenre_TablesAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

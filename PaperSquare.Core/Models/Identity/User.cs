@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PaperSquare.Core.Infrastructure;
+using PaperSquare.Core.Models.Domain;
 
 namespace PaperSquare.Core.Models.Identity
 {
@@ -30,6 +31,7 @@ namespace PaperSquare.Core.Models.Identity
         public ICollection<UserRole> Roles { get; set; }
         public ICollection<UserLogin> Logins { get; set; }
         public ICollection<UserToken> Tokens { get; set; }
+        public ICollection<UserGenre> Genres { get; set; }
 
         #endregion Navigation
 

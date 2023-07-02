@@ -15,5 +15,12 @@ namespace PaperSquare.Shared.Enums
             Kindle = 3,
             Audiobook = 4
         }
+
+        public enum BookStatus
+        {
+            CurrentlyReading = 1,
+            WantToRead = 2,
+            Read = 3
+        }
     }
 }

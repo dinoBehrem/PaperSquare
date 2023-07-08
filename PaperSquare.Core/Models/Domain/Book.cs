@@ -24,6 +24,7 @@ namespace PaperSquare.Core.Models.Domain
         public ICollection<BookPublisher>? Publishings { get; set; }
         public ICollection<BookGenre>? Genres { get; set; }
         public ICollection<BookInShelf>? BookShelves { get; set; }
+        public ICollection<Quote>? Quotes { get; set; }
 
         #endregion Navigation
 

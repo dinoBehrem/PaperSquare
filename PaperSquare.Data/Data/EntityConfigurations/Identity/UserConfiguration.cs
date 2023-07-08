@@ -50,6 +50,16 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
                 .WithOne(bs => bs.User)
                 .HasForeignKey(bs => bs.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(u => u.Quotes)
+                .WithOne(q => q.User)
+                .HasForeignKey(q => q.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(u => u.QuoteCollections)
+                .WithOne(qc => qc.User)
+                .HasForeignKey(qc => qc.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

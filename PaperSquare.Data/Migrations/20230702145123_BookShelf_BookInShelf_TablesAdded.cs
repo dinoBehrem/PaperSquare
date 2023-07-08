@@ -12,7 +12,7 @@ namespace PaperSquare.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BookShelf",
+                name: "BookShelves",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -25,9 +25,9 @@ namespace PaperSquare.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookShelf", x => x.Id);
+                    table.PrimaryKey("PK_BookShelves", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookShelf_User_UserId",
+                        name: "FK_BookShelves_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -35,7 +35,7 @@ namespace PaperSquare.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookInShelf",
+                name: "BookInShelves",
                 columns: table => new
                 {
                     BookShelfId = table.Column<string>(type: "text", nullable: false),
@@ -49,27 +49,27 @@ namespace PaperSquare.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookInShelf", x => new { x.BookId, x.BookShelfId });
+                    table.PrimaryKey("PK_BookInShelves", x => new { x.BookId, x.BookShelfId });
                     table.ForeignKey(
-                        name: "FK_BookInShelf_BookShelf_BookShelfId",
+                        name: "FK_BookInShelves_BookShelves_BookShelfId",
                         column: x => x.BookShelfId,
-                        principalTable: "BookShelf",
+                        principalTable: "BookShelves",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_BookInShelf_Books_BookId",
+                        name: "FK_BookInShelves_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookInShelf_BookShelfId",
-                table: "BookInShelf",
+                name: "IX_BookInShelves_BookShelfId",
+                table: "BookInShelves",
                 column: "BookShelfId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookShelf_UserId",
-                table: "BookShelf",
+                name: "IX_BookShelves_UserId",
+                table: "BookShelves",
                 column: "UserId");
         }
 
@@ -77,10 +77,10 @@ namespace PaperSquare.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookInShelf");
+                name: "BookInShelves");
 
             migrationBuilder.DropTable(
-                name: "BookShelf");
+                name: "BookShelves");
         }
     }
 }

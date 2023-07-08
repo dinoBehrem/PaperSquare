@@ -12,7 +12,7 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    [Migration("20230702144137_BookShelf_BookInShelf_TablesAdded")]
+    [Migration("20230702145123_BookShelf_BookInShelf_TablesAdded")]
     partial class BookShelf_BookInShelf_TablesAdded
     {
         /// <inheritdoc />
@@ -165,7 +165,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookShelfId");
 
-                    b.ToTable("BookInShelf");
+                    b.ToTable("BookInShelves");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookPublisher", b =>
@@ -285,7 +285,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookShelf");
+                    b.ToTable("BookShelves");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.Genre", b =>

@@ -33,6 +33,8 @@ namespace PaperSquare.Core.Models.Identity
         public ICollection<UserToken> Tokens { get; set; }
         public ICollection<UserGenre> Genres { get; set; }
         public ICollection<BookShelf> Shelves { get; set; }
+        public ICollection<Quote> Quotes { get; set; }
+        public ICollection<QuoteCollection> QuoteCollections { get; set; }
 
         #endregion Navigation
 

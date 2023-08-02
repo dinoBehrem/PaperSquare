@@ -28,6 +28,7 @@ namespace PaperSquare.Data.Data
         public virtual DbSet<QuoteCollection> QuoteCollections { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<GroupMembership> GroupMemberships { get; set; }
+        public virtual DbSet<BookAuthors> BookAuthors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

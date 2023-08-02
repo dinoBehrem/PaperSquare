@@ -1,10 +1,5 @@
 ﻿using PaperSquare.Core.Infrastructure;
 using PaperSquare.Core.Models.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Core.Models.Domain
 {
@@ -21,7 +16,7 @@ namespace PaperSquare.Core.Models.Domain
 
         #region Navigation
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<BookAuthors> Books { get; set; }
         public ICollection<BookSeries> BookSeries { get; set; }
 
         #endregion Navigation

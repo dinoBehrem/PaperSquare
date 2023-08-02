@@ -15,12 +15,10 @@ namespace PaperSquare.Core.Models.Domain
 
         #region Navigation
 
-        public Author Author { get; set; }
-        public string AuthorId { get; set; }
-
         public BookSeries? Series { get; set; }
         public string? SeriesId { get; set; }
 
+        public ICollection<BookAuthors> Authors { get; set; }
         public ICollection<BookPublisher>? Publishings { get; set; }
         public ICollection<BookGenre>? Genres { get; set; }
         public ICollection<BookInShelf>? BookShelves { get; set; }

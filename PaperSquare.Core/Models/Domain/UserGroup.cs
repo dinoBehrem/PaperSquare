@@ -15,6 +15,7 @@ namespace PaperSquare.Core.Models.Domain
         #region Navigation
 
         public ICollection<GroupMembership> Members { get; set; }
+        public ICollection<GroupMembershipRequest> MembershipRequests { get; set; }
 
         #endregion Navigation
 

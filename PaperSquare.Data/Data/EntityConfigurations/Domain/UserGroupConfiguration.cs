@@ -17,6 +17,11 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
                 .WithOne(gm => gm.Group)
                 .HasForeignKey(gm => gm.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(ug => ug.MembershipRequests)
+                .WithOne(gmr => gmr.UserGroup)
+                .HasForeignKey(gmr => gmr.UserGroupId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

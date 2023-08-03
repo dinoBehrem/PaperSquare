@@ -65,6 +65,16 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
                 .WithOne(gm => gm.User)
                 .HasForeignKey(gm => gm.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(u => u.MembershipRequests)
+                .WithOne(gmr => gmr.Requester)
+                .HasForeignKey(gmr => gmr.RequesterId)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(u => u.ApprovedMembershipRequests)
+                .WithOne(gmr => gmr.Approver)
+                .HasForeignKey(gmr => gmr.ApproverId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

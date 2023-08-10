@@ -1,23 +1,22 @@
 ﻿using PaperSquare.Core.Infrastructure;
-using PaperSquare.Core.Models.Base;
+using PaperSquare.Core.Models.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PaperSquare.Core.Models.Domain
 {
-    public class BookSeries: BaseEntity, IAuditableEntity
+    public class BookSeriesFollowers: IAuditableEntity
     {
-        #region Properties
-
-        public string Name { get; set; }
-
-        #endregion Properties
-
         #region Navigation
 
-        public Author Author { get; set; }
-        public string AuthorId { get; set; }
-
-        public ICollection<Book> Books { get; set; }
-        public ICollection<BookSeriesFollowers> Followers { get; set; }
+        public User Follower { get; set; }
+        public string FollowerId { get; set; }
+        
+        public BookSeries BookSeries { get; set; }
+        public string BookSeriesId { get; set; }
 
         #endregion Navigation
 

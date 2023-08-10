@@ -75,6 +75,11 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
                 .WithOne(gmr => gmr.Approver)
                 .HasForeignKey(gmr => gmr.ApproverId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.HasMany(u => u.BookSeries)
+                .WithOne(bsf => bsf.Follower)
+                .HasForeignKey(bsf => bsf.FollowerId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

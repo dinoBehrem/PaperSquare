@@ -1,21 +1,17 @@
 ﻿using PaperSquare.Core.Infrastructure;
-using PaperSquare.Core.Models.Base;
+using PaperSquare.Core.Models.Identity;
 
 namespace PaperSquare.Core.Models.Domain
 {
-    public class Publisher: BaseEntity, IAuditableEntity
+    public class PublisherFollower: IAuditableEntity
     {
-        #region Properties
-
-        public string Name { get; set; }
-        public string? Descritpion { get; set; }
-
-        #endregion Properties
-
         #region Navigation
 
-        public ICollection<BookPublisher>? Publishings { get; set; }
-        public ICollection<PublisherFollower>? Followers { get; set; }
+        public User User { get; set; }
+        public string UserId { get; set; }
+        
+        public Publisher Publisher { get; set; }
+        public string PublisherId { get; set; }
 
         #endregion Navigation
 

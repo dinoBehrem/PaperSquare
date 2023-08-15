@@ -80,6 +80,11 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
                 .WithOne(bsf => bsf.Follower)
                 .HasForeignKey(bsf => bsf.FollowerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Publishers)
+               .WithOne(pf => pf.User)
+               .HasForeignKey(pf => pf.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

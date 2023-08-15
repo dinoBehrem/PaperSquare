@@ -39,6 +39,7 @@ namespace PaperSquare.Core.Models.Identity
         public ICollection<GroupMembershipRequest> MembershipRequests { get; set; }
         public ICollection<GroupMembershipRequest> ApprovedMembershipRequests { get; set; }
         public ICollection<BookSeriesFollowers> BookSeries { get; set; }
+        public ICollection<PublisherFollower> Publishers { get; set; }
 
         #endregion Navigation
 

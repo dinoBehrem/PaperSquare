@@ -17,6 +17,11 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
                .WithOne(bp => bp.Publisher)
                .HasForeignKey(bp => bp.PublisherId)
                .OnDelete(DeleteBehavior.NoAction);
+            
+            builder.HasMany(p => p.Followers)
+               .WithOne(pf => pf.Publisher)
+               .HasForeignKey(pf => pf.PublisherId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

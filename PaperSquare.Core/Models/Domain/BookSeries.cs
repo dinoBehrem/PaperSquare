@@ -18,6 +18,7 @@ namespace PaperSquare.Core.Models.Domain
 
         public ICollection<Book> Books { get; set; }
         public ICollection<BookSeriesFollowers> Followers { get; set; }
+        public ICollection<BookSeriesReviews> Reviews { get; set; }
 
         #endregion Navigation
 

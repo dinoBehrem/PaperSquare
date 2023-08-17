@@ -19,7 +19,7 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Domain
                    .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(br => br.Book)
-                   .WithMany(u => u.Reviews)
+                   .WithMany(b => b.Reviews)
                    .HasForeignKey(br => br.BookId)
                    .OnDelete(DeleteBehavior.NoAction);
         }

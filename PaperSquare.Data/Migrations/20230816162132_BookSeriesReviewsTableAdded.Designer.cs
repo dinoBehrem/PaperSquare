@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Data.Data;
@@ -11,9 +12,11 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230816162132_BookSeriesReviewsTableAdded")]
+    partial class BookSeriesReviewsTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

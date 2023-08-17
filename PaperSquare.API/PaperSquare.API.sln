@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.UnitTests", "..\PaperSquare.UnitTests\PaperSquare.UnitTests.csproj", "{530BCD9D-15B4-4DC8-A748-FD4FE149F042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.IntegrationTest", "..\PaperSquare.IntegrationTest\PaperSquare.IntegrationTest.csproj", "{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.IntegrationTest", "..\PaperSquare.IntegrationTest\PaperSquare.IntegrationTest.csproj", "{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5F73FFE-3CFA-4B83-B317-3206F23347FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.Shared", "..\PaperSquare.Shared\PaperSquare.Shared.csproj", "{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

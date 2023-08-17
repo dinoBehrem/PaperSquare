@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Data.Data;
@@ -11,9 +12,11 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230815204047_BookReviewsTableAdded")]
+    partial class BookReviewsTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,40 +337,6 @@ namespace PaperSquare.Data.Migrations
                     b.HasIndex("BookSeriesId");
 
                     b.ToTable("BookSeriesFollowers");
-                });
-
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesReviews", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("BookSeriesId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOnUtc")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedOnUtc")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserId", "BookSeriesId");
-
-                    b.HasIndex("BookSeriesId");
-
-                    b.ToTable("BookSeriesReviews");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
@@ -1057,7 +1026,7 @@ namespace PaperSquare.Data.Migrations
                     b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
                         .WithMany("BookReviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -1093,25 +1062,6 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("BookSeries");
 
                     b.Navigation("Follower");
-                });
-
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesReviews", b =>
-                {
-                    b.HasOne("PaperSquare.Core.Models.Domain.BookSeries", "BookSeries")
-                        .WithMany("Reviews")
-                        .HasForeignKey("BookSeriesId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
-                        .WithMany("BookSeriesReviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookSeries");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
@@ -1347,8 +1297,6 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Books");
 
                     b.Navigation("Followers");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
@@ -1396,8 +1344,6 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("BookReviews");
 
                     b.Navigation("BookSeries");
-
-                    b.Navigation("BookSeriesReviews");
 
                     b.Navigation("Claims");
 

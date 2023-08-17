@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Core.Infrastructure
 {
-    public interface IEntityStateTracking
+    public interface IAuditableEntity
     {
         string CreatedBy { get; set; }
         DateTime CreatedOnUtc { get; set; }

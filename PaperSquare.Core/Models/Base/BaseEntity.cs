@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PaperSquare.Core.Models.Base
 {
-    public abstract class Base
+    public abstract class BaseEntity
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
     }

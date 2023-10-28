@@ -1,4 +1,4 @@
-﻿using PaperSquare.Core.Models.Identity;
+﻿using PaperSquare.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

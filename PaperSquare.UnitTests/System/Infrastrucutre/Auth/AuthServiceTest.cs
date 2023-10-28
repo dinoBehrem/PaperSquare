@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using PaperSquare.API.Feature.Auth.Dto;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
@@ -50,15 +50,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Password = "johnDoe!1"
             };
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = false
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
             var claims = new List<Claim>()
             {
@@ -109,15 +101,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Password = "johnDoe!1"
             };
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = true
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
             _userManager.Setup(_ => _.FindByNameAsync(loginInsertRequest.Username)).ReturnsAsync(user);
 
@@ -148,15 +132,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Password = "johnDoe!1"
             };
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = false
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
             _userManager.Setup(_ => _.FindByNameAsync(loginInsertRequest.Username)).ReturnsAsync(user);
 
@@ -189,15 +165,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Password = "johnDoe!1"
             };
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = false
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
             var signInResult = SignInResult.Failed;
 
@@ -237,24 +205,9 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Token = Guid.NewGuid().ToString()
             };
 
-            var refreshToken = new RefreshToken()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Created = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                IsValid = true,
-                UserId = Guid.NewGuid().ToString()
-            };
+            var refreshToken = new RefreshToken(Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = false
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
             var claims = new List<Claim>()
             {
@@ -303,14 +256,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Token = Guid.NewGuid().ToString()
             };
 
-            var refreshToken = new RefreshToken()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Created = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                IsValid = false,
-                UserId = Guid.NewGuid().ToString()
-            };
+            var refreshToken = new RefreshToken(Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
 
             _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);
 

@@ -2,8 +2,8 @@
 using Ardalis.Result;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.API.Feature.Auth.Dto;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;

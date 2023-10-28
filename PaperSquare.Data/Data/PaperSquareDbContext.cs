@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.Core.Models.Domain;
-using PaperSquare.Core.Models.Identity;
+using PaperSquare.Domain.Entities.Domain;
+using PaperSquare.Domain.Entities.Identity;
 using System.Reflection;
 
 namespace PaperSquare.Data.Data

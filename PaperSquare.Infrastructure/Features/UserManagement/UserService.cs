@@ -3,12 +3,12 @@ using Ardalis.Result;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.Infrastructure.Shared;
 using PaperSquare.Infrastructure.Exceptions;
+using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Infrastructure.Features.UserManagement
 {
@@ -27,15 +27,13 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
         {
             Guard.Against.Null(insert, nameof(insert));
 
-            var user = _mapper.Map<User>(insert);
-
             if (!CheckIfPasswordsMatch(insert))
             {
-                throw new ErrorException("Passwords doesn`t match!");
+                return Result.Error("Passwords doesn`t match!");
             }
-                        
-            SetDefaultsForUser(user);
 
+            var user = new User(insert.Firstname, insert.Lastname, insert.Username, insert.Email);
+            
             var result = await _userManager.CreateAsync(user, insert.Password);
 
             if (!result.Succeeded)
@@ -105,12 +103,6 @@ namespace PaperSquare.Infrastructure.Features.UserManagement
         private bool CheckIfPasswordsMatch(UserInsertDto request)
         {
             return request.Password == request.ConfirmPassword;
-        }
-
-        private void SetDefaultsForUser(User user)
-        {
-            user.CreatedOnUtc = DateTime.UtcNow;
-            user.BirthDate = DateTime.UtcNow;
         }
 
         public override IQueryable<User> ApplyFilters(IQueryable<User> query, UserSearchDto search = null)

@@ -1,12 +1,7 @@
-﻿using Ardalis.Result;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.API.Infrastructure.Versioning;
-using PaperSquare.Core.Models.Identity;
-using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.Auth.Validators;

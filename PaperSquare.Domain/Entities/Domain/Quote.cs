@@ -3,8 +3,10 @@ using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class Quote : BaseAuditableEntity<string>
+    public sealed class Quote : BaseAuditableEntity<string>
     {
+        public Quote(string id) : base(id) { }
+
         #region Properties
 
         public string Content { get; set; }

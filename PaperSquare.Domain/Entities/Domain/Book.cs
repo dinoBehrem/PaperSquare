@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class Book : BaseAuditableEntity<string>
+    public sealed class Book : BaseAuditableEntity<string>
     {
+        public Book(string id) : base(id) { }
+
         #region Properties
 
         public string Title { get; set; }

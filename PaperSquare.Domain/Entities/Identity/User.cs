@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PaperSquare.Domain.Common.Interfaces;
 using PaperSquare.Domain.Entities.Domain;
+using System.Security.Cryptography;
 
 namespace PaperSquare.Domain.Entities.Identity
 {
-    public class User : IdentityUser, ISoftDelete, IAuditableEntity
+    public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
     {
         public User(string firstname, string lastname, string username, string email): base(username)
         {
@@ -14,13 +15,6 @@ namespace PaperSquare.Domain.Entities.Identity
             Email = email;
             BirthDate = DateTime.UtcNow;
             IsDeleted = false;
-            
-
-            Claims = new HashSet<UserClaim>();
-            Roles = new HashSet<UserRole>();
-            Logins = new HashSet<UserLogin>();
-            Tokens = new HashSet<UserToken>();
-            //RefreshTokens = new HashSet<RefreshToken>();
         }
 
         #region Fields
@@ -39,7 +33,7 @@ namespace PaperSquare.Domain.Entities.Identity
 
         #region Navigation
 
-        public virtual IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
+        public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
         public ICollection<UserClaim> Claims { get; set; }
         public ICollection<UserRole> Roles { get; set; }
         public ICollection<UserLogin> Logins { get; set; }
@@ -54,7 +48,7 @@ namespace PaperSquare.Domain.Entities.Identity
         public ICollection<BookSeriesFollowers> BookSeries { get; set; }
         public ICollection<PublisherFollower> Publishers { get; set; }
         public ICollection<BookReview> BookReviews { get; set; }
-        public ICollection<BookSeriesReviews> BookSeriesReviews { get; set; }
+        public ICollection<BookSeriesReview> BookSeriesReviews { get; set; }
 
         #endregion Navigation
 
@@ -74,7 +68,13 @@ namespace PaperSquare.Domain.Entities.Identity
 
         public RefreshToken AddRefreshToken(DateTime expiriationDate)
         {
-            var refreshToken = new RefreshToken(Id, expiriationDate);
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+            }
+
+            var refreshToken = new RefreshToken(Guid.NewGuid().ToString(), Convert.ToBase64String(randomNumber), expiriationDate);
 
             _refreshTokens.Add(refreshToken);
 

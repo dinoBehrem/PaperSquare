@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class Author : BaseAuditableEntity<string>
+    public sealed class Author : BaseAuditableEntity<string>
     {
+        public Author(string id) : base(id) { }
+
         #region Properties
 
         public string Firstname { get; set; }

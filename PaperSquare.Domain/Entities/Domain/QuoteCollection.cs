@@ -3,8 +3,10 @@ using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookShelf : BaseAuditableEntity<string>
+    public sealed class QuoteCollection : BaseAuditableEntity<string>
     {
+        public QuoteCollection(string id) : base(id) { }
+
         #region Properties
 
         public string Name { get; set; }
@@ -16,7 +18,7 @@ namespace PaperSquare.Domain.Entities.Domain
         public User User { get; set; }
         public string UserId { get; set; }
 
-        public ICollection<BookInShelf>? Books { get; set; }
+        public ICollection<Quote> Quotes { get; set; }
 
         #endregion Navigation
     }

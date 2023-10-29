@@ -3,8 +3,10 @@ using static PaperSquare.Shared.Enums.BookEnums;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookInShelf : BaseAuditableEntity<string>
+    public sealed class BookInShelf : BaseAuditableEntity<string>
     {
+        public BookInShelf(string id) : base(id) { }
+
         #region Properties
 
         public decimal? Progress { get; set; }

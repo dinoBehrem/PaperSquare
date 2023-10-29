@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Common
 {
-    public abstract class BaseAuditableEntity<TType> : BaseEntity<TType>, ISoftDelete, IAuditableEntity
+    public abstract class BaseAuditableEntity<TType> : Entity<TType>, ISoftDelete, IAuditableEntity
     {
+        protected BaseAuditableEntity(TType id) : base(id) { }
+
         public string CreatedBy { get; set; }
         public DateTime CreatedOnUtc { get; set; }
         public string? LastModifiedBy { get; set; }

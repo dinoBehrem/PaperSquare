@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookSeriesReviews : Review
+    public sealed class BookSeriesReview : Review
     {
+        public BookSeriesReview(string id) : base(id) { }
+
         #region Navigation
 
         public User User { get; set; }

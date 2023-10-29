@@ -2,19 +2,20 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class Publisher : BaseAuditableEntity<string>
+    public sealed class Genre : BaseAuditableEntity<string>
     {
+        public Genre(string id) : base(id) { }
+
         #region Properties
 
         public string Name { get; set; }
-        public string? Descritpion { get; set; }
 
         #endregion Properties
 
         #region Navigation
 
-        public ICollection<BookPublisher>? Publishings { get; set; }
-        public ICollection<PublisherFollower>? Followers { get; set; }
+        public ICollection<BookGenre>? Books { get; set; }
+        public ICollection<UserGenre>? Users { get; set; }
 
         #endregion Navigation
     }

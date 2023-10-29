@@ -2,15 +2,16 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookGenre : BaseAuditableEntity<string>
+    public sealed class BookAuthors : BaseAuditableEntity<string>
     {
+        public BookAuthors(string id) : base(id) { }
+
         #region Navigation
 
+        public Author Author { get; set; }
+        public string AuthorId { get; set; }
         public Book Book { get; set; }
         public string BookId { get; set; }
-
-        public Genre Genre { get; set; }
-        public string GenreId { get; set; }
 
         #endregion Navigation
     }

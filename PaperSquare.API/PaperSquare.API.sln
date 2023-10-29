@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.API", "PaperSquare.API.csproj", "{942C9503-C91D-4880-8897-83C064CF3D64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Domain", "..\PaperSquare.Core\PaperSquare.Domain.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Domain", "..\PaperSquare.Domain\PaperSquare.Domain.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Data", "..\PaperSquare.Data\PaperSquare.Data.csproj", "{3602F3D4-4418-4832-B95B-10E3BB4CD21E}"
 EndProject

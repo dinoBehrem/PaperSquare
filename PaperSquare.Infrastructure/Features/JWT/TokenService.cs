@@ -47,16 +47,8 @@ namespace PaperSquare.Infrastructure.Features.JWT
             var expirationOffset = _tokenConfiguration.RefreshTokenDuration;
             var expirationDateTime = DateTime.UtcNow.Add(expirationOffset);
 
-            var randomNumber = new byte[32];
-
             var refreshToken = user.AddRefreshToken(expirationDateTime);
             
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(randomNumber);
-                refreshToken.Id = Convert.ToBase64String(randomNumber);
-            }
-
             await _refreshTokenService.AddRefreshToken(refreshToken);
 
             return new TokenResource

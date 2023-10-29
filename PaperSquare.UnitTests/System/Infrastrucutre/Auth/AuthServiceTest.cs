@@ -205,7 +205,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Token = Guid.NewGuid().ToString()
             };
 
-            var refreshToken = new RefreshToken(Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+            var refreshToken = new RefreshToken(id: Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
 
             var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
@@ -256,7 +256,7 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Token = Guid.NewGuid().ToString()
             };
 
-            var refreshToken = new RefreshToken(Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+            var refreshToken = new RefreshToken(id:Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
 
             _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);
 

@@ -5,8 +5,10 @@ using static PaperSquare.Shared.Enums.UserEnums;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class GroupMembershipRequest : BaseAuditableEntity<string>
+    public sealed class GroupMembershipRequest : BaseAuditableEntity<string>
     {
+        public GroupMembershipRequest(string id) : base(id) { }
+
         #region Properties
 
         public GroupMembershipRequestStatus RequestStatus { get; set; }

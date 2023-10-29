@@ -3,8 +3,10 @@ using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookSeriesFollowers : BaseAuditableEntity<string>
+    public sealed class BookSeriesFollowers : BaseAuditableEntity<string>
     {
+        public BookSeriesFollowers(string id) : base(id) { }
+
         #region Navigation
 
         public User Follower { get; set; }

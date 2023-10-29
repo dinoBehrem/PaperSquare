@@ -3,8 +3,10 @@ using static PaperSquare.Shared.Enums.BookEnums;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookPublisher : BaseAuditableEntity<string>
+    public sealed class BookPublisher : BaseAuditableEntity<string>
     {
+        public BookPublisher(string id) : base(id) { }
+
         #region Properties
 
         public string Edition { get; set; }

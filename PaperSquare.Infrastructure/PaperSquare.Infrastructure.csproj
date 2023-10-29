@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.Core\PaperSquare.Domain.csproj" />
     <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
+    <ProjectReference Include="..\PaperSquare.Domain\PaperSquare.Domain.csproj" />
   </ItemGroup>
 
 </Project>

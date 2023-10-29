@@ -3,8 +3,10 @@ using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class PublisherFollower : BaseAuditableEntity<string>
+    public sealed class PublisherFollower : BaseAuditableEntity<string>
     {
+        public PublisherFollower(string id) : base(id) { }
+
         #region Navigation
 
         public User User { get; set; }

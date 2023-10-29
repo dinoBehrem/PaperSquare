@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class UserGroup : BaseAuditableEntity<string>
+    public sealed class UserGroup : BaseAuditableEntity<string>
     {
+        public UserGroup(string id) : base(id) { }
+
         #region Properties
 
         public string Name { get; set; }

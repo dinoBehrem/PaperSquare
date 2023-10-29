@@ -2,8 +2,10 @@
 
 namespace PaperSquare.Domain.Entities.Domain
 {
-    public class BookSeries : BaseAuditableEntity<string>
+    public sealed class BookSeries : BaseAuditableEntity<string>
     {
+        public BookSeries(string id) : base(id) { }
+
         #region Properties
 
         public string Name { get; set; }
@@ -17,7 +19,7 @@ namespace PaperSquare.Domain.Entities.Domain
 
         public ICollection<Book> Books { get; set; }
         public ICollection<BookSeriesFollowers> Followers { get; set; }
-        public ICollection<BookSeriesReviews> Reviews { get; set; }
+        public ICollection<BookSeriesReview> Reviews { get; set; }
 
         #endregion Navigation
     }

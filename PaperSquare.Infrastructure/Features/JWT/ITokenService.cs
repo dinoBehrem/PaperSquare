@@ -1,4 +1,4 @@
-﻿using PaperSquare.Core.Models.Identity;
+﻿using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System;
 using System.Collections.Generic;

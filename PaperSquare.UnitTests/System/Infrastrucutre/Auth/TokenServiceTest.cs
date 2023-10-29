@@ -1,16 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Moq;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Core.Permissions;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.JWT;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 {
@@ -64,22 +58,9 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
         {
             // Arrange 
 
-            var user = new User()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Firstname = "John",
-                Lastname = "Doe",
-                Email = "john.doe@mail.com",
-                UserName = "johnDoe",
-                IsDeleted = false
-            };
+            var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
-            var refreshToken = new RefreshToken
-            {
-                UserId = user.Id,
-                Created = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(10),
-            };
+            var refreshToken = new RefreshToken(id:Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
 
             _refreshTokenService.Setup(_ => _.AddRefreshToken(refreshToken)).Returns(Task.CompletedTask);
 

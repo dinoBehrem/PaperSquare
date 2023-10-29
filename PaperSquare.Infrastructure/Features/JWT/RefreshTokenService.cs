@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Data;
+using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Infrastructure.Features.JWT
 {
@@ -29,7 +29,7 @@ namespace PaperSquare.Infrastructure.Features.JWT
 
         public async Task MarkAsInvalid(RefreshToken token)
         {
-            token.IsValid = false;
+            token.MarkAsInvalid();
             await _context.SaveChangesAsync();
         }
     }

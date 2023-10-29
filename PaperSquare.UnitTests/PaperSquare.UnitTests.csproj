@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.API\PaperSquare.API.csproj" />
+    <ProjectReference Include="..\PaperSquare.Domain\PaperSquare.Domain.csproj" />
   </ItemGroup>
 
 </Project>

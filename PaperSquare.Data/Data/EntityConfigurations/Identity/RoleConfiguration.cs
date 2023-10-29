@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaperSquare.Core.Models.Identity;
 using PaperSquare.Data.Generators;
+using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Identity
 {

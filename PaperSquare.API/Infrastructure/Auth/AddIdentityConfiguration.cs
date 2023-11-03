@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PaperSquare.Core.Models.Identity;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Data.Data;
 
 namespace PaperSquare.API.Infrastructure.Auth

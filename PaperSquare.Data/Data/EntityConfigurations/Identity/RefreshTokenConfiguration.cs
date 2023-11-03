@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaperSquare.Core.Models.Identity;
+using PaperSquare.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
             builder.ToTable(nameof(RefreshToken));
             builder.HasKey(token => token.Id);
 
-            builder.Property(token => token.Created).IsRequired();
+            builder.Property(token => token.CreatedOnUtc).IsRequired();
             builder.Property(token => token.Expires).IsRequired();
             builder.Property(token => token.IsValid).IsRequired().HasDefaultValue(false);
 

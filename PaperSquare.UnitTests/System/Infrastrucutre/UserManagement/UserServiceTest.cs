@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
-using PaperSquare.Core.Models.Identity;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaperSquare.Core.Models.Domain;
+using PaperSquare.Domain.Entities.Domain;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Domain
 {
-    public class BookSeriesReviewsConfiguration : IEntityTypeConfiguration<BookSeriesReviews>
+    public class BookSeriesReviewsConfiguration : IEntityTypeConfiguration<BookSeriesReview>
     {
-        public void Configure(EntityTypeBuilder<BookSeriesReviews> builder)
+        public void Configure(EntityTypeBuilder<BookSeriesReview> builder)
         {
             builder.HasKey(bsr => new { bsr.UserId, bsr.BookSeriesId });
 

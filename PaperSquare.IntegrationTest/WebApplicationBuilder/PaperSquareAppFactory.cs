@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Writers;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
-using PaperSquare.Core.Models.Identity;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 
@@ -63,19 +63,7 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
             {
                 for (int i = 1; i <= 10; i++)
                 {
-                    dbContext.Users.Add(new User()
-                    {
-                        Id = $"user-{i}-id",
-                        UserName = $"userName-{i}",
-                        Firstname = $"First name -- {i}",
-                        Lastname = $"Last name -- {i}",
-                        Email = $"testuser{i}@example.com",
-                        PasswordHash = "AQAAAAEAACcQAAAAECKfk8fF5yZ4plu8y1vPtzMs/u8dlOOq0zuPKb1uKKDKRuxUFhSb2HUaBFLUEYe0EA==",
-                        SecurityStamp = "VJWEG644FKWZHWEQSDTECNTWRMOX3YFN",
-                        ConcurrencyStamp = "efc45564-59cd-4bcc-a3cd-265b3cb5b6ce",
-                        EmailConfirmed = true
-                    });
-
+                    dbContext.Users.Add(new User($"First name -- {i}", $"Last name -- {i}", $"userName -- {i}", $"testuser{i}@example.com"));
                 }
             }
 

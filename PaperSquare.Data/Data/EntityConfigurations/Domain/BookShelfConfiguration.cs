@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaperSquare.Core.Models.Domain;
+using PaperSquare.Domain.Entities.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

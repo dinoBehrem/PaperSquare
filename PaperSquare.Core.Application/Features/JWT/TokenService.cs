@@ -1,17 +1,11 @@
 ﻿using Ardalis.GuardClauses;
-using Ardalis.Result;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PaperSquare.Infrastructure.Features.JWT
 {
@@ -55,6 +49,19 @@ namespace PaperSquare.Infrastructure.Features.JWT
             var expirationDateTime = DateTime.UtcNow.Add(expirationOffset);
 
             var refreshToken = user.AddRefreshToken(expirationDateTime);
+
+            var refreshToken = new RefreshToken
+            {
+                UserId = user.Id,
+                Created = DateTime.UtcNow,
+                Expires = expirationDateTime,
+            };
+            
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                refreshToken.Id = Convert.ToBase64String(randomNumber);
+            }
 
             await _refreshTokenService.AddRefreshToken(refreshToken);
 

@@ -60,7 +60,11 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
 
             var user = new User("John", "Doe", "johnDoe", "john.doe@mail.com");
 
+<<<<<<< HEAD
             var refreshToken = new RefreshToken(id: Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+=======
+            var refreshToken = new RefreshToken(id:Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+>>>>>>> 51f1736be53fc24fcd21487f1571f61b9adf021a
 
             _refreshTokenService.Setup(_ => _.AddRefreshToken(refreshToken)).Returns(Task.CompletedTask);
 

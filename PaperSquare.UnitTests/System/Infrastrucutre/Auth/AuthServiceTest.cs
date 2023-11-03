@@ -5,6 +5,11 @@ using Moq;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Domain.Entities.Identity;
+<<<<<<< HEAD
+=======
+using PaperSquare.Infrastructure.Exceptions;
+using PaperSquare.Infrastructure.Features.Auth;
+>>>>>>> 51f1736be53fc24fcd21487f1571f61b9adf021a
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
@@ -256,7 +261,11 @@ namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth
                 Token = Guid.NewGuid().ToString()
             };
 
+<<<<<<< HEAD
             var refreshToken = new RefreshToken(id: Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+=======
+            var refreshToken = new RefreshToken(id:Guid.NewGuid().ToString(), userId: Guid.NewGuid().ToString(), DateTime.UtcNow.AddMinutes(10));
+>>>>>>> 51f1736be53fc24fcd21487f1571f61b9adf021a
 
             _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);
 

@@ -7,6 +7,7 @@ using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
+using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.UserManagement;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;

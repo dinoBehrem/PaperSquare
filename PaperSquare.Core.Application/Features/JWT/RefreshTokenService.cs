@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Data.Data;
+using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.Infrastructure.Features.JWT
 {

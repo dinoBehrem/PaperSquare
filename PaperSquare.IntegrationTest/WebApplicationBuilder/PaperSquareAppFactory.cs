@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+<<<<<<< HEAD
 using Microsoft.OpenApi.Writers;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using PaperSquare.Domain.Entities.Identity;
+=======
+>>>>>>> 51f1736be53fc24fcd21487f1571f61b9adf021a
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
+using PaperSquare.Domain.Entities.Identity;
 
 namespace PaperSquare.IntegrationTest.WebApplicationBuilder
 {
@@ -63,7 +66,13 @@ namespace PaperSquare.IntegrationTest.WebApplicationBuilder
             {
                 for (int i = 1; i <= 10; i++)
                 {
+<<<<<<< HEAD
                     dbContext.Users.Add(new User($"First name -- {i}", $"Last name -- {i}", $"userName -- {i}", $"testuser{i}@example.com"));
+=======
+                    // TO DO: 
+                    dbContext.Users.Add(new User($"First name -- {i}", $"Last name -- {i}", $"userName -- {i}", $"testuser{i}@example.com"));
+
+>>>>>>> 51f1736be53fc24fcd21487f1571f61b9adf021a
                 }
             }
 

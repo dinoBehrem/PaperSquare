@@ -1,10 +1,10 @@
-﻿using PaperSquare.Domain.Common;
+﻿using PaperSquare.Core.Domain.Common;
 
-namespace PaperSquare.Domain.Entities.Domain;
+namespace PaperSquare.Core.Domain.Entities.Domain;
 
-public sealed class BookAuthors : AuditableEntity<string>
+public sealed class BookAuthor : AuditableEntity<string>
 {
-    public BookAuthors(string id) : base(id) { }
+    public BookAuthor(string id) : base(id) { }
 
     #region Navigation
 

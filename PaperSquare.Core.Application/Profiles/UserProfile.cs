@@ -1,21 +1,15 @@
 ﻿using AutoMapper;
-using PaperSquare.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PaperSquare.Infrastructure.Profiles
+namespace PaperSquare.Core.Application.Profiles;
+
+public class UserProfile : Profile
 {
-    public class UserProfile: Profile
+    public UserProfile()
     {
-        public UserProfile()
-        {
-            CreateMap<UserInsertDto, User>();
-            CreateMap<UserUpdateDto, User>();
-            CreateMap<User, UserDto>();
-        }
+        CreateMap<UserInsertDto, User>();
+        CreateMap<UserUpdateDto, User>();
+        CreateMap<User, UserDto>();
     }
 }

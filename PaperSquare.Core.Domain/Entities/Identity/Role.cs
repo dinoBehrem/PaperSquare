@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PaperSquare.Domain.Entities.Identity
+namespace PaperSquare.Core.Domain.Entities.Identity;
+
+public class Role : IdentityRole
 {
-    public class Role : IdentityRole
-    {
-        public ICollection<UserRole> Roles { get; set; }
-        public ICollection<RoleClaim> Claims { get; set; }
-    }
+    public ICollection<UserRole> Roles { get; set; }
+    public ICollection<RoleClaim> Claims { get; set; }
 }

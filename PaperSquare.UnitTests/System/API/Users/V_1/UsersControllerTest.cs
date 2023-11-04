@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PaperSquare.API.Features.Users.V_1;
-using PaperSquare.Infrastructure.Features.UserManagement;
+using PaperSquare.Core.Application.Features.UserManagement;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 
 namespace PaperSquare.UnitTests.System.API.Users.V_1

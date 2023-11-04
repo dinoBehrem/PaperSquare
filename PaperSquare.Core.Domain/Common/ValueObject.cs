@@ -1,4 +1,4 @@
-﻿namespace PaperSquare.Domain.Common;
+﻿namespace PaperSquare.Core.Domain.Common;
 
 public abstract class ValueObject
 {

@@ -1,75 +1,59 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using PaperSquare.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 
-namespace PaperSquare.Infrastructure.Features.JWT
+namespace PaperSquare.Core.Application.Features.JWT;
+
+public class TokenService : ITokenService
 {
-    public class TokenService : ITokenService
+    private readonly TokenConfiguration _tokenConfiguration;
+    private readonly IRefreshTokenService _refreshTokenService;
+
+
+    public TokenService(
+        IOptions<TokenConfiguration> tokenConfiguration,
+        IRefreshTokenService refreshTokenService)
     {
-        private readonly TokenConfiguration _tokenConfiguration;
-        private readonly IRefreshTokenService _refreshTokenService;
+        _tokenConfiguration = tokenConfiguration.Value;
+        _refreshTokenService = refreshTokenService;
+    }
 
+    public async Task<TokenResource> BuildToken(IEnumerable<Claim> claims)
+    {
+        Guard.Against.Null(claims, nameof(claims));
 
-        public TokenService(
-            IOptions<TokenConfiguration> tokenConfiguration, 
-            IRefreshTokenService refreshTokenService)
+        var expiriation = DateTime.UtcNow.AddMinutes(5);
+
+        var token = new JwtSecurityToken(
+            issuer: null,
+            audience: null,
+            claims: claims,
+            expires: expiriation,
+            signingCredentials: _tokenConfiguration.SigningCredentials);
+
+        return new TokenResource()
         {
-            _tokenConfiguration = tokenConfiguration.Value;
-            _refreshTokenService = refreshTokenService;
-        }
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiriation = expiriation
+        };
+    }
 
-        public async Task<TokenResource> BuildToken(IEnumerable<Claim> claims)
+    public async Task<TokenResource> BuildRefreshToken(User user)
+    {
+        var expirationOffset = _tokenConfiguration.RefreshTokenDuration;
+        var expirationDateTime = DateTime.UtcNow.Add(expirationOffset);
+
+        var refreshToken = user.AddRefreshToken(expirationDateTime);
+
+        await _refreshTokenService.AddRefreshToken(refreshToken);
+
+        return new TokenResource
         {
-            Guard.Against.Null(claims, nameof(claims));
-
-            var expiriation = DateTime.UtcNow.AddMinutes(5);
-
-            var token = new JwtSecurityToken(
-                issuer: null, 
-                audience: null, 
-                claims: claims, 
-                expires: expiriation, 
-                signingCredentials: _tokenConfiguration.SigningCredentials);
-
-            return new TokenResource()
-            {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiriation = expiriation
-            };
-        }
-
-        public async Task<TokenResource> BuildRefreshToken(User user)
-        {
-            var expirationOffset = _tokenConfiguration.RefreshTokenDuration;
-            var expirationDateTime = DateTime.UtcNow.Add(expirationOffset);
-
-            var refreshToken = user.AddRefreshToken(expirationDateTime);
-
-            var refreshToken = new RefreshToken
-            {
-                UserId = user.Id,
-                Created = DateTime.UtcNow,
-                Expires = expirationDateTime,
-            };
-            
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(randomNumber);
-                refreshToken.Id = Convert.ToBase64String(randomNumber);
-            }
-
-            await _refreshTokenService.AddRefreshToken(refreshToken);
-
-            return new TokenResource
-            {
-                Token = refreshToken.Id,
-                Expiriation = expirationDateTime,
-            };
-        }
+            Token = refreshToken.Id,
+            Expiriation = expirationDateTime,
+        };
     }
 }

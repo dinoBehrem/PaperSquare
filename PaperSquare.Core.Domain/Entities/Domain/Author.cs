@@ -1,6 +1,6 @@
-﻿using PaperSquare.Domain.Common;
+﻿using PaperSquare.Core.Domain.Common;
 
-namespace PaperSquare.Domain.Entities.Domain;
+namespace PaperSquare.Core.Domain.Entities.Domain;
 
 public sealed class Author : AuditableEntity<string>
 {
@@ -17,7 +17,7 @@ public sealed class Author : AuditableEntity<string>
 
     #region Navigation
 
-    public ICollection<BookAuthors> Books { get; set; }
+    public ICollection<BookAuthor> Books { get; set; }
     public ICollection<BookSeries> BookSeries { get; set; }
 
     #endregion Navigation

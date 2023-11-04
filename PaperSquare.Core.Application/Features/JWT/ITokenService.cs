@@ -1,17 +1,11 @@
-﻿using PaperSquare.Domain.Entities.Identity;
+﻿using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.JWT.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PaperSquare.Infrastructure.Features.JWT
+namespace PaperSquare.Core.Application.Features.JWT;
+
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        Task<TokenResource> BuildToken(IEnumerable<Claim> claims);
-        Task<TokenResource> BuildRefreshToken(User user);
-    }   
+    Task<TokenResource> BuildToken(IEnumerable<Claim> claims);
+    Task<TokenResource> BuildRefreshToken(User user);
 }

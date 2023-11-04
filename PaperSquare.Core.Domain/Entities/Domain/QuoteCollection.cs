@@ -1,7 +1,7 @@
-﻿using PaperSquare.Domain.Common;
-using PaperSquare.Domain.Entities.Identity;
+﻿using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Common;
 
-namespace PaperSquare.Domain.Entities.Domain;
+namespace PaperSquare.Core.Domain.Entities.Domain;
 
 public sealed class QuoteCollection : AuditableEntity<string>
 {

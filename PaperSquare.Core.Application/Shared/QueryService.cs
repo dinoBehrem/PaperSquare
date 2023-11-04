@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.Domain.Entities.Identity;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Extensions;

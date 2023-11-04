@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.Domain.Entities.Domain;
-using PaperSquare.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Domain;
 using System.Reflection;
 
 namespace PaperSquare.Data.Data
@@ -28,7 +28,7 @@ namespace PaperSquare.Data.Data
         public virtual DbSet<QuoteCollection> QuoteCollections { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<GroupMembership> GroupMemberships { get; set; }
-        public virtual DbSet<BookAuthors> BookAuthors { get; set; }
+        public virtual DbSet<BookAuthor> BookAuthors { get; set; }
         public virtual DbSet<GroupMembershipRequest> GroupMembershipsRequests { get; set; }
         public virtual DbSet<PublisherFollower> PublisherFollowers { get; set; }
         public virtual DbSet<BookReview> BookReviews { get; set; }

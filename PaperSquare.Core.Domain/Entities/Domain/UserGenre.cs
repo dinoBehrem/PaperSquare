@@ -1,7 +1,7 @@
-﻿using PaperSquare.Domain.Common;
-using PaperSquare.Domain.Entities.Identity;
+﻿using PaperSquare.Core.Domain.Common;
+using PaperSquare.Core.Domain.Entities.Identity;
 
-namespace PaperSquare.Domain.Entities.Domain;
+namespace PaperSquare.Core.Domain.Entities.Domain;
 
 public sealed class UserGenre : AuditableEntity<string>
 {

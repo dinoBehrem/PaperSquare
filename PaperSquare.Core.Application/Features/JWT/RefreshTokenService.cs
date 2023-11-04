@@ -1,37 +1,35 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Data.Data;
-using PaperSquare.Domain.Entities.Identity;
 
-namespace PaperSquare.Infrastructure.Features.JWT
+namespace PaperSquare.Core.Application.Features.JWT;
+
+public class RefreshTokenService : IRefreshTokenService
 {
-    public class RefreshTokenService : IRefreshTokenService
+    private readonly PaperSquareDbContext _context;
+
+    protected DbSet<RefreshToken> RefreshTokens => _context.Set<RefreshToken>();
+
+    public RefreshTokenService(PaperSquareDbContext context)
     {
-        private readonly PaperSquareDbContext _context;
+        _context = context;
+    }
 
-        protected DbSet<RefreshToken> RefreshTokens => _context.Set<RefreshToken>();
+    public async Task AddRefreshToken(RefreshToken refreshToken)
+    {
+        Guard.Against.Null(refreshToken, nameof(refreshToken));
 
-        public RefreshTokenService(PaperSquareDbContext context)
-        {
-            _context = context;
-        }
+        RefreshTokens.Add(refreshToken);
 
-        public async Task AddRefreshToken(RefreshToken refreshToken)
-        {
-            Guard.Against.Null(refreshToken, nameof(refreshToken));
+        await _context.SaveChangesAsync();
+    }
 
-            RefreshTokens.Add(refreshToken);
+    public async Task<RefreshToken?> GetToken(string token) => await RefreshTokens.FindAsync(token);
 
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<RefreshToken?> GetToken(string token) => await RefreshTokens.FindAsync(token);
-
-        public async Task MarkAsInvalid(RefreshToken token)
-        {
-            token.MarkAsInvalid();
-            await _context.SaveChangesAsync();
-        }
+    public async Task MarkAsInvalid(RefreshToken token)
+    {
+        token.MarkAsInvalid();
+        await _context.SaveChangesAsync();
     }
 }

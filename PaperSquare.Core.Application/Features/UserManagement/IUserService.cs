@@ -1,11 +1,8 @@
-﻿using Ardalis.Result;
-using PaperSquare.Domain.Entities.Identity;
-using PaperSquare.Infrastructure.Features.UserManagement.Dto;
+﻿using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.Infrastructure.Shared;
 
-namespace PaperSquare.Infrastructure.Features.UserManagement
+namespace PaperSquare.Core.Application.Features.UserManagement;
+
+public interface IUserService : ICommandService<UserDto, UserSearchDto, string, UserInsertDto, UserUpdateDto>
 {
-    public interface IUserService: ICommandService<UserDto, UserSearchDto, string, UserInsertDto, UserUpdateDto>
-    {
-    }
 }

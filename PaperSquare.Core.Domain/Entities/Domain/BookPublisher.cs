@@ -1,7 +1,7 @@
-﻿using PaperSquare.Domain.Common;
+﻿using PaperSquare.Core.Domain.Common;
 using static PaperSquare.Shared.Enums.BookEnums;
 
-namespace PaperSquare.Domain.Entities.Domain;
+namespace PaperSquare.Core.Domain.Entities.Domain;
 
 public sealed class BookPublisher : AuditableEntity<string>
 {

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace PaperSquare.Domain.Entities.Identity
+namespace PaperSquare.Core.Domain.Entities.Identity;
+
+public class UserClaim : IdentityUserClaim<string>
 {
-    public class UserClaim : IdentityUserClaim<string>
-    {
-        public User User { get; set; }
-    }
+    public User User { get; set; }
 }

@@ -12,6 +12,7 @@ using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Application.Features.JWT;
+using PaperSquare.Core.Application.Features.Common;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth;
 

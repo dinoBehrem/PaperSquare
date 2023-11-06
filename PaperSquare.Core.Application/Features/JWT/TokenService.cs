@@ -1,7 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.Extensions.Options;
+using PaperSquare.Core.Application.Features.JWT.Dto;
 using PaperSquare.Core.Domain.Entities.Identity;
-using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -34,26 +34,18 @@ public class TokenService : ITokenService
             expires: expiriation,
             signingCredentials: _tokenConfiguration.SigningCredentials);
 
-        return new TokenResource()
-        {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            Expiriation = expiriation
-        };
+        return new TokenResource(new JwtSecurityTokenHandler().WriteToken(token), expiriation);
     }
 
     public async Task<TokenResource> BuildRefreshToken(User user)
     {
         var expirationOffset = _tokenConfiguration.RefreshTokenDuration;
-        var expirationDateTime = DateTime.UtcNow.Add(expirationOffset);
+        var expiriationDateTime = DateTime.UtcNow.Add(expirationOffset);
 
-        var refreshToken = user.AddRefreshToken(expirationDateTime);
+        var refreshToken = user.AddRefreshToken(expiriationDateTime);
 
         await _refreshTokenService.AddRefreshToken(refreshToken);
 
-        return new TokenResource
-        {
-            Token = refreshToken.Id,
-            Expiriation = expirationDateTime,
-        };
+        return new TokenResource(refreshToken.Id, expiriationDateTime);
     }
 }

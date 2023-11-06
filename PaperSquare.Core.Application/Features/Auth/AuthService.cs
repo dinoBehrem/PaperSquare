@@ -5,10 +5,12 @@ using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
-using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Security.Claims;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Application.Features.JWT;
+using PaperSquare.Core.Application.Features.Common;
+using PaperSquare.Core.Application.Features.JWT.Dto;
+using Microsoft.Extensions.Options;
 
 namespace PaperSquare.Infrastructure.Features.Auth
 {
@@ -18,17 +20,20 @@ namespace PaperSquare.Infrastructure.Features.Auth
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenService;
         private readonly IRefreshTokenService _refreshTokenService;
+        private readonly TokenConfiguration _tokenConfiguration;
 
         public AuthService(
             SignInManager<User> signInManager,
             ITokenService tokenService,
             UserManager<User> userManager,
-            IRefreshTokenService refreshTokenService)
+            IRefreshTokenService refreshTokenService,
+            IOptions<TokenConfiguration> tokenConfiguratiuon)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
             _userManager = userManager;
             _refreshTokenService = refreshTokenService;
+            _tokenConfiguration = tokenConfiguratiuon.Value;
         }
 
         public async Task<Result<AuthResponse>> Login(LoginInsertRequest request)
@@ -69,11 +74,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             var refreshToken = await _tokenService.BuildRefreshToken(user);
 
-            var authResponse = new AuthResponse()
-            {
-                AccessToken = accesToken,
-                RefreshToken = refreshToken
-            };
+            var authResponse = AuthResponse.Create(claims, user, _tokenConfiguration);
 
             return Result<AuthResponse>.Success(authResponse);
         }
@@ -103,11 +104,7 @@ namespace PaperSquare.Infrastructure.Features.Auth
 
             var refreshToken = await _tokenService.BuildRefreshToken(user);
 
-            var authResponse = new AuthResponse()
-            {
-                AccessToken = accesToken,
-                RefreshToken = refreshToken
-            };
+            var authResponse = AuthResponse.Create(claims, user, _tokenConfiguration);
 
             await _refreshTokenService.MarkAsInvalid(token);
 

@@ -3,8 +3,8 @@ using Moq;
 using PaperSquare.Core.Application.Features.JWT;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Core.Domain.Entities.Identity;
-using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Security.Claims;
+using PaperSquare.Core.Application.Features.JWT.Dto;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth;
 

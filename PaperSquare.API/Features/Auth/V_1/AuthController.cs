@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.Core.Application.Features.Common;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.Auth.Validators;
-using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Features.Auth.V_1;

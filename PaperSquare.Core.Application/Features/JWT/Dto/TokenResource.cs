@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace PaperSquare.Core.Application.Features.JWT.Dto;
 
-namespace PaperSquare.Infrastructure.Features.JWT.Dto
+public sealed class TokenResource
 {
-    public class TokenResource
+    public TokenResource(string token, DateTime expiriation)
     {
-        public string Token { get; set; }
-        public DateTime Expiriation { get; set; }
+        Token = token;
+        Expiriation = expiriation;
     }
+
+    public string Token { get; init; }
+    public DateTime Expiriation { get; init; }
 }

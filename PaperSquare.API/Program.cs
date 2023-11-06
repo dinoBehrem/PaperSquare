@@ -44,6 +44,7 @@ builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
 builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 var app = builder.Build();
 

@@ -4,6 +4,7 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.API.Features.Auth.V_1;
+using PaperSquare.Core.Application.Features.Common;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
 using PaperSquare.Infrastructure.Features.JWT.Dto;

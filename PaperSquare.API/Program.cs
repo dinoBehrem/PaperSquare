@@ -1,13 +1,17 @@
 using AspNetCoreRateLimit;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.API.Features.Auth.V_1;
 using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.HttpContext;
 using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Middlewares.RateLimiting;
+using PaperSquare.Core.Application;
 using PaperSquare.Core.Application.Profiles;
 using PaperSquare.Data.Data;
+using PaperSquare.Data.Interceprots;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,11 +33,22 @@ builder.Host.UseSerilog(logger);
 
 //builder.Services.AddControllers();
 //builder.Services.ApiVersioningConfiguration();
-builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DevBase")));
+
+builder.Services.AddScoped<PaperSquareSaveChangesInterceptor>();
+builder.Services.AddDbContext<PaperSquareDbContext>((serviceProvider, options) => 
+{
+    var saveChangesInterceptor = serviceProvider.GetService<PaperSquareSaveChangesInterceptor>()!;
+
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DevBase"));
+    options.AddInterceptors(saveChangesInterceptor);
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SwaggerGenConfig();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AppServices();
@@ -44,7 +59,7 @@ builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
 builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddApplicationDependencies();
 
 var app = builder.Build();
 
@@ -74,10 +89,8 @@ app.UseAuthorization();
 app.UseMiddlewareHandlers();
 
 //app.MigrateDatabase();
-app.MapGet("api/test", () => new { id = "test" })
-    .AllowAnonymous()
-    .WithTags("Test")
-    .WithOpenApi();
+
+app.MapAuthEndpoints();
 
 app.Run();
 

@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using PaperSquare.Core.Application.Features.Common;
-using PaperSquare.Core.Application.Features.JWT;
 using PaperSquare.Core.Application.Features.JWT.Dto;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Permissions;
@@ -13,7 +12,7 @@ using System.Security.Claims;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<AuthResponse>>
 {
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;
@@ -26,7 +25,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
         _tokenConfiguration = tokenConfiguration.Value;
     }
 
-    public async Task<AuthResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AuthResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
 

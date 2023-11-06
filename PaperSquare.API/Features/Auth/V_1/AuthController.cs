@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.API.Infrastructure.Versioning;
+using PaperSquare.Core.Application.Features.Auth.Commands.Login;
 using PaperSquare.Core.Application.Features.Common;
 using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
@@ -15,10 +17,12 @@ namespace PaperSquare.API.Features.Auth.V_1;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IMediator _mediator;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IMediator mediator)
     {
         _authService = authService;
+        _mediator = mediator;
     }
 
     #region POST
@@ -30,21 +34,16 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] LoginInsertRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginCommand request)
     {
-        var validator = new LoginInsertRequestValidator().Validate(request);
+        //var validator = new LoginInsertRequestValidator().Validate(request);
 
-        if (!validator.IsValid)
-        {
-            return BadRequest(new { errors = validator.Errors.Select(err => err.ErrorMessage) });
-        }
+        //if (!validator.IsValid)
+        //{
+        //    return BadRequest(new { errors = validator.Errors.Select(err => err.ErrorMessage) });
+        //}
 
-        var result = await _authService.Login(request);
-
-        if (!result.IsSuccess)
-        {
-            return NotFound(new { errors = result.Errors.ToList() });
-        }
+        var result = await _mediator.Send(request);
 
         return Ok(result.Value);
     }               

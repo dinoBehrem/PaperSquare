@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace PaperSquare.Data.Data
 {
-    public class PaperSquareDbContext: IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
+    public class PaperSquareDbContext : IdentityDbContext<User, Role, string, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public PaperSquareDbContext(DbContextOptions<PaperSquareDbContext> options) : base(options)
         {

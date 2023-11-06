@@ -5,7 +5,6 @@ using Moq;
 using PaperSquare.API.Feature.Auth.Dto;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.Auth.Dto;
-using PaperSquare.Infrastructure.Features.JWT.Dto;
 using System.Net;
 using System.Security.Claims;
 using PaperSquare.Infrastructure.Exceptions;
@@ -13,6 +12,10 @@ using PaperSquare.Infrastructure.Features.Auth;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Application.Features.JWT;
 using PaperSquare.Core.Application.Features.Common;
+using Microsoft.Extensions.Options;
+using PaperSquare.Core.Application.Features.JWT.Dto;
+using Newtonsoft.Json.Linq;
+using Google.Api.Gax;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.Auth;
 
@@ -23,6 +26,7 @@ public class AuthServiceTest
     private readonly Mock<UserManager<User>> _userManager;
     private readonly Mock<ITokenService> _tokenService;
     private readonly Mock<IRefreshTokenService> _refreshTokenService;
+    private readonly IOptions<TokenConfiguration> _tokenConfiguration;
 
     public AuthServiceTest()
     {
@@ -33,9 +37,9 @@ public class AuthServiceTest
 
         _tokenService = new Mock<ITokenService>();
         _refreshTokenService = new Mock<IRefreshTokenService>();
-
+        _tokenConfiguration = Options.Create(new TokenConfiguration());
         // SUT
-        _authService = new AuthService(_signInManager.Object, _tokenService.Object, _userManager.Object, _refreshTokenService.Object);
+        _authService = new AuthService(_signInManager.Object, _tokenService.Object, _userManager.Object, _refreshTokenService.Object, _tokenConfiguration);
     }
 
     #region Login
@@ -60,11 +64,7 @@ public class AuthServiceTest
             new Claim(AppClaimTypes.Email, user.Email)
         };
 
-        var tokenResource = new TokenResource()
-        {
-            Expiriation = DateTime.Now.AddMinutes(10),
-            Token = Guid.NewGuid().ToString(),
-        };
+        var tokenResource = new TokenResource(Guid.NewGuid().ToString(), DateTime.Now.AddMinutes(10));
 
         var signInResult = SignInResult.Success;
 
@@ -217,12 +217,8 @@ public class AuthServiceTest
             new Claim(AppClaimTypes.Email, user.Email)
         };
 
-        var tokenResource = new TokenResource()
-        {
-            Expiriation = DateTime.Now.AddMinutes(10),
-            Token = Guid.NewGuid().ToString(),
-        };
-
+        var tokenResource = new TokenResource(Guid.NewGuid().ToString(), DateTime.Now.AddMinutes(10));
+        
         _refreshTokenService.Setup(_ => _.GetToken(refreshTokenRequest.Token)).ReturnsAsync(refreshToken);
 
         _userManager.Setup(_ => _.FindByIdAsync(refreshToken.UserId)).ReturnsAsync(user);

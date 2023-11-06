@@ -65,7 +65,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Book", b =>
@@ -112,7 +112,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("SeriesId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookAuthors", b =>
@@ -152,7 +152,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookAuthors");
+                    b.ToTable("BookAuthors", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookGenre", b =>
@@ -192,7 +192,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookGenres");
+                    b.ToTable("BookGenres", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookInShelf", b =>
@@ -238,7 +238,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookShelfId");
 
-                    b.ToTable("BookInShelves");
+                    b.ToTable("BookInShelves", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookPublisher", b =>
@@ -301,7 +301,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("BookPublishers");
+                    b.ToTable("BookPublishers", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookReview", b =>
@@ -347,7 +347,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookReviews");
+                    b.ToTable("BookReviews", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeries", b =>
@@ -389,7 +389,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BookSeries");
+                    b.ToTable("BookSeries", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesFollowers", b =>
@@ -429,7 +429,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesFollowers");
+                    b.ToTable("BookSeriesFollowers", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesReview", b =>
@@ -475,7 +475,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesReview");
+                    b.ToTable("BookSeriesReview", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookShelf", b =>
@@ -517,7 +517,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookShelves");
+                    b.ToTable("BookShelves", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Genre", b =>
@@ -553,7 +553,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembership", b =>
@@ -596,7 +596,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupMemberships");
+                    b.ToTable("GroupMemberships", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembershipRequest", b =>
@@ -652,7 +652,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserGroupId");
 
-                    b.ToTable("GroupMembershipsRequests");
+                    b.ToTable("GroupMembershipsRequests", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Publisher", b =>
@@ -691,7 +691,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers");
+                    b.ToTable("Publishers", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.PublisherFollower", b =>
@@ -731,7 +731,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PublisherFollowers");
+                    b.ToTable("PublisherFollowers", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Quote", b =>
@@ -792,7 +792,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Quotes");
+                    b.ToTable("Quotes", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.QuoteCollection", b =>
@@ -834,7 +834,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("QuoteCollections");
+                    b.ToTable("QuoteCollections", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGenre", b =>
@@ -874,7 +874,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("UserGenres");
+                    b.ToTable("UserGenres", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGroup", b =>
@@ -913,7 +913,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserGroups");
+                    b.ToTable("UserGroups", (string)null);
                 });
 
             modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.RefreshToken", b =>

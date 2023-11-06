@@ -2,7 +2,7 @@
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.Login
 {
-    public class LoginCommandValidator: AbstractValidator<LoginCommand>
+    public sealed class LoginCommandValidator: AbstractValidator<LoginCommand>
     {
         public LoginCommandValidator()
         {

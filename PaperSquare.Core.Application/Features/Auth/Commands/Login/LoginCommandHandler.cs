@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.Login;
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<AuthResponse>>
+public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, Result<AuthResponse>>
 {
     private readonly SignInManager<User> _signInManager;
     private readonly UserManager<User> _userManager;

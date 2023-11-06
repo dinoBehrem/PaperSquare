@@ -9,12 +9,11 @@ namespace PaperSquare.API.Infrastructure.SwaggerGen
         {
             services.AddSwaggerGen(options =>
             {
-
-                options.SwaggerDoc(ApiVersions.V_1, new OpenApiInfo()
-                {
-                    Title = "PaperSquare.API",
-                    Version = ApiVersions.V_1,
-                });
+                //options.SwaggerDoc(ApiVersions.V_1, new OpenApiInfo()
+                //{
+                //    Title = "PaperSquare.API",
+                //    Version = ApiVersions.V_1,
+                //});
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -42,7 +41,7 @@ namespace PaperSquare.API.Infrastructure.SwaggerGen
                  });
             });
 
-            services.ConfigureOptions<ConfigureSwaggerOptions>();
+            //services.ConfigureOptions<ConfigureSwaggerOptions>();
 
             return services;
         }

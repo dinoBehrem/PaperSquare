@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PaperSquare.Domain.Entities.Domain;
+using PaperSquare.Core.Domain.Entities.Domain;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Domain
 {
-    public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthors>
+    public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
     {
-        public void Configure(EntityTypeBuilder<BookAuthors> builder)
+        public void Configure(EntityTypeBuilder<BookAuthor> builder)
         {
             builder.HasKey(ba => new { ba.AuthorId, ba.BookId });
 

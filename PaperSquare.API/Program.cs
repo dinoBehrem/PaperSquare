@@ -5,10 +5,9 @@ using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.HttpContext;
 using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
-using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.API.Middlewares.RateLimiting;
+using PaperSquare.Core.Application.Profiles;
 using PaperSquare.Data.Data;
-using PaperSquare.Infrastructure.Profiles;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +27,8 @@ builder.Host.UseSerilog(logger);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-builder.Services.ApiVersioningConfiguration();
+//builder.Services.AddControllers();
+//builder.Services.ApiVersioningConfiguration();
 builder.Services.AddDbContext<PaperSquareDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DevBase")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,7 +46,6 @@ builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
 
 var app = builder.Build();
-
 
 app.UseIpRateLimiting();
 
@@ -70,11 +68,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
 
 app.UseMiddlewareHandlers();
 
-app.MigrateDatabase();
+//app.MigrateDatabase();
+app.MapGet("api/test", () => new { id = "test" })
+    .AllowAnonymous()
+    .WithTags("Test")
+    .WithOpenApi();
 
 app.Run();
 

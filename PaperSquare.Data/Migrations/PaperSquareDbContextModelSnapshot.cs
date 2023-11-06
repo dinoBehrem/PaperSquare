@@ -22,7 +22,7 @@ namespace PaperSquare.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Author", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Author", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -40,9 +40,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Firstname")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -59,7 +68,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Book", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Book", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -71,8 +80,17 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -97,7 +115,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookAuthors", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookAuthors", b =>
                 {
                     b.Property<string>("AuthorId")
                         .HasColumnType("text");
@@ -112,6 +130,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -125,7 +155,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookAuthors");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookGenre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookGenre", b =>
                 {
                     b.Property<string>("GenreId")
                         .HasColumnType("text");
@@ -140,6 +170,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -153,7 +195,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookGenres");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookInShelf", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookInShelf", b =>
                 {
                     b.Property<string>("BookId")
                         .HasColumnType("text");
@@ -167,6 +209,18 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -187,7 +241,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookInShelves");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookPublisher", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookPublisher", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -206,6 +260,12 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -215,6 +275,9 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<int>("Format")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Language")
                         .HasColumnType("text");
@@ -241,7 +304,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookPublishers");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookReview", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookReview", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -259,6 +322,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -275,7 +350,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookReviews");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeries", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeries", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -290,6 +365,15 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -308,7 +392,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookSeries");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesFollowers", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesFollowers", b =>
                 {
                     b.Property<string>("FollowerId")
                         .HasColumnType("text");
@@ -323,6 +407,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -336,7 +432,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookSeriesFollowers");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesReviews", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesReview", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -354,6 +450,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -367,10 +475,10 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesReviews");
+                    b.ToTable("BookSeriesReview");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookShelf", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -381,6 +489,15 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -403,7 +520,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("BookShelves");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Genre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Genre", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -414,6 +531,15 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -430,7 +556,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.GroupMembership", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembership", b =>
                 {
                     b.Property<string>("GroupId")
                         .HasColumnType("text");
@@ -444,6 +570,18 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -461,7 +599,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("GroupMemberships");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.GroupMembershipRequest", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembershipRequest", b =>
                 {
                     b.Property<string>("RequesterId")
                         .HasColumnType("text");
@@ -478,6 +616,18 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -505,7 +655,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("GroupMembershipsRequests");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Publisher", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Publisher", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -517,8 +667,17 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Descritpion")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -535,7 +694,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Publishers");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.PublisherFollower", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.PublisherFollower", b =>
                 {
                     b.Property<string>("PublisherId")
                         .HasColumnType("text");
@@ -550,6 +709,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -563,7 +734,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("PublisherFollowers");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Quote", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Quote", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -581,6 +752,12 @@ namespace PaperSquare.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("IsDeleted")
@@ -618,7 +795,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Quotes");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.QuoteCollection", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.QuoteCollection", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -629,6 +806,15 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -651,7 +837,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("QuoteCollections");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGenre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGenre", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -666,6 +852,18 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
@@ -679,7 +877,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserGenres");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGroup", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGroup", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -691,8 +889,17 @@ namespace PaperSquare.Data.Migrations
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -709,12 +916,12 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserGroups");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.RefreshToken", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.RefreshToken", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("Expires")
@@ -736,7 +943,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("RefreshToken", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.Role", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -762,7 +969,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("Role", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.RoleClaim", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -787,7 +994,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("RoleClaim", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.User", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -807,6 +1014,12 @@ namespace PaperSquare.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
@@ -879,7 +1092,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserClaim", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -904,7 +1117,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserClaim", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserLogin", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -926,7 +1139,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserLogin", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserRole", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserRole", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -941,7 +1154,7 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserRole", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserToken", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserToken", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -960,9 +1173,9 @@ namespace PaperSquare.Data.Migrations
                     b.ToTable("UserToken", (string)null);
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Book", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Book", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.BookSeries", "Series")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.BookSeries", "Series")
                         .WithMany("Books")
                         .HasForeignKey("SeriesId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -970,15 +1183,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Series");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookAuthors", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookAuthors", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Author", "Author")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("Authors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -989,15 +1202,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookGenre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookGenre", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("Genres")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.Genre", "Genre")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1008,15 +1221,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookInShelf", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookInShelf", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("BookShelves")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.BookShelf", "BookShelf")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.BookShelf", "BookShelf")
                         .WithMany("Books")
                         .HasForeignKey("BookShelfId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1027,15 +1240,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("BookShelf");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookPublisher", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookPublisher", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("Publishings")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.Publisher", "Publisher")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Publisher", "Publisher")
                         .WithMany("Publishings")
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1046,15 +1259,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Publisher");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookReview", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookReview", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("Reviews")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("BookReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1065,9 +1278,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeries", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeries", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Author", "Author")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Author", "Author")
                         .WithMany("BookSeries")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1076,15 +1289,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesFollowers", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesFollowers", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.BookSeries", "BookSeries")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.BookSeries", "BookSeries")
                         .WithMany("Followers")
                         .HasForeignKey("BookSeriesId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "Follower")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "Follower")
                         .WithMany("BookSeries")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1095,15 +1308,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Follower");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeriesReviews", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeriesReview", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.BookSeries", "BookSeries")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.BookSeries", "BookSeries")
                         .WithMany("Reviews")
                         .HasForeignKey("BookSeriesId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("BookSeriesReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1114,9 +1327,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookShelf", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Shelves")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1125,15 +1338,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.GroupMembership", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembership", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.UserGroup", "Group")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.UserGroup", "Group")
                         .WithMany("Members")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Memberships")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1144,20 +1357,20 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.GroupMembershipRequest", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.GroupMembershipRequest", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "Approver")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "Approver")
                         .WithMany("ApprovedMembershipRequests")
                         .HasForeignKey("ApproverId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "Requester")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "Requester")
                         .WithMany("MembershipRequests")
                         .HasForeignKey("RequesterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.UserGroup", "UserGroup")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.UserGroup", "UserGroup")
                         .WithMany("MembershipRequests")
                         .HasForeignKey("UserGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1170,15 +1383,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("UserGroup");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.PublisherFollower", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.PublisherFollower", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Publisher", "Publisher")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Publisher", "Publisher")
                         .WithMany("Followers")
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Publishers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1189,21 +1402,21 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Quote", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Quote", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Book", "Book")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Book", "Book")
                         .WithMany("Quotes")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Domain.QuoteCollection", "QuoteCollection")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.QuoteCollection", "QuoteCollection")
                         .WithMany("Quotes")
                         .HasForeignKey("QuoteCollectionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Quotes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1216,9 +1429,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.QuoteCollection", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.QuoteCollection", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("QuoteCollections")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1227,15 +1440,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGenre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGenre", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Domain.Genre", "Genre")
+                    b.HasOne("PaperSquare.Domain.Entities.Domain.Genre", "Genre")
                         .WithMany("Users")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Genres")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1246,9 +1459,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.RefreshToken", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.RefreshToken", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1257,9 +1470,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.RoleClaim", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.RoleClaim", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.Role", "Role")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.Role", "Role")
                         .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1268,9 +1481,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserClaim", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserClaim", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1279,9 +1492,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserLogin", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserLogin", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1290,15 +1503,15 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserRole", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserRole", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.Role", "Role")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.Role", "Role")
                         .WithMany("Roles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1309,9 +1522,9 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.UserToken", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.UserToken", b =>
                 {
-                    b.HasOne("PaperSquare.Core.Models.Identity.User", "User")
+                    b.HasOne("PaperSquare.Domain.Entities.Identity.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1320,14 +1533,14 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Author", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Author", b =>
                 {
                     b.Navigation("BookSeries");
 
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Book", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Book", b =>
                 {
                     b.Navigation("Authors");
 
@@ -1342,7 +1555,7 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookSeries", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookSeries", b =>
                 {
                     b.Navigation("Books");
 
@@ -1351,45 +1564,45 @@ namespace PaperSquare.Data.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.BookShelf", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.BookShelf", b =>
                 {
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Genre", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Genre", b =>
                 {
                     b.Navigation("Books");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.Publisher", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.Publisher", b =>
                 {
                     b.Navigation("Followers");
 
                     b.Navigation("Publishings");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.QuoteCollection", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.QuoteCollection", b =>
                 {
                     b.Navigation("Quotes");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Domain.UserGroup", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Domain.UserGroup", b =>
                 {
                     b.Navigation("Members");
 
                     b.Navigation("MembershipRequests");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.Role", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.Role", b =>
                 {
                     b.Navigation("Claims");
 
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("PaperSquare.Core.Models.Identity.User", b =>
+            modelBuilder.Entity("PaperSquare.Domain.Entities.Identity.User", b =>
                 {
                     b.Navigation("ApprovedMembershipRequests");
 

@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using PaperSquare.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.Identity;
 
 namespace PaperSquare.Data.Generators
 {

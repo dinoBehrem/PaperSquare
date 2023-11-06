@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using PaperSquare.API.Feature.Auth.Dto;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.Login
 {
@@ -13,8 +12,8 @@ namespace PaperSquare.Core.Application.Features.Auth.Commands.Login
 
             RuleFor(lc => lc.password)
                 .NotEmpty()
-                .MinimumLength(LoginInsertRequestOptions.PasswordLength)
-                .WithMessage("Password must contain at least 8 characters!");
+                .MinimumLength(LoginCommandOptions.PasswordLength)
+                .WithMessage($"Password must contain at least {LoginCommandOptions.PasswordLength} characters!");
         }
     }
 }

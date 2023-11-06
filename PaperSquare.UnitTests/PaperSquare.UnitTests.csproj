@@ -28,4 +28,9 @@
     <ProjectReference Include="..\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="System\API\Auth\V_1\" />
+    <Folder Include="System\Infrastrucutre\Auth\" />
+  </ItemGroup>
+
 </Project>

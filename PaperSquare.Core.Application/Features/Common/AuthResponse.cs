@@ -8,8 +8,8 @@ namespace PaperSquare.Core.Application.Features.Common;
 
 public sealed class AuthResponse
 {
-    public TokenResource AccessToken { get; private set; }
-    public TokenResource RefreshToken { get; private set; }
+    public TokenResource AccessToken { get; init; }
+    public TokenResource RefreshToken { get; init; }
 
     private AuthResponse(TokenResource accessToken, TokenResource refreshToken)
     {
@@ -19,8 +19,7 @@ public sealed class AuthResponse
 
     public static AuthResponse Create(List<Claim>? claims, User user, TokenConfiguration tokenConfiguration)
     {
-        Guard.Against.Null(claims, nameof(claims));
-
+        // Build access token
         var expiriation = DateTime.UtcNow.AddMinutes(5);
 
         var token = new JwtSecurityToken(
@@ -32,6 +31,7 @@ public sealed class AuthResponse
 
         var accessToken = new TokenResource(new JwtSecurityTokenHandler().WriteToken(token), expiriation);
 
+        // Build refresh token
         var expirationOffset = tokenConfiguration.RefreshTokenDuration;
         var expiriationDateTime = DateTime.UtcNow.Add(expirationOffset);
 
@@ -39,6 +39,7 @@ public sealed class AuthResponse
 
         var refreshToken = new TokenResource(userRefreshToken.Id, expiriationDateTime);
 
+        // Create auth response
         var authResponse = new AuthResponse(accessToken, refreshToken);
 
         return authResponse;

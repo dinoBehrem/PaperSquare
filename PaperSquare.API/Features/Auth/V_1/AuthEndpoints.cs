@@ -4,8 +4,6 @@ using PaperSquare.API.Middlewares.Exceptions;
 using PaperSquare.Core.Application.Features.Auth.Commands.Login;
 using PaperSquare.Core.Application.Features.Auth.Commands.RefreshToken;
 using PaperSquare.Core.Application.Features.Common;
-using PaperSquare.Core.Domain.Entities.Identity;
-using Serilog;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Features.Auth.V_1;

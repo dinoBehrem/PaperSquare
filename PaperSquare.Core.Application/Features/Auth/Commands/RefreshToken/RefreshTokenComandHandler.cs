@@ -24,6 +24,7 @@ public sealed class RefreshTokenComandHandler : IRequestHandler<RefreshTokenComm
         _tokenConfiguration = tokenConfiguration.Value;
         _currentUser = currentUser;
     }
+
     public async Task<Result<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));

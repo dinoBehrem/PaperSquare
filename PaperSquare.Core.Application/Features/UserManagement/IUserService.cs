@@ -1,4 +1,5 @@
-﻿using PaperSquare.Infrastructure.Features.UserManagement.Dto;
+﻿using PaperSquare.Core.Application.Features.UserManagement.Dto;
+using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.Infrastructure.Shared;
 
 namespace PaperSquare.Core.Application.Features.UserManagement;

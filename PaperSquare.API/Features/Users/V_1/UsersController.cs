@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Controllers.V_1;
 using PaperSquare.Core.Application.Features.UserManagement;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 

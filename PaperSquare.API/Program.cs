@@ -1,9 +1,9 @@
 using AspNetCoreRateLimit;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using PaperSquare.API.Features.Auth.V_1;
 using PaperSquare.API.Infrastructure.AppServices;
 using PaperSquare.API.Infrastructure.Auth;
+using PaperSquare.API.Infrastructure.Endpoints;
 using PaperSquare.API.Infrastructure.HttpContext;
 using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
@@ -90,7 +90,7 @@ app.UseMiddlewareHandlers();
 
 //app.MigrateDatabase();
 
-app.MapAuthEndpoints();
+app.UseAppEndpoints();
 
 app.Run();
 

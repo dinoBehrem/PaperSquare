@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PaperSquare.API.Shared;
 using PaperSquare.Infrastructure.Exceptions;
 using Serilog;
 using System.Net;

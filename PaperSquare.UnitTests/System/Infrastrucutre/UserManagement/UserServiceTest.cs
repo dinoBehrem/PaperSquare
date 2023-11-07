@@ -12,6 +12,7 @@ using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using System.Net;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Application.Profiles;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 
 namespace PaperSquare.UnitTests.System.Infrastrucutre.UserManagement;
 

@@ -9,6 +9,7 @@ using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using PaperSquare.Infrastructure.Shared;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 
 namespace PaperSquare.Core.Application.Features.UserManagement;
 

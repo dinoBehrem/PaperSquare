@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Infrastructure.Versioning;
-using PaperSquare.API.Middlewares.Exceptions;
 using PaperSquare.API.Shared;
 using PaperSquare.Infrastructure.Shared;
 using PaperSquare.Infrastructure.Shared.Dto;
-using System.Net;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Controllers.V_1
@@ -25,7 +23,7 @@ namespace PaperSquare.API.Controllers.V_1
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Insert(insert);
 
-            return CreatedAtAction(nameof(Insert), new ApiResponse<TModel>(HttpStatusCode.Created, result.Value));
+            return CreatedAtAction(nameof(Insert), new ApiResponse<TModel>(result.Value));
         }
         
         [HttpPost("update")]
@@ -38,7 +36,7 @@ namespace PaperSquare.API.Controllers.V_1
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Update(id, update);
 
-            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
+            return Ok(new ApiResponse<TModel>(result.Value));
         }
 
         #endregion POST
@@ -55,7 +53,7 @@ namespace PaperSquare.API.Controllers.V_1
         {
             var result = await ((ICommandService<TModel, TSearch, TType, TInsert, TUpdate>)_queryService).Delete(id);
 
-            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
+            return Ok(new ApiResponse<TModel>(result.Value));
         }
 
         #endregion DELETE

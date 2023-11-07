@@ -3,12 +3,12 @@ using Ardalis.Result;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Permissions;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
-using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 using System.Collections.Generic;
 
 namespace PaperSquare.Core.Application.Features.UserManagement.Command.CreateUser;

@@ -25,7 +25,6 @@ internal sealed class CreateUserCommandValidator: AbstractValidator<CreateUserCo
             .EmailAddress()
             .WithMessage(CreateUserValidationMessages.InvalidEmail);
 
-
         RuleFor(user => user.password)
             .NotEmpty()
             .WithMessage(CreateUserValidationMessages.FieldIsRequired)
@@ -42,7 +41,8 @@ internal sealed class CreateUserCommandValidator: AbstractValidator<CreateUserCo
     }
 }
 
-file class CreateUserValidationMessages
+// TO DO: Implement localization
+internal sealed class CreateUserValidationMessages
 {
     public const string FieldIsRequired = "Filed is required!";
     public const string InvalidEmail = "Invalid email address!";

@@ -2,8 +2,8 @@
 using Ardalis.Result;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Application.Shared.Dto;
 using PaperSquare.Data.Data;
-using PaperSquare.Infrastructure.Shared.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace PaperSquare.Infrastructure.Shared
     public class CRUDService<TEntity, TModel, TType, TSearch, TInsert, TUpdate>: 
                     QueryService<TEntity, TType, TModel, TSearch>, 
                     ICommandService<TModel, TSearch, TType, TInsert, TUpdate> 
-                    where TEntity: class where TModel : class where TSearch : SearchDto where TInsert : class where TUpdate : class
+                    where TEntity: class where TModel : class where TSearch : SearchRequest where TInsert : class where TUpdate : class
     {
         public CRUDService(PaperSquareDbContext dbContext, IMapper mapper): base(dbContext, mapper){}
                

@@ -1,14 +1,14 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Application.Shared.Dto;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
 using PaperSquare.Infrastructure.Extensions;
-using PaperSquare.Infrastructure.Shared.Dto;
 
 namespace PaperSquare.Infrastructure.Shared
 {
-    public class QueryService<TEntity, TType, TModel, TSearch> : IQueryService<TModel, TSearch, TType> where TEntity : class where TModel : class where TSearch : SearchDto
+    public class QueryService<TEntity, TType, TModel, TSearch> : IQueryService<TModel, TSearch, TType> where TEntity : class where TModel : class where TSearch : SearchRequest
     {
         protected readonly PaperSquareDbContext _dbContext;
         protected readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace PaperSquare.Infrastructure.Shared
         {
             var entities = ApplyFilters(_entities, search);
 
-            var pagedEntities = _mapper.Map<IEnumerable<TModel>>(entities.ToPagedList(search.Page, search.PageSize));
+            var pagedEntities = _mapper.Map<IEnumerable<TModel>>(entities.ToPagedList(search.page.Value, search.pageSize.Value));
 
             return Result.Success(pagedEntities);
         }

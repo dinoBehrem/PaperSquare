@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Infrastructure.Versioning;
 using PaperSquare.API.Shared;
+using PaperSquare.Core.Application.Shared.Dto;
 using PaperSquare.Infrastructure.Shared;
-using PaperSquare.Infrastructure.Shared.Dto;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Controllers.V_1
 {
-    public class CRUDController<TModel, TType, TSearch, TInsert, TUpdate> : BaseController<TModel, TType, TSearch> where TModel : class where TSearch : SearchDto where TInsert : class where TUpdate : class
+    public class CRUDController<TModel, TType, TSearch, TInsert, TUpdate> : BaseController<TModel, TType, TSearch> where TModel : class where TSearch : SearchRequest where TInsert : class where TUpdate : class
     {
         public CRUDController(ICommandService<TModel, TSearch, TType, TInsert, TUpdate> service): base(service) {}
 

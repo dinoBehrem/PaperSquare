@@ -8,6 +8,8 @@ using PaperSquare.Core.Application.Features.UserManagement.Commands.DeleteUser;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Permissions;
 using System.Net.Mime;
+using PaperSquare.Core.Application.Features.UserManagement.Querries.GetAllUsers;
+using PaperSquare.Core.Application.Features.UserManagement.Querries.GetUserById;
 
 namespace PaperSquare.API.Features.Users.V_1;
 
@@ -22,6 +24,19 @@ public static class UserEndpoints
         var group = routes.MapGroup(user_path)
             .WithTags(user_tag_name)            
             .WithOpenApi();
+
+        group.MapGet("get-all", GetAllUsers)
+            .AllowAnonymous()            
+            .Produces<ApiResponse<IEnumerable<UserDto>>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
+        
+        group.MapGet("get-by-id", GetUserById)
+            .AllowAnonymous()            
+            .Produces<ApiResponse<IEnumerable<UserDto>>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
 
         group.MapPost("create", CreateUser)
             .AllowAnonymous()
@@ -44,6 +59,20 @@ public static class UserEndpoints
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
 
         return routes;
+    }
+
+    public static async Task<Ok<ApiResponse<IEnumerable<UserDto>>>> GetAllUsers([AsParameters] GetAllUsersRequest request, IMediator mediator)
+    {
+        var result = await mediator.Send(request);
+
+        return TypedResults.Ok(new ApiResponse<IEnumerable<UserDto>>(result.Value));
+    }
+    
+    public static async Task<Ok<ApiResponse<UserDto>>> GetUserById([AsParameters] GetUserByIdRequest request, IMediator mediator)
+    {
+        var result = await mediator.Send(request);
+
+        return TypedResults.Ok(new ApiResponse<UserDto>(result.Value));
     }
 
     public static async Task<Created<ApiResponse<UserDto>>> CreateUser([FromBody] CreateUserCommand command, IMediator mediator)

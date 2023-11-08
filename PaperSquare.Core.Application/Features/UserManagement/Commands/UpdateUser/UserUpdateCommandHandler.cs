@@ -1,4 +1,5 @@
-﻿using Ardalis.Result;
+﻿using Ardalis.GuardClauses;
+using Ardalis.Result;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
 
-namespace PaperSquare.Core.Application.Features.UserManagement.Command.UpdateUser;
+namespace PaperSquare.Core.Application.Features.UserManagement.Commands.UpdateUser;
 
 public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand, Result<UserDto>>
 {
@@ -25,6 +26,8 @@ public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand
 
     public async Task<Result<UserDto>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
+        Guard.Against.Null(request, nameof(request));
+
         if (request.id == _currentUser.Id)
         {
             throw new UnatuhorizedAccessException("Permission denied!");

@@ -11,7 +11,7 @@ using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
 using System.Collections.Generic;
 
-namespace PaperSquare.Core.Application.Features.UserManagement.Command.CreateUser;
+namespace PaperSquare.Core.Application.Features.UserManagement.Commands.CreateUser;
 
 public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<UserDto>>
 {

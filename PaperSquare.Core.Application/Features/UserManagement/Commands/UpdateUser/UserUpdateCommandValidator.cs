@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using PaperSquare.Core.Application.Features.UserManagement.Command.CreateUser;
+using PaperSquare.Core.Application.Features.UserManagement.Commands.CreateUser;
 
-namespace PaperSquare.Core.Application.Features.UserManagement.Command.UpdateUser;
+namespace PaperSquare.Core.Application.Features.UserManagement.Commands.UpdateUser;
 
 internal sealed class UserUpdateCommandValidator: AbstractValidator<UpdateUserCommand>
 {

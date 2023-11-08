@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Shared;
-using PaperSquare.Core.Application.Features.UserManagement.Command.CreateUser;
-using PaperSquare.Core.Application.Features.UserManagement.Command.UpdateUser;
+using PaperSquare.Core.Application.Features.UserManagement.Commands.CreateUser;
+using PaperSquare.Core.Application.Features.UserManagement.Commands.UpdateUser;
+using PaperSquare.Core.Application.Features.UserManagement.Commands.DeleteUser;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Permissions;
 using System.Net.Mime;
@@ -34,6 +35,13 @@ public static class UserEndpoints
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
+        
+        group.MapDelete("delete/{id}", DeleteUser)
+            .RequireAuthorization(Permission.RegisteredUser, Permission.FullAccess)
+            .Produces<ApiResponse<UserDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
+            .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
 
         return routes;
     }
@@ -46,6 +54,13 @@ public static class UserEndpoints
     }
 
     public static async Task<Ok<ApiResponse<UserDto>>> UpdateUser(string id, [FromBody] UpdateUserCommand command, IMediator mediator)
+    {
+        var result = await mediator.Send(command);
+
+        return TypedResults.Ok(new ApiResponse<UserDto>(result.Value));
+    }
+
+    public static async Task<Ok<ApiResponse<UserDto>>> DeleteUser([FromBody] DeleteUserCommand command, IMediator mediator)
     {
         var result = await mediator.Send(command);
 

@@ -108,5 +108,10 @@ public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
         }
     }
 
+    public void MarkAsDeleted()
+    {
+        IsDeleted = true;
+    }
+
     #endregion Methods
 }

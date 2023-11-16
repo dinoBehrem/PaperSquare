@@ -28,9 +28,9 @@ public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand
     {
         Guard.Against.Null(request, nameof(request));
 
-        if (request.id == _currentUser.Id)
+        if (request.id != _currentUser.Id)
         {
-            throw new UnatuhorizedAccessException("Permission denied!");
+            throw new NotFoundException("User not found!", nameof(User));
         }
 
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.id, cancellationToken);

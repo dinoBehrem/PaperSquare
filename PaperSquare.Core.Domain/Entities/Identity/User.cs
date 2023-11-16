@@ -105,6 +105,7 @@ public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
         if(!string.IsNullOrWhiteSpace(email))
         {
             Email = email;
+            NormalizedEmail = email.ToUpper();
         }
     }
 

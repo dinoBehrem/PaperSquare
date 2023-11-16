@@ -54,7 +54,7 @@ builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AppServices();
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
-builder.Services.AddAuthorizationConfig(builder.Configuration);
+builder.Services.AddAuthorizationConfig();
 builder.Services.CurrentPrincipalAccessorConfig();
 builder.Services.AddCors();
 builder.Services.AddRateLimiting(builder.Configuration);

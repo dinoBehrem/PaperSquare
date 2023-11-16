@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Shared;
 using PaperSquare.Core.Application.Features.UserManagement.Commands.UpdateUser;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
-using PaperSquare.Core.Permissions;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Features.Users.V_1;
@@ -14,7 +13,7 @@ public static class UpdateUserEndpoint
     public static RouteGroupBuilder MapUpdateUser(this RouteGroupBuilder group)
     {
         group.MapPut("update/{id}", UpdateUser)
-            .RequireAuthorization(Permission.RegisteredUser)
+            .RequireAuthorization()
             .Produces<ApiResponse<UserDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)

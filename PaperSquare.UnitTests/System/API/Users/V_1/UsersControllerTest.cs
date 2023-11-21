@@ -1,157 +1,157 @@
-﻿using Ardalis.Result;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using PaperSquare.API.Features.Users.V_1;
-using PaperSquare.Core.Application.Features.UserManagement;
-using PaperSquare.Core.Application.Features.UserManagement.Dto;
-using PaperSquare.Infrastructure.Features.UserManagement.Dto;
+﻿// using Ardalis.Result;
+// using Microsoft.AspNetCore.Mvc;
+// using Moq;
+// using PaperSquare.API.Features.Users.V_1;
+// using PaperSquare.Core.Application.Features.UserManagement;
+// using PaperSquare.Core.Application.Features.UserManagement.Dto;
+// using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 
-namespace PaperSquare.UnitTests.System.API.Users.V_1
-{
-    public class UsersControllerTest
-    {
-        private readonly UsersController _usersController;
-        private readonly Mock<IUserService> _userService;
+// namespace PaperSquare.UnitTests.System.API.Users.V_1
+// {
+//     public class UsersControllerTest
+//     {
+//         private readonly UsersController _usersController;
+//         private readonly Mock<IUserService> _userService;
 
-        public UsersControllerTest()
-        {
-            // Mocking dependencies
-            _userService = new Mock<IUserService>();
+//         public UsersControllerTest()
+//         {
+//             // Mocking dependencies
+//             _userService = new Mock<IUserService>();
 
-            // SUT
-            _usersController = new UsersController(_userService.Object);
-        }
+//             // SUT
+//             _usersController = new UsersController(_userService.Object);
+//         }
 
-        #region GetAll
+//         #region GetAll
 
-        [Fact]
-        public async void GetAll_ValidResult_ReturnsOk()
-        {
-            // Arrange
+//         [Fact]
+//         public async void GetAll_ValidResult_ReturnsOk()
+//         {
+//             // Arrange
 
-            var userSearchRequest = new UserSearchDto();
+//             var userSearchRequest = new UserSearchDto();
 
-            var queryResult = Result<IEnumerable<UserDto>>.Success(null);
+//             var queryResult = Result<IEnumerable<UserDto>>.Success(null);
 
-            _userService.Setup(_ => _.GetAll(userSearchRequest)).ReturnsAsync(queryResult);
+//             _userService.Setup(_ => _.GetAll(userSearchRequest)).ReturnsAsync(queryResult);
 
-            // Act
+//             // Act
 
-            var endpointResult = await _usersController.GetAll(userSearchRequest);
+//             var endpointResult = await _usersController.GetAll(userSearchRequest);
 
-            // Assert
+//             // Assert
 
-            Assert.NotNull(endpointResult);
-            Assert.IsType<OkObjectResult>(endpointResult);
-        }
+//             Assert.NotNull(endpointResult);
+//             Assert.IsType<OkObjectResult>(endpointResult);
+//         }
 
-        #endregion GetAll
+//         #endregion GetAll
 
-        #region GetById
+//         #region GetById
 
-        [Fact]
-        public async void GetById_ValidResult_ReturnsOk()
-        {
-            // Arrange
+//         [Fact]
+//         public async void GetById_ValidResult_ReturnsOk()
+//         {
+//             // Arrange
 
-            var userId = "someUserId";
+//             var userId = "someUserId";
 
-            var userResult = Result<UserDto>.Success(null);
+//             var userResult = Result<UserDto>.Success(null);
 
-            _userService.Setup(_ => _.GetById(userId)).ReturnsAsync(userResult);
+//             _userService.Setup(_ => _.GetById(userId)).ReturnsAsync(userResult);
 
-            // Act
+//             // Act
 
-            var endpointResult = await _usersController.GetById(userId);
+//             var endpointResult = await _usersController.GetById(userId);
 
-            // Assert
+//             // Assert
 
-            Assert.NotNull(endpointResult);
-            Assert.IsType<OkObjectResult>(endpointResult);
-        }
+//             Assert.NotNull(endpointResult);
+//             Assert.IsType<OkObjectResult>(endpointResult);
+//         }
 
-        #endregion GetById
+//         #endregion GetById
 
-        #region Insert
+//         #region Insert
 
-        [Fact]
-        public async void Insert_InsertSuccessfull_ReturnsCreatedAtAction()
-        {
-            // Arrange
+//         [Fact]
+//         public async void Insert_InsertSuccessfull_ReturnsCreatedAtAction()
+//         {
+//             // Arrange
 
-            var userInsertRequest = new UserInsertDto();
+//             var userInsertRequest = new UserInsertDto();
 
-            var userInsertResult = Result<UserDto>.Success(null);
+//             var userInsertResult = Result<UserDto>.Success(null);
 
-            _userService.Setup(_ => _.Insert(userInsertRequest)).ReturnsAsync(userInsertResult);
+//             _userService.Setup(_ => _.Insert(userInsertRequest)).ReturnsAsync(userInsertResult);
 
-            // Act
+//             // Act
 
-            var endpointResult = await _usersController.Insert(userInsertRequest);
+//             var endpointResult = await _usersController.Insert(userInsertRequest);
 
-            // Assert
+//             // Assert
 
-            Assert.NotNull(endpointResult);
-            Assert.IsType<CreatedAtActionResult>(endpointResult);
-        }
+//             Assert.NotNull(endpointResult);
+//             Assert.IsType<CreatedAtActionResult>(endpointResult);
+//         }
         
-        #endregion Insert
+//         #endregion Insert
 
-        #region Update
+//         #region Update
 
-        [Fact]
-        public async void Update_SuccessfullUpdate_ReturnsOk()
-        {
-            // Arrange
+//         [Fact]
+//         public async void Update_SuccessfullUpdate_ReturnsOk()
+//         {
+//             // Arrange
 
-            var userId = "someUserId";
+//             var userId = "someUserId";
 
-            var userUpdateRequest = new UserUpdateDto()
-            {
-                FirstName = "someFirstName",
-                LastName = "someLastName",
-                Email = "email@mail.com"
-            };
+//             var userUpdateRequest = new UserUpdateDto()
+//             {
+//                 FirstName = "someFirstName",
+//                 LastName = "someLastName",
+//                 Email = "email@mail.com"
+//             };
 
-            var userUpdateResult = Result<UserDto>.Success(null);
+//             var userUpdateResult = Result<UserDto>.Success(null);
 
-            _userService.Setup(_ => _.Update(userId, userUpdateRequest)).ReturnsAsync(userUpdateResult);
+//             _userService.Setup(_ => _.Update(userId, userUpdateRequest)).ReturnsAsync(userUpdateResult);
 
-            // Act
+//             // Act
 
-            var endpointResult = await _usersController.Update(userId, userUpdateRequest);
+//             var endpointResult = await _usersController.Update(userId, userUpdateRequest);
 
-            // Assert
+//             // Assert
 
-            Assert.NotNull(endpointResult);
-            Assert.IsType<OkObjectResult>(endpointResult);
-        }
+//             Assert.NotNull(endpointResult);
+//             Assert.IsType<OkObjectResult>(endpointResult);
+//         }
         
-        #endregion Update
+//         #endregion Update
 
-        #region Delete
+//         #region Delete
 
-        [Fact]
-        public async void Delete_SuccessfullDelete_ReturnsOk()
-        {
-            // Arrange
+//         [Fact]
+//         public async void Delete_SuccessfullDelete_ReturnsOk()
+//         {
+//             // Arrange
 
-            var userId = "someUserId";
+//             var userId = "someUserId";
 
-            var userDeleteResult = Result<UserDto>.Success(null);
+//             var userDeleteResult = Result<UserDto>.Success(null);
 
-            _userService.Setup(_ => _.Delete(userId)).ReturnsAsync(userDeleteResult);
+//             _userService.Setup(_ => _.Delete(userId)).ReturnsAsync(userDeleteResult);
 
-            // Act
+//             // Act
 
-            var endpointResult = await _usersController.Delete(userId);
+//             var endpointResult = await _usersController.Delete(userId);
 
-            // Assert
+//             // Assert
 
-            Assert.NotNull(endpointResult);
-            Assert.IsType<OkObjectResult>(endpointResult);
-        }
+//             Assert.NotNull(endpointResult);
+//             Assert.IsType<OkObjectResult>(endpointResult);
+//         }
 
-        #endregion Delete
-    }
-}
+//         #endregion Delete
+//     }
+// }

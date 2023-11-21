@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 

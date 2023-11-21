@@ -4,7 +4,7 @@ namespace PaperSquare.Core.Domain.Entities.Identity;
 
 public sealed class RefreshToken: Entity<string>
 {
-    public RefreshToken(string id, string userId, DateTime expires): base(id)
+    internal RefreshToken(string id, string userId, DateTime expires): base(id)
     {
         UserId = userId;
         Expires = expires;

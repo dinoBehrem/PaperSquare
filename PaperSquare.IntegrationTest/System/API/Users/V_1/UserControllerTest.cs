@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using PaperSquare.Infrastructure.Features.UserManagement.Dto;
+using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.IntegrationTest.WebApplicationBuilder;
 using System.Net;
 using System.Net.Http.Json;

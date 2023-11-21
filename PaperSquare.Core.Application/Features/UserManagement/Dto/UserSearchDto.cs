@@ -1,16 +1,10 @@
-﻿using PaperSquare.Infrastructure.Shared.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PaperSquare.Core.Application.Shared.Dto;
 
-namespace PaperSquare.Infrastructure.Features.UserManagement.Dto
+namespace PaperSquare.Core.Application.Features.UserManagement.Dto;
+
+public record UserSearchDto : SearchRequest
 {
-    public class UserSearchDto: SearchDto
-    {
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public DateTime? BirthDate { get; set; }
-    }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public DateTime? BirthDate { get; set; }
 }

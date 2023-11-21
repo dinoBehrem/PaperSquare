@@ -83,5 +83,36 @@ public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
         return refreshToken;
     }
 
+    public void SetFirstname(string name)
+    {
+        if(!string.IsNullOrWhiteSpace(name))
+        {
+            Firstname = name;
+        }
+    }
+    
+    public void SetLastname(string name)
+    {
+        if(!string.IsNullOrWhiteSpace(name))
+        {
+            Lastname = name;
+        }
+    }
+    
+    public void SetEmail(string email)
+    {
+        // TO DO: Check if email is valid
+        if(!string.IsNullOrWhiteSpace(email))
+        {
+            Email = email;
+            NormalizedEmail = email.ToUpper();
+        }
+    }
+
+    public void MarkAsDeleted()
+    {
+        IsDeleted = true;
+    }
+
     #endregion Methods
 }

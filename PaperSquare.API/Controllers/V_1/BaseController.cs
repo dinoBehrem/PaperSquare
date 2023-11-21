@@ -33,7 +33,7 @@ namespace PaperSquare.API.Controllers.V_1
         {
             var result = await _queryService.GetAll(searchDto);
 
-            return Ok(new ApiResponse<IEnumerable<TModel>>(HttpStatusCode.OK, result.Value));
+            return Ok(new ApiResponse<IEnumerable<TModel>>(result.Value));
         }
         
         [HttpGet("get-by-id")]
@@ -47,7 +47,7 @@ namespace PaperSquare.API.Controllers.V_1
         {
             var result = await _queryService.GetById(id);
 
-            return Ok(new ApiResponse<TModel>(HttpStatusCode.OK, result.Value));
+            return Ok(new ApiResponse<TModel>(result.Value));
         }
 
         #endregion GET

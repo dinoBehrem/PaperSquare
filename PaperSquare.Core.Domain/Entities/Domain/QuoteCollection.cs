@@ -1,5 +1,5 @@
 ﻿using PaperSquare.Core.Domain.Entities.Identity;
-using PaperSquare.Core.Domain.Common;
+using PaperSquare.Core.Domain.Primitives;
 
 namespace PaperSquare.Core.Domain.Entities.Domain;
 

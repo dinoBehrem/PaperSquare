@@ -1,56 +1,65 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PaperSquare.Core.Domain.Common;
+using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Domain.Entities.Domain;
 using System.Security.Cryptography;
 
 namespace PaperSquare.Core.Domain.Entities.Identity;
 
-public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
+public sealed class User : IdentityUser, IAggregate, ISoftDelete, IAuditableEntity
 {
     public User() { }
 
-    public User(string firstname, string lastname, string username, string email) : base(username)
+    public User(PersonalInfo personalInfo, string username, string email) : base(username)
     {
-        Firstname = firstname;
-        Lastname = lastname;
+        PersonalInfo = personalInfo;
         UserName = username;
         Email = email;
-        BirthDate = DateTime.UtcNow;
         IsDeleted = false;
     }
+
+    #region Properties
+
+    public PersonalInfo PersonalInfo { get; private set; }
+
+    #endregion Properties     
 
     #region Fields
 
     private readonly List<RefreshToken> _refreshTokens = new List<RefreshToken>();
+    private readonly List<UserClaim> _claims = new List<UserClaim>();
+    private readonly List<UserRole> _roles = new List<UserRole>();
+    private readonly List<UserLogin> _logins = new List<UserLogin>();
+    private readonly List<UserToken> _tokens = new List<UserToken>();
+    private readonly List<UserGenre> _genres = new List<UserGenre>();
+    private readonly List<BookShelf> _shelves = new List<BookShelf>();
+    private readonly List<QuoteCollection> _quotes = new List<QuoteCollection>();
+    private readonly List<GroupMembership> _memberships = new List<GroupMembership>();
+    private readonly List<GroupMembershipRequest> _membershipRequests = new List<GroupMembershipRequest>();
+    private readonly List<GroupMembershipRequest> _approvedMembershipRequests = new List<GroupMembershipRequest>();
+    private readonly List<BookSeriesFollower> _bookSeries = new List<BookSeriesFollower>();
+    private readonly List<PublisherFollower> _publishers = new List<PublisherFollower>();
+    private readonly List<BookReview> _bookReviewws = new List<BookReview>();
+    private readonly List<BookSeriesReview> _bookSeriesReviewws = new List<BookSeriesReview>();
 
     #endregion Fields
-
-    #region Properties
-
-    public string Firstname { get; private set; }
-    public string Lastname { get; private set; }
-    public DateTime BirthDate { get; private set; }
-
-    #endregion Properties     
 
     #region Navigation
 
     public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
-    public ICollection<UserClaim> Claims { get; set; }
-    public ICollection<UserRole> Roles { get; set; }
-    public ICollection<UserLogin> Logins { get; set; }
-    public ICollection<UserToken> Tokens { get; set; }
-    public ICollection<UserGenre> Genres { get; set; }
-    public ICollection<BookShelf> Shelves { get; set; }
-    public ICollection<Quote> Quotes { get; set; }
-    public ICollection<QuoteCollection> QuoteCollections { get; set; }
-    public ICollection<GroupMembership> Memberships { get; set; }
-    public ICollection<GroupMembershipRequest> MembershipRequests { get; set; }
-    public ICollection<GroupMembershipRequest> ApprovedMembershipRequests { get; set; }
-    public ICollection<BookSeriesFollower> BookSeries { get; set; }
-    public ICollection<PublisherFollower> Publishers { get; set; }
-    public ICollection<BookReview> BookReviews { get; set; }
-    public ICollection<BookSeriesReview> BookSeriesReviews { get; set; }
+    public IReadOnlyCollection<UserClaim> Claims => _claims;
+    public ICollection<UserRole> Roles => _roles;
+    public ICollection<UserLogin> Logins => _logins;
+    public ICollection<UserToken> Tokens => _tokens;
+    public ICollection<UserGenre> Genres => _genres;
+    public ICollection<BookShelf> Shelves => _shelves;
+    public ICollection<QuoteCollection> QuoteCollections => _quotes;
+    public ICollection<GroupMembership> Memberships => _memberships;
+    public ICollection<GroupMembershipRequest> MembershipRequests => _membershipRequests;
+    public ICollection<GroupMembershipRequest> ApprovedMembershipRequests => _approvedMembershipRequests;
+    public ICollection<BookSeriesFollower> BookSeries => _bookSeries;
+    public ICollection<PublisherFollower> Publishers => _publishers;
+    public ICollection<BookReview> BookReviews => _bookReviewws;
+    public ICollection<BookSeriesReview> BookSeriesReviews => _bookSeriesReviewws;
 
     #endregion Navigation
 
@@ -83,19 +92,11 @@ public sealed class User : IdentityUser, ISoftDelete, IAuditableEntity
         return refreshToken;
     }
 
-    public void SetFirstname(string name)
+    public void SetPersonalInfo(string firstName, string lastName, DateTime birthdate)
     {
-        if(!string.IsNullOrWhiteSpace(name))
+        if(!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
         {
-            Firstname = name;
-        }
-    }
-    
-    public void SetLastname(string name)
-    {
-        if(!string.IsNullOrWhiteSpace(name))
-        {
-            Lastname = name;
+            PersonalInfo = PersonalInfo.Create(firstName, lastName, birthdate);
         }
     }
     

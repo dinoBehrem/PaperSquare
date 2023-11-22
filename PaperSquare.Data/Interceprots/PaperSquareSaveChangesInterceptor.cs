@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using PaperSquare.Core.Domain.Common;
+using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 
 namespace PaperSquare.Data.Interceprots;

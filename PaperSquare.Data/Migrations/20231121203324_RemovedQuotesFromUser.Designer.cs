@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Data.Data;
@@ -11,9 +12,11 @@ using PaperSquare.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231121203324_RemovedQuotesFromUser")]
+    partial class RemovedQuotesFromUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -429,7 +432,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesFollowers");
+                    b.ToTable("BookSeriesFollower");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookSeriesReview", b =>
@@ -1002,6 +1005,9 @@ namespace PaperSquare.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -1027,6 +1033,10 @@ namespace PaperSquare.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -1035,6 +1045,10 @@ namespace PaperSquare.Data.Migrations
 
                     b.Property<DateTime?>("LastModifiedOnUtc")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -1468,25 +1482,6 @@ namespace PaperSquare.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Identity.User", b =>
-                {
-                    b.OwnsOne("PaperSquare.Core.Domain.PersonalInfo", "PersonalInfo", b1 =>
-                        {
-                            b1.Property<string>("UserId")
-                                .HasColumnType("text");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("PersonalInfo")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Identity.UserClaim", b =>

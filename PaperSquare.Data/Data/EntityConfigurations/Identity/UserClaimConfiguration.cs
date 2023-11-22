@@ -8,7 +8,7 @@ public class UserClaimConfiguration : IEntityTypeConfiguration<UserClaim>
 {
     public void Configure(EntityTypeBuilder<UserClaim> builder)
     {
-        builder.ToTable(nameof(UserClaim));
+        builder.ToTable("UserClaims");
 
         builder.HasKey(userClaim => userClaim.Id);
         builder.HasOne(userClaim => userClaim.User).WithMany(user => user.Claims).HasForeignKey(userClaim => userClaim.UserId).IsRequired();

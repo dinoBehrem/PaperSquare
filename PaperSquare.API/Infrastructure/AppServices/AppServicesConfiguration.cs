@@ -9,7 +9,6 @@ public static class AppServicesConfiguration
     {
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

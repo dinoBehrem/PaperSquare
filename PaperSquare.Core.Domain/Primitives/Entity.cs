@@ -1,4 +1,4 @@
-﻿namespace PaperSquare.Core.Domain.Common;
+﻿namespace PaperSquare.Core.Domain.Primitives;
 
 public abstract class Entity<TType> : IEquatable<Entity<TType>>
 {

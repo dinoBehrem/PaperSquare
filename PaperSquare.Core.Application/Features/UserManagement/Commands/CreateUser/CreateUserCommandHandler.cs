@@ -4,6 +4,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
+using PaperSquare.Core.Domain;
 using PaperSquare.Core.Domain.Entities.Identity;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Permissions;
@@ -17,14 +18,12 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
 {
     private readonly PaperSquareDbContext _context;
     private readonly UserManager<User> _userManager;
-    private readonly ICurrentUser _currentUser;
     private readonly IMapper _mapper;
 
-    public CreateUserCommandHandler(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper, ICurrentUser currentUser)
+    public CreateUserCommandHandler(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper)
     {
         _context = paperSquareDbContext;
         _userManager = userManager;
-        _currentUser = currentUser;
         _mapper = mapper;
     }
 
@@ -37,7 +36,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
             return Result.Error("Passwords doesn`t match!");
         }
 
-        var user = new User(request.firstName, request.lastName, request.username, request.email);
+        var user = new User(PersonalInfo.Create(request.firstName, request.lastName, new DateTime(1,1,2000)), request.username, request.email);
 
         var userCreationResult = await _userManager.CreateAsync(user, request.password);
 
@@ -55,6 +54,6 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Result.SuccessWithMessage("User successfully added!");
+        return Result.Success(_mapper.Map<UserDto>(user),"User successfully added!");
     }
 }

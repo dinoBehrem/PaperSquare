@@ -1,4 +1,4 @@
-﻿using PaperSquare.Core.Domain.Common;
+﻿using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Domain.Entities.Identity;
 
 namespace PaperSquare.Core.Domain.Entities.Domain;

@@ -8,11 +8,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable(nameof(User));
+        builder.ToTable("Users");
 
-        builder.Property(user => user.Firstname).IsRequired();
-        builder.Property(user => user.Lastname).IsRequired();
-        builder.Property(user => user.BirthDate).IsRequired();
+        builder.OwnsOne(user => user.PersonalInfo);
         builder.Property(user => user.Email).IsRequired();
 
         builder.HasMany(user => user.Claims)
@@ -49,12 +47,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne(bs => bs.User)
             .HasForeignKey(bs => bs.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
-        builder.HasMany(u => u.Quotes)
-            .WithOne(q => q.User)
-            .HasForeignKey(q => q.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
+                
         builder.HasMany(u => u.QuoteCollections)
             .WithOne(qc => qc.User)
             .HasForeignKey(qc => qc.UserId)

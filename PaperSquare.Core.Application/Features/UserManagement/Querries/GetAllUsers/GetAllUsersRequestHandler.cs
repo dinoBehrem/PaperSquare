@@ -35,12 +35,12 @@ public sealed class GetAllUsersRequestHandler : IRequestHandler<GetAllUsersReque
 
         if (!string.IsNullOrWhiteSpace(search.firstName))
         {
-            filteredQuery = filteredQuery.Where(user => user.Firstname.ToLower().Contains(search.firstName.ToLower()));
+            filteredQuery = filteredQuery.Where(user => user.PersonalInfo.FirstName.ToLower().Contains(search.firstName.ToLower()));
         }
 
         if (!string.IsNullOrWhiteSpace(search.lastName))
         {
-            filteredQuery = filteredQuery.Where(user => user.Lastname.ToLower().Contains(search.lastName.ToLower()));
+            filteredQuery = filteredQuery.Where(user => user.PersonalInfo.LastName.ToLower().Contains(search.lastName.ToLower()));
         }
 
         return filteredQuery;

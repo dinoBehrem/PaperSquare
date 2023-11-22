@@ -8,7 +8,7 @@ public class RoleClaimConfiguration : IEntityTypeConfiguration<RoleClaim>
 {
     public void Configure(EntityTypeBuilder<RoleClaim> builder)
     {
-        builder.ToTable(nameof(RoleClaim));
+        builder.ToTable("RoleClaims");
         builder.HasOne(roleClaim => roleClaim.Role).WithMany(role => role.Claims).HasForeignKey(roleClaim => roleClaim.RoleId).IsRequired();
     }
 }

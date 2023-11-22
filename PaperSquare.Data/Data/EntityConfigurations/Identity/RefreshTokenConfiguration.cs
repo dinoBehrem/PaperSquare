@@ -8,7 +8,7 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
     public void Configure(EntityTypeBuilder<RefreshToken> builder)
     {
-        builder.ToTable(nameof(RefreshToken));
+        builder.ToTable("RefreshTokens");
         builder.HasKey(token => token.Id);
 
         builder.Property(token => token.CreatedOnUtc).IsRequired();

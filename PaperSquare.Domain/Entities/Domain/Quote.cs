@@ -1,31 +1,27 @@
 ﻿using PaperSquare.Domain.Common;
 using PaperSquare.Domain.Entities.Identity;
 
-namespace PaperSquare.Domain.Entities.Domain
+namespace PaperSquare.Domain.Entities.Domain;
+
+public sealed class Quote : AuditableEntity<string>
 {
-    public sealed class Quote : BaseAuditableEntity<string>
-    {
-        public Quote(string id) : base(id) { }
+    public Quote(string id) : base(id) { }
 
-        #region Properties
+    #region Properties
 
-        public string Content { get; set; }
-        public bool IsFavourite { get; set; }
-        public bool IsDeleted { get; set; }
+    public string Content { get; set; }
+    public bool IsFavourite { get; set; }
+    public bool IsDeleted { get; set; }
 
-        #endregion Properties
+    #endregion Properties
 
-        #region Navigation
+    #region Navigation
 
-        public Book Book { get; set; }
-        public string BookId { get; set; }
+    public Book Book { get; set; }
+    public string BookId { get; set; }
 
-        public User User { get; set; }
-        public string UserId { get; set; }
+    public QuoteCollection QuoteCollection { get; set; }
+    public string QuoteCollectionId { get; set; }
 
-        public QuoteCollection QuoteCollection { get; set; }
-        public string QuoteCollectionId { get; set; }
-
-        #endregion Navigation
-    }
+    #endregion Navigation
 }

@@ -1,4 +1,4 @@
-﻿namespace PaperSquare.Core.Domain.Common;
+﻿namespace PaperSquare.Core.Domain.Primitives;
 
 public interface IAuditableEntity
 {

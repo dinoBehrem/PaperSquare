@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
 using AutoMapper;
+using Bogus.DataSets;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
@@ -40,8 +41,7 @@ public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand
             throw new NotFoundEntityException($"User with id: '{request.id}', not found!", typeof(User));
         }
 
-        user.SetFirstname(request.firstName);
-        user.SetLastname(request.lastName);
+        user.SetPersonalInfo(request.firstName, request.lastName, DateTime.UtcNow);
         user.SetEmail(request.email);
         
         await _context.SaveChangesAsync();

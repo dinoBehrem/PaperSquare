@@ -18,12 +18,7 @@ public class QuoteConfiguration : IEntityTypeConfiguration<Quote>
             .WithMany(b => b.Quotes)
             .HasForeignKey(q => q.BookId)
             .OnDelete(DeleteBehavior.NoAction);
-        
-        builder.HasOne(q => q.User)
-            .WithMany(b => b.Quotes)
-            .HasForeignKey(q => q.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
-        
+                
         builder.HasOne(q => q.QuoteCollection)
             .WithMany(b => b.Quotes)
             .HasForeignKey(q => q.QuoteCollectionId)

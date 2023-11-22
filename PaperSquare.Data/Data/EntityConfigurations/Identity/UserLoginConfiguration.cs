@@ -8,7 +8,7 @@ namespace PaperSquare.Data.Data.EntityConfigurations.Identity
     {
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
-            builder.ToTable(nameof(UserLogin));
+            builder.ToTable("UserLogins");
             builder.HasOne(userLogin => userLogin.User).WithMany(user => user.Logins).HasForeignKey(userLogin => userLogin.UserId).IsRequired();
         }
     }

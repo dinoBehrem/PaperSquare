@@ -31,7 +31,7 @@ public sealed class PaperSquareSaveChangesInterceptor: SaveChangesInterceptor
             switch(entry.State)
             {
                 case EntityState.Added:
-                    entry.Property(e => e.CreatedBy).CurrentValue = _currentUser.Id;
+                    entry.Property(e => e.CreatedBy).CurrentValue = "system";
                     entry.Property(e => e.CreatedOnUtc).CurrentValue = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:

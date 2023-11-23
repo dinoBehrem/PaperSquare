@@ -9,7 +9,7 @@ public sealed class PersonalInfo : ValueObject
     public string LastName { get; }
     public DateTime Birthdate { get; }
 
-    public PersonalInfo(){}
+    private PersonalInfo(){}
     
     private PersonalInfo(string firstName, string lastName, DateTime birthdate)
     {
@@ -37,7 +37,7 @@ public sealed class PersonalInfo : ValueObject
             throw new Exception($"Last name can contain up to {PersonalInfoConstraints.Length} characters!");
         }
 
-        if(birthdate.Year - DateTime.UtcNow.Year < PersonalInfoConstraints.MinimalAge)
+        if(DateTime.UtcNow.Year - birthdate.Year < PersonalInfoConstraints.MinimalAge)
         {
             throw new Exception($"You need to be over {PersonalInfoConstraints.MinimalAge} to create account!");
         }

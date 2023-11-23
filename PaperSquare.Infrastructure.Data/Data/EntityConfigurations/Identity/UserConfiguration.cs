@@ -1,18 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
-using PaperSquare.Data.Generators;
 
 namespace PaperSquare.Data.Data.EntityConfigurations.Identity;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
 
+        builder.HasKey(u => u.Id);
+
         builder.OwnsOne(user => user.PersonalInfo)
-            .HasData(UsersGenerator.Generator.PersonalInfos);
+            .Property(pi => pi.FirstName)
+            .IsRequired();
+        
+        builder.OwnsOne(user => user.PersonalInfo)
+            .Property(pi => pi.LastName)
+            .IsRequired();
+        
+        builder.OwnsOne(user => user.PersonalInfo)
+            .Property(pi => pi.Birthdate)
+            .IsRequired();
+
         builder.Property(user => user.Email).IsRequired();
 
         builder.HasMany(user => user.Claims)
@@ -90,6 +101,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
            .HasForeignKey(bsr => bsr.UserId)
            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasData(UsersGenerator.Generator.Users);
+        //builder.HasData(UsersGenerator.Generator.Users);
     }
 }

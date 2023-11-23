@@ -13,7 +13,7 @@ public static class GetAllUsersEndpoint
     {
         group.MapGet("get-all", GetAllUsers)
             .AllowAnonymous()
-            .Produces<ApiResponse<IEnumerable<UserDto>>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiResponse<IEnumerable<UserResponse>>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
 

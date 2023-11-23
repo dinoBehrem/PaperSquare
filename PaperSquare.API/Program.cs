@@ -8,7 +8,6 @@ using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Middlewares.RateLimiting;
 using PaperSquare.Core.Application;
-using PaperSquare.Core.Application.Profiles;
 using PaperSquare.Data.Interceprots;
 using Serilog;
 using PaperSquare.Infrastructure.Data;
@@ -48,7 +47,6 @@ builder.Services.SwaggerGenConfig();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 
-builder.Services.AddAutoMapper(typeof(UserProfile));
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
 builder.Services.AddAuthorizationConfig();

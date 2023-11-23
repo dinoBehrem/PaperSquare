@@ -1,11 +1,10 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using PaperSquare.Core.Application.Features.Common;
 using PaperSquare.Core.Application.Features.JWT.Dto;
-using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Application.Shared.Dto;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Infrastructure.Exceptions;
 using System.Security.Claims;
@@ -14,22 +13,22 @@ namespace PaperSquare.Core.Application.Features.Auth.Commands.RefreshToken;
 
 public sealed class RefreshTokenComandHandler : IRequestHandler<RefreshTokenCommand, Result<AuthResponse>>
 {
-    private readonly UserManager<User> _userManager;
+    private readonly IUserRepository _userRepository;
     private readonly TokenConfiguration _tokenConfiguration;
     private readonly ICurrentUser _currentUser;
 
-    public RefreshTokenComandHandler(UserManager<User> userManager, IOptions<TokenConfiguration> tokenConfiguration, ICurrentUser currentUser)
+    public RefreshTokenComandHandler(IUserRepository userRepository, IOptions<TokenConfiguration> tokenConfiguration, ICurrentUser currentUser)
     {
-        _userManager = userManager;
         _tokenConfiguration = tokenConfiguration.Value;
         _currentUser = currentUser;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
 
-        var user = await _userManager.FindByIdAsync(_currentUser.Id);
+        var user = await _userRepository.GetUserWithRefreshTokensAndRolesAsync(_currentUser.Id, cancellationToken);
 
         if (user is null || user.IsDeleted)
         {

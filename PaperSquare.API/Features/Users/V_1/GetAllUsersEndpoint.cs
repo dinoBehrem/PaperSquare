@@ -20,10 +20,10 @@ public static class GetAllUsersEndpoint
         return group;
     }
 
-    public static async Task<Ok<ApiResponse<IEnumerable<UserDto>>>> GetAllUsers([AsParameters] GetAllUsersRequest request, IMediator mediator)
+    public static async Task<Ok<ApiResponse<IEnumerable<UserResponse>>>> GetAllUsers([AsParameters] GetAllUsersRequest request, IMediator mediator)
     {
         var result = await mediator.Send(request);
 
-        return TypedResults.Ok(new ApiResponse<IEnumerable<UserDto>>(result.Value));
+        return TypedResults.Ok(new ApiResponse<IEnumerable<UserResponse>>(result.Value));
     }
 }

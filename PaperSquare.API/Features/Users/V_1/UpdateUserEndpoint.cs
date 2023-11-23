@@ -14,7 +14,7 @@ public static class UpdateUserEndpoint
     {
         group.MapPut("update/{id}", UpdateUser)
             .RequireAuthorization()
-            .Produces<ApiResponse<UserDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiResponse<UserResponse>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
@@ -22,11 +22,11 @@ public static class UpdateUserEndpoint
         return group;
     }
 
-    public static async Task<Ok<ApiResponse<UserDto>>> UpdateUser([FromRoute] string id, [FromBody] UpdateUserRequest request, IMediator mediator)
+    public static async Task<Ok<ApiResponse<UserResponse>>> UpdateUser([FromRoute] string id, [FromBody] UpdateUserRequest request, IMediator mediator)
     {
         var result = await mediator.Send(new UpdateUserCommand(id, request.firstName, request.lastName, request.email));
 
-        return TypedResults.Ok(new ApiResponse<UserDto>(result.Value));
+        return TypedResults.Ok(new ApiResponse<UserResponse>(result.Value));
     }
 }
 

@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PaperSquare.Core.Permissions;
-using PaperSquare.Data.Data;
-using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Domain;
+using PaperSquare.Core.Domain.Entities.Domain;
+using PaperSquare.Infrastructure.Data.Data;
 
 namespace PaperSquare.IntegrationTest.WebApplicationBuilder;
 

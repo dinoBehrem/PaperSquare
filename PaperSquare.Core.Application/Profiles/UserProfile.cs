@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
-using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 
 namespace PaperSquare.Core.Application.Profiles;

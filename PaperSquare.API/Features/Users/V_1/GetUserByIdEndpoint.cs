@@ -14,7 +14,7 @@ public static class GetUserByIdEndpoint
     {
         group.MapGet("get-by-id", GetUserById)
             .RequireAuthorization(Permission.RegisteredUser)
-            .Produces<ApiResponse<UserDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiResponse<UserResponse>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
@@ -22,10 +22,10 @@ public static class GetUserByIdEndpoint
         return group;
     }
 
-    public static async Task<Ok<ApiResponse<UserDto>>> GetUserById([AsParameters] GetUserByIdRequest request, IMediator mediator)
+    public static async Task<Ok<ApiResponse<UserResponse>>> GetUserById([AsParameters] GetUserByIdRequest request, IMediator mediator)
     {
         var result = await mediator.Send(request);
 
-        return TypedResults.Ok(new ApiResponse<UserDto>(result.Value));
+        return TypedResults.Ok(new ApiResponse<UserResponse>(result.Value));
     }
 }

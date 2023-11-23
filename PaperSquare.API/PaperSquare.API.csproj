@@ -39,10 +39,11 @@
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj" />
     <ProjectReference Include="..\PaperSquare.Core.Application\PaperSquare.Core.Application.csproj" />
-    <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
+    <ProjectReference Include="..\PaperSquare.Infrastructure.Data\PaperSquare.Infrastructure.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\AppServices\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

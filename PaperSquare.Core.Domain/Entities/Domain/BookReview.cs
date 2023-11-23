@@ -1,4 +1,4 @@
-﻿using PaperSquare.Core.Domain.Entities.Identity;
+﻿using PaperSquare.Core.Domain.Entities.UserAggregate;
 
 namespace PaperSquare.Core.Domain.Entities.Domain;
 

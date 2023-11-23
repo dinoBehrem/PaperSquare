@@ -15,13 +15,13 @@
     <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj" />
-    <ProjectReference Include="..\PaperSquare.Data\PaperSquare.Data.csproj" />
   </ItemGroup>
 
 </Project>

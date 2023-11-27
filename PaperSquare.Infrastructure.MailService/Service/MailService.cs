@@ -1,8 +1,6 @@
-﻿using MailKit.Net.Smtp;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MimeKit;
 using PaperSquare.Infrastructure.MailService.Models;
-using System.Net.Mail;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace PaperSquare.Infrastructure.MailService.Service;
@@ -44,22 +42,21 @@ internal sealed class MailService : IMailService
         {
             try
             {
-                smtpClient.Connect(_mailSettings.Host, _mailSettings.Port);
+                await smtpClient.ConnectAsync(_mailSettings.Host, _mailSettings.Port);
 
-                smtpClient.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+                await smtpClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
 
                 await smtpClient.SendAsync(email);
+
+                await smtpClient.DisconnectAsync(true);
+
+                //smtpClient?.Dispose();
 
                 return true;
             }
             catch (Exception ex)
             {
                 return false;
-            }
-            finally
-            {
-                smtpClient.Disconnect(true);
-                smtpClient?.Dispose();
             }
         }
     }

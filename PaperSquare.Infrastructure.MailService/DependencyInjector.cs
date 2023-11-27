@@ -12,6 +12,7 @@ public static class DependencyInjector
     {
         services.Configure<EmailConfiguration>(opt => configuration.GetSection(SECTION).Bind(opt));
         services.AddScoped<IMailService, MailService.Service.MailService>();
+
         return services;
     }
 }

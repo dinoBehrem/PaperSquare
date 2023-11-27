@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Domain.Entities.Domain;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 
 namespace PaperSquare.Core.Application.Shared;
 
@@ -23,4 +24,12 @@ public interface IPaperSquareDbContext
     public DbSet<GroupMembershipRequest> GroupMembershipRequests { get; set; }
     public DbSet<PublisherFollower> PublisherFollowers { get; set; }
     public DbSet<BookReview> BookReviews { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<UserClaim> UserClaims { get; set; }
+    public DbSet<UserLogin> UserLogins { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
+    public DbSet<UserToken> UserTokens { get; set; }
+    public DbSet<Role> Roles { get; set; }
+
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

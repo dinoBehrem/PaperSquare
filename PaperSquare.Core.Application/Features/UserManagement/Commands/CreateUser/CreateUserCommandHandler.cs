@@ -1,34 +1,29 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
-using PaperSquare.Core.Domain.Entities.Identity;
-using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
+using PaperSquare.Core.Application.Mapper.UserMappings;
+using PaperSquare.Core.Application.Shared;
+using PaperSquare.Core.Domain;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Permissions;
-using PaperSquare.Data.Data;
 using PaperSquare.Infrastructure.Exceptions;
-using System.Collections.Generic;
 
 namespace PaperSquare.Core.Application.Features.UserManagement.Commands.CreateUser;
 
-public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<UserDto>>
+public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<UserResponse>>
 {
-    private readonly PaperSquareDbContext _context;
+    private readonly IPaperSquareDbContext _context;
     private readonly UserManager<User> _userManager;
-    private readonly ICurrentUser _currentUser;
-    private readonly IMapper _mapper;
 
-    public CreateUserCommandHandler(PaperSquareDbContext paperSquareDbContext, UserManager<User> userManager, IMapper mapper, ICurrentUser currentUser)
+    public CreateUserCommandHandler(IPaperSquareDbContext paperSquareDbContext, UserManager<User> userManager)
     {
         _context = paperSquareDbContext;
         _userManager = userManager;
-        _currentUser = currentUser;
-        _mapper = mapper;
     }
 
-    public async Task<Result<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<UserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
 
@@ -37,7 +32,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
             return Result.Error("Passwords doesn`t match!");
         }
 
-        var user = new User(request.firstName, request.lastName, request.username, request.email);
+        var user = new User(PersonalInfo.Create(request.firstName, request.lastName, new DateTime(2000, 1, 1)), request.username, request.email);
 
         var userCreationResult = await _userManager.CreateAsync(user, request.password);
 
@@ -55,6 +50,6 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return Result.SuccessWithMessage("User successfully added!");
+        return Result.Success(user.ToUserResponse(), "User successfully added!");
     }
 }

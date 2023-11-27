@@ -45,7 +45,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadFromJsonAsync<IEnumerable<UserDto>>();
+            var content = await response.Content.ReadFromJsonAsync<IEnumerable<UserResponse>>();
 
             // Assert
 
@@ -79,7 +79,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadFromJsonAsync<UserDto>();
+            var content = await response.Content.ReadFromJsonAsync<UserResponse>();
 
             // Assert
 
@@ -147,7 +147,7 @@ namespace PaperSquare.IntegrationTest.System.API.Users.V_1
 
             response.EnsureSuccessStatusCode();
 
-            var content = response.Content.ReadFromJsonAsync<UserDto>();
+            var content = response.Content.ReadFromJsonAsync<UserResponse>();
 
             // Assert
 

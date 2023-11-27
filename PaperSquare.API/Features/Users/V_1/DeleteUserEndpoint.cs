@@ -15,7 +15,7 @@ public static class DeleteUserEndpoint
     {
         group.MapDelete("delete/{id}", DeleteUser)
             .RequireAuthorization(Permission.RegisteredUser, Permission.FullAccess)
-            .Produces<ApiResponse<UserDto>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+            .Produces<ApiSuccessResponse<UserResponse>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)
             .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
@@ -23,10 +23,10 @@ public static class DeleteUserEndpoint
         return group;
     }
 
-    public static async Task<Ok<ApiResponse<UserDto>>> DeleteUser([FromBody] DeleteUserCommand command, IMediator mediator)
+    public static async Task<Ok<ApiSuccessResponse<UserResponse>>> DeleteUser([FromBody] DeleteUserCommand command, IMediator mediator)
     {
         var result = await mediator.Send(command);
 
-        return TypedResults.Ok(new ApiResponse<UserDto>(result.Value));
+        return TypedResults.Ok(new ApiSuccessResponse<UserResponse>(result.Value));
     }
 }

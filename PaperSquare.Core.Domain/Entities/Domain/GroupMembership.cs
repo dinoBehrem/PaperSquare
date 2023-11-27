@@ -1,5 +1,5 @@
-﻿using PaperSquare.Core.Domain.Common;
-using PaperSquare.Core.Domain.Entities.Identity;
+﻿using PaperSquare.Core.Domain.Primitives;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using static PaperSquare.Shared.Enums.UserEnums;
 
 namespace PaperSquare.Core.Domain.Entities.Domain;

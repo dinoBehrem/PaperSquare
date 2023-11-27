@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PaperSquare.API.Shared;
 using PaperSquare.Core.Application.Features.Auth.Commands.RefreshToken;
-using PaperSquare.Core.Application.Features.Common;
+using PaperSquare.Core.Application.Shared.Dto;
 using System.Net.Mime;
 
 namespace PaperSquare.API.Features.Auth.V_1;

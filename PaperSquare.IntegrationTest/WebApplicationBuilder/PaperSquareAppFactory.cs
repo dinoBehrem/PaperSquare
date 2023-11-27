@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PaperSquare.Core.Permissions;
-using PaperSquare.Data.Data;
-using PaperSquare.Core.Domain.Entities.Identity;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
+using PaperSquare.Core.Domain;
+using PaperSquare.Core.Domain.Entities.Domain;
+using PaperSquare.Infrastructure.Data.Data;
 
 namespace PaperSquare.IntegrationTest.WebApplicationBuilder;
 
@@ -61,7 +63,7 @@ public class PaperSquareAppFactory<TEntryPoint> : WebApplicationFactory<Program>
             for (int i = 1; i <= 10; i++)
             {
                 // TO DO: 
-                dbContext.Users.Add(new User($"First name -- {i}", $"Last name -- {i}", $"userName -- {i}", $"testuser{i}@example.com"));
+                dbContext.Users.Add(new User(PersonalInfo.Create($"First name -- {i}", $"Last name -- {i}", new DateTime(1,1, 2000 - i)), $"userName -- {i}", $"testuser{i}@example.com"));
             }
         }
 

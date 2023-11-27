@@ -1,6 +1,6 @@
 ﻿using Ardalis.Result;
 using MediatR;
-using PaperSquare.Core.Application.Features.Common;
+using PaperSquare.Core.Application.Shared.Dto;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.Login;
 

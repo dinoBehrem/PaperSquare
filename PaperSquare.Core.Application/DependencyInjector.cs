@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PaperSquare.Core.Application.Repositories;
-using PaperSquare.Core.Application.Shared;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 
 namespace PaperSquare.Core.Application;

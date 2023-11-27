@@ -46,6 +46,7 @@ builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
 builder.Services.AddDataDependencies();
 builder.Services.AddApplicationDependencies();
+builder.Services.AddMailDependencies(configuration);
 
 var app = builder.Build();
 

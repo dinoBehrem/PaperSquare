@@ -1,24 +1,26 @@
 ﻿using Ardalis.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Application.Mapper.UserMappings;
+using PaperSquare.Core.Application.Shared;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Infrastructure.Exceptions;
 
-namespace PaperSquare.Core.Application.Features.UserManagement.Querries.GetUserById;
+namespace PaperSquare.Core.Application.Features.UserManagement.Queries.GetUserById;
 
 public sealed class GetUserByIdRequestHandler : IRequestHandler<GetUserByIdRequest, Result<UserResponse>>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IPaperSquareDbContext _context;
 
-    public GetUserByIdRequestHandler(IUserRepository userRepository)
+    public GetUserByIdRequestHandler(IPaperSquareDbContext context)
     {
-        _userRepository = userRepository;
+        _context = context;
     }
 
     public async Task<Result<UserResponse>> Handle(GetUserByIdRequest request, CancellationToken cancellationToken)
     {
-        var entity = await _userRepository.GetUserAsync(request.id, cancellationToken);
+        var entity = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Equals(request.id) && !u.IsDeleted, cancellationToken);
 
         if (entity is null)
         {

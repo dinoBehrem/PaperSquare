@@ -3,9 +3,9 @@ using MediatR;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Application.Shared.Dto;
 
-namespace PaperSquare.Core.Application.Features.UserManagement.Querries.GetAllUsers;
+namespace PaperSquare.Core.Application.Features.UserManagement.Queries.GetAllUsers;
 
-public sealed record GetAllUsersRequest : SearchRequest, IRequest<Result<IEnumerable<UserResponse>>>
+public sealed record GetAllUsersRequest : SearchRequest, IRequest<Result<List<UserResponse>>>
 {
     public string? firstName { get; init; }
     public string? lastName { get; init; }

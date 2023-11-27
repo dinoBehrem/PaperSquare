@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 
-namespace PaperSquare.Data.Interceprots;
+namespace PaperSquare.Infrastructure.Data.Interceptors;
 
-public sealed class PaperSquareSaveChangesInterceptor: SaveChangesInterceptor
+public sealed class PaperSquareSaveChangesInterceptor : SaveChangesInterceptor
 {
     private readonly ICurrentUser _currentUser;
 
@@ -19,19 +19,26 @@ public sealed class PaperSquareSaveChangesInterceptor: SaveChangesInterceptor
     {
         DbContext? dbContrext = eventData.Context;
 
-        if(dbContrext is null) 
+        if (dbContrext is null)
         {
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
         var entries = dbContrext.ChangeTracker.Entries<IAuditableEntity>();
 
-        foreach (EntityEntry<IAuditableEntity> entry in entries)
+        foreach (var entry in entries)
         {
-            switch(entry.State)
+            switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Property(e => e.CreatedBy).CurrentValue = "system";
+                    if (!string.IsNullOrWhiteSpace(_currentUser.Id))
+                    {
+                        entry.Property(e => e.CreatedBy).CurrentValue = _currentUser.Id;
+                    }
+                    else if (entry.Entity is User entity)
+                    {
+                        entry.Property(e => e.CreatedBy).CurrentValue = entity.Id;
+                    }
                     entry.Property(e => e.CreatedOnUtc).CurrentValue = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:

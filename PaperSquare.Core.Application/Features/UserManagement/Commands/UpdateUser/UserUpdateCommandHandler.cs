@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Application.Mapper.UserMappings;
 using PaperSquare.Core.Application.Shared;
@@ -32,7 +33,7 @@ public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand
             throw new NotFoundException("User not found!", nameof(User));
         }
 
-        var user = await _userRepository.GetUserAsync(request.id, cancellationToken);
+        var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == request.id, cancellationToken);
 
         if (user is null)
         {
@@ -41,7 +42,7 @@ public sealed class UserUpdateCommandHandler : IRequestHandler<UpdateUserCommand
 
         user.SetPersonalInfo(request.firstName, request.lastName, DateTime.UtcNow);
         user.SetEmail(request.email);
-        
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return Result.Success(user.ToUserResponse());

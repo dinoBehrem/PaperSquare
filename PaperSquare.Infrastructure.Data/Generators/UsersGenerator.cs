@@ -49,14 +49,15 @@ public class UsersGenerator
             .RuleFor(u => u.LastModifiedBy, (_, u) => null)
             .RuleFor(u => u.PasswordHash, _ => PASSWORD_HASH)
             .RuleFor(u => u.SecurityStamp, _ => SECURITY_STAMP)
-            .RuleFor(u => u.ConcurrencyStamp, _ => Guid.NewGuid().ToString());
+            .RuleFor(u => u.ConcurrencyStamp, _ => Guid.NewGuid().ToString())
+            .UseSeed(1);
     }
 
     public List<User> InitUsersData()
     {
         return GetUserGenerator().Generate(NUMBER_OF_USERS);
     }
-    
+
     public List<PersonalInfo> InitPersonalInfos()
     {
         return GetUserPersonalInfoGenerator().Generate(NUMBER_OF_USERS);

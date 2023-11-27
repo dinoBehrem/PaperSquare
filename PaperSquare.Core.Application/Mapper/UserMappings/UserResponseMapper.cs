@@ -7,6 +7,6 @@ internal static class UserResponseMapper
 {
     internal static UserResponse ToUserResponse(this User user)
     {
-        return new UserResponse(user.Id, user.UserName, user.PersonalInfo);
+        return new UserResponse(user.Id, user.UserName, user.PersonalInfo, user.CreatedBy);
     }
 }

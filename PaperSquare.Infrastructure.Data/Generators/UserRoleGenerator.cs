@@ -9,7 +9,7 @@ namespace PaperSquare.Data.Generators
 
         public static UserRoleGenerator Generator { get { return Instance; } }
 
-        public List<UserRole> UserRoles = new ();
+        public List<UserRole> UserRoles = new();
 
         private UserRoleGenerator()
         {
@@ -23,16 +23,17 @@ namespace PaperSquare.Data.Generators
                 .RuleFor(ur => ur.RoleId, (f, _) =>
                 {
                     return f.PickRandom(RolesGenerator.Generator.Roles).Id;
-                });
+                })
+                .UseSeed(1);
         }
 
-        private List<UserRole> InitUserRolesData() 
+        private List<UserRole> InitUserRolesData()
         {
             foreach (var user in UsersGenerator.Generator.Users)
             {
                 UserRoles.Add(GetUserRolesGenerator(user.Id).Generate());
-            }            
-                        
+            }
+
             return UserRoles;
         }
     }

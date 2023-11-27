@@ -2,4 +2,4 @@
 
 namespace PaperSquare.Core.Application.Features.UserManagement.Dto;
 
-public sealed record UserResponse(string id, string username, PersonalInfo personalInfo);
+public sealed record UserResponse(string id, string username, PersonalInfo personalInfo, string? createdBy = "");

@@ -28,7 +28,7 @@
 //     public UserServiceTest()
 //     {
 //         // Mocking dependencies
-                     
+
 //         _dbContext = GetDatabaseContext().Result;
 //         _userManager = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
 //         _mapper = CreateMapper(_mapper);
@@ -138,7 +138,7 @@
 //         };
 
 //         _userManager.Setup(_ => _.CreateAsync(It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
-        
+
 //         _userManager.Setup(_ => _.AddToRoleAsync(It.IsAny<User>(), AppRoles.REGISTERED_USER)).ReturnsAsync(IdentityResult.Success);
 
 //         const string successMessage = "User successfully added!";
@@ -387,7 +387,7 @@
 //             // Act
 
 //             var serviceResult = await _userService.Delete(userId);
-                            
+
 //         }
 //         catch (NotFoundEntityException exc)
 //         {

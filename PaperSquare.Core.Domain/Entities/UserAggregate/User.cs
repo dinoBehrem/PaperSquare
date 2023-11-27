@@ -94,16 +94,16 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
 
     public void SetPersonalInfo(string firstName, string lastName, DateTime birthdate)
     {
-        if(!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
+        if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName))
         {
             PersonalInfo = PersonalInfo.Create(firstName, lastName, birthdate);
         }
     }
-    
+
     public void SetEmail(string email)
     {
         // TO DO: Check if email is valid
-        if(!string.IsNullOrWhiteSpace(email))
+        if (!string.IsNullOrWhiteSpace(email))
         {
             Email = email;
             NormalizedEmail = email.ToUpper();

@@ -1,6 +1,5 @@
 using AspNetCoreRateLimit;
 using FluentValidation.AspNetCore;
-using Microsoft.EntityFrameworkCore;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.Endpoints;
 using PaperSquare.API.Infrastructure.HttpContext;
@@ -8,11 +7,9 @@ using PaperSquare.API.Infrastructure.Middlewares;
 using PaperSquare.API.Infrastructure.SwaggerGen;
 using PaperSquare.API.Middlewares.RateLimiting;
 using PaperSquare.Core.Application;
-using PaperSquare.Data.Interceprots;
 using Serilog;
 using PaperSquare.Infrastructure.Data;
-using PaperSquare.Infrastructure.Data.Data;
-using PaperSquare.Data.Data;
+using PaperSquare.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,14 +28,7 @@ builder.Host.UseSerilog(logger);
 
 // Add services to the container.
 
-builder.Services.AddScoped<PaperSquareSaveChangesInterceptor>();
-builder.Services.AddDbContext<PaperSquareDbContext>((serviceProvider, options) =>
-{
-    var saveChangesInterceptor = serviceProvider.GetService<PaperSquareSaveChangesInterceptor>()!;
-
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DevBase"));
-    options.AddInterceptors(saveChangesInterceptor);
-});
+builder.Services.AddDbContextConfiguration(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -82,7 +72,7 @@ app.UseAuthorization();
 
 app.UseMiddlewareHandlers();
 
-app.MigrateDatabase();
+//app.MigrateDatabase();
 
 app.UseAppEndpoints();
 

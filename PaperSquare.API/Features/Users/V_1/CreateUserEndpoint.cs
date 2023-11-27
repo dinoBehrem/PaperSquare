@@ -14,17 +14,17 @@ public static class CreateUserEndpoint
     {
         group.MapPost("create", CreateUser)
            .AllowAnonymous()
-           .Produces<ApiResponse<UserResponse>>(StatusCodes.Status201Created, MediaTypeNames.Application.Json)
+           .Produces<ApiSuccessResponse<UserResponse>>(StatusCodes.Status201Created, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status500InternalServerError, MediaTypeNames.Application.Json);
 
         return group;
     }
 
-    public static async Task<Created<ApiResponse<UserResponse>>> CreateUser([FromBody] CreateUserCommand command, IMediator mediator)
+    public static async Task<Created<ApiSuccessResponse<UserResponse>>> CreateUser([FromBody] CreateUserCommand command, IMediator mediator)
     {
         var result = await mediator.Send(command);
 
-        return TypedResults.Created("", new ApiResponse<UserResponse>(result.Value));
+        return TypedResults.Created(new Uri("https://localhost:7242"), new ApiSuccessResponse<UserResponse>(result.Value));
     }
 }

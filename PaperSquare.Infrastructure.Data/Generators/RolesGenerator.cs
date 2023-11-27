@@ -22,7 +22,8 @@ namespace PaperSquare.Data.Generators
                 .RuleFor(r => r.Id, _ => Guid.NewGuid().ToString())
                 .RuleFor(r => r.Name, _ => name)
                 .RuleFor(r => r.NormalizedName, _ => name.ToUpper())
-                .RuleFor(r => r.ConcurrencyStamp, _ => Guid.NewGuid().ToString());
+                .RuleFor(r => r.ConcurrencyStamp, _ => Guid.NewGuid().ToString())
+                .UseSeed(1);
         }
 
         private List<Role> InitRolesData()

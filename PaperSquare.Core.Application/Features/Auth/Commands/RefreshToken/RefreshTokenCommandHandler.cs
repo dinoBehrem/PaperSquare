@@ -1,36 +1,39 @@
 ﻿using Ardalis.GuardClauses;
 using Ardalis.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PaperSquare.Core.Application.Features.JWT.Dto;
+using PaperSquare.Core.Application.Shared;
 using PaperSquare.Core.Application.Shared.Dto;
-using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Infrastructure.Exceptions;
 using System.Security.Claims;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.RefreshToken;
 
-public sealed class RefreshTokenComandHandler : IRequestHandler<RefreshTokenCommand, Result<AuthResponse>>
+public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, Result<AuthResponse>>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IPaperSquareDbContext _context;
     private readonly TokenConfiguration _tokenConfiguration;
     private readonly ICurrentUser _currentUser;
 
-    public RefreshTokenComandHandler(IUserRepository userRepository, IOptions<TokenConfiguration> tokenConfiguration, ICurrentUser currentUser)
+    public RefreshTokenCommandHandler(IPaperSquareDbContext context, IOptions<TokenConfiguration> tokenConfiguration, ICurrentUser currentUser)
     {
         _tokenConfiguration = tokenConfiguration.Value;
         _currentUser = currentUser;
-        _userRepository = userRepository;
+        _context = context;
     }
 
     public async Task<Result<AuthResponse>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         Guard.Against.Null(request, nameof(request));
 
-        var user = await _userRepository.GetUserWithRefreshTokensAndRolesAsync(_currentUser.Id, cancellationToken);
+        var user = await _context.Users.Include(u => u.RefreshTokens)
+                                       .Include(u => u.Roles)
+                                       .FirstOrDefaultAsync(u => u.Equals(_currentUser.Id), cancellationToken);
 
-        if (user is null || user.IsDeleted)
+        if (user is null)
         {
             throw new InternalServerException("Unknown error occured!");
         }

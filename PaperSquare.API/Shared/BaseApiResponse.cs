@@ -14,11 +14,11 @@ public abstract class BaseApiResponse
     }
 }
 
-public sealed class ApiResponse<TEntity> : BaseApiResponse
+public sealed class ApiSuccessResponse<TEntity> : BaseApiResponse
 {
     public TEntity? Data { get; set; }
 
-    public ApiResponse(TEntity data, HttpStatusCode statusCode = HttpStatusCode.OK, bool isSuccess = true) : base(statusCode, isSuccess)
+    public ApiSuccessResponse(TEntity data, HttpStatusCode statusCode = HttpStatusCode.OK, bool isSuccess = true) : base(statusCode, isSuccess)
     {
         Data = data;
     }

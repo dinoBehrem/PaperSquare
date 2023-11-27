@@ -12,17 +12,12 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(u => u.Id);
 
-        builder.OwnsOne(user => user.PersonalInfo)
-            .Property(pi => pi.FirstName)
-            .IsRequired();
-        
-        builder.OwnsOne(user => user.PersonalInfo)
-            .Property(pi => pi.LastName)
-            .IsRequired();
-        
-        builder.OwnsOne(user => user.PersonalInfo)
-            .Property(pi => pi.Birthdate)
-            .IsRequired();
+        builder.OwnsOne(user => user.PersonalInfo, pi =>
+        {
+            pi.Property(pi => pi.FirstName).IsRequired();
+            pi.Property(pi => pi.LastName).IsRequired();
+            pi.Property(pi => pi.Birthdate).IsRequired();
+        });
 
         builder.Property(user => user.Email).IsRequired();
 
@@ -55,32 +50,32 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne(ug => ug.User)
             .HasForeignKey(ug => ug.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.Shelves)
             .WithOne(bs => bs.User)
             .HasForeignKey(bs => bs.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-                
+
         builder.HasMany(u => u.QuoteCollections)
             .WithOne(qc => qc.User)
             .HasForeignKey(qc => qc.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.Memberships)
             .WithOne(gm => gm.User)
             .HasForeignKey(gm => gm.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.MembershipRequests)
             .WithOne(gmr => gmr.Requester)
             .HasForeignKey(gmr => gmr.RequesterId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.ApprovedMembershipRequests)
             .WithOne(gmr => gmr.Approver)
             .HasForeignKey(gmr => gmr.ApproverId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.BookSeries)
             .WithOne(bsf => bsf.Follower)
             .HasForeignKey(bsf => bsf.FollowerId)
@@ -90,17 +85,19 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
            .WithOne(pf => pf.User)
            .HasForeignKey(pf => pf.UserId)
            .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.BookReviews)
            .WithOne(br => br.User)
            .HasForeignKey(br => br.UserId)
            .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.HasMany(u => u.BookSeriesReviews)
            .WithOne(bsr => bsr.User)
            .HasForeignKey(bsr => bsr.UserId)
            .OnDelete(DeleteBehavior.Cascade);
 
+
+        builder.HasQueryFilter(u => !u.IsDeleted);
         //builder.HasData(UsersGenerator.Generator.Users);
     }
 }

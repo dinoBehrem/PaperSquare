@@ -15,6 +15,7 @@ public static class AuthEndpoints
 
         group.MapLogin();
         group.MapRefreshToken();
+        group.MapVerifyAccount();
 
         return routes;
     }

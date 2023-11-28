@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MimeKit;
 using PaperSquare.Infrastructure.MailService.Models;
-using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace PaperSquare.Infrastructure.MailService.Service;
 
@@ -24,7 +23,7 @@ internal sealed class MailService : IMailService
 
         // Add recipients of the email
         email.To.Add(emailData.recipient);
-
+        
         // Set the mail content
 
         // TO DO: Create email templte
@@ -38,17 +37,17 @@ internal sealed class MailService : IMailService
 
         // Send email
 
-        using (var smtpClient = new SmtpClient())
+        using (var smtpClient = new MailKit.Net.Smtp.SmtpClient())
         {
             try
             {
-                await smtpClient.ConnectAsync(_mailSettings.Host, _mailSettings.Port);
+                smtpClient.Connect(_mailSettings.Host, _mailSettings.Port);
 
-                await smtpClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
+                smtpClient.Authenticate(_mailSettings.UserName, _mailSettings.Password);
 
                 await smtpClient.SendAsync(email);
 
-                await smtpClient.DisconnectAsync(true);
+                smtpClient.Disconnect(true);
 
                 //smtpClient?.Dispose();
 

@@ -40,4 +40,8 @@
     <ProjectReference Include="..\PaperSquare.Infrastructure.MailService\PaperSquare.Infrastructure.MailService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>

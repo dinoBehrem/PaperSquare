@@ -2,6 +2,7 @@
 using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Domain.Entities.Domain;
 using System.Security.Cryptography;
+using PaperSquare.Core.Domain.Entities.UserAggregate.ValueObjects;
 
 namespace PaperSquare.Core.Domain.Entities.UserAggregate;
 
@@ -20,11 +21,13 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     #region Properties
 
     public PersonalInfo PersonalInfo { get; private set; }
+    public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes;
 
     #endregion Properties     
 
     #region Fields
 
+    private readonly List<VerificationCode> _verificationCodes = new List<VerificationCode>();
     private readonly List<RefreshToken> _refreshTokens = new List<RefreshToken>();
     private readonly List<UserClaim> _claims = new List<UserClaim>();
     private readonly List<UserRole> _roles = new List<UserRole>();
@@ -75,7 +78,21 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
 
     #endregion Audit
 
-    #region Methods
+    #region Behaviour
+
+    public void VerifyAccount(string code)
+    {
+        var verificationCode = VerificationCodes.FirstOrDefault(vc => vc.Code == code);
+
+        if (verificationCode is null && !verificationCode.IsValid && verificationCode.ExpiringDate < DateTime.UtcNow)
+        {
+            throw new Exception($"Verification code was not found!");
+        }
+
+        verificationCode.MarkAsInvalid();
+
+        EmailConfirmed = true;
+    }
 
     public RefreshToken AddRefreshToken(DateTime expiriationDate)
     {
@@ -115,5 +132,5 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
         IsDeleted = true;
     }
 
-    #endregion Methods
+    #endregion Behaviour
 }

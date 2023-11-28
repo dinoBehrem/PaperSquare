@@ -22,10 +22,6 @@ public sealed class PaperSquareSaveChangesInterceptor : SaveChangesInterceptor
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-
-
-        _mailService.SendMailAsync(new EmailData(new MailboxAddress("Dino", "dino_behrem@hotmail.com"), "Welcome mail!", "Welcome to the application!"));
-
         DbContext? dbContrext = eventData.Context;
 
         if (dbContrext is null)

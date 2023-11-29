@@ -29,7 +29,7 @@ public sealed class VerifyAccountCommandHandler : IRequestHandler<VerifyAccountC
 
         var user = await _userManager.FindByIdAsync(request.userId);
 
-        if (user is null && !user.IsDeleted)
+        if (user is null || !user.IsDeleted)
         {
             throw new NotFoundEntityException($"User was not found!", typeof(User));
         }

@@ -22,7 +22,7 @@ internal sealed class MailService : IMailService
         email.Sender = new MailboxAddress(_mailSettings.DisplayName, _mailSettings.From);
 
         // Add recipients of the email
-        email.To.Add(emailData.recipient);
+        email.To.Add(emailData.Recipient);
         
         // Set the mail content
 
@@ -30,8 +30,8 @@ internal sealed class MailService : IMailService
 
         var body = new BodyBuilder();
 
-        email.Subject = emailData.subject;
-        body.HtmlBody = emailData.content;
+        email.Subject = emailData.Subject;
+        body.HtmlBody = emailData.Content;
 
         email.Body = body.ToMessageBody();
 

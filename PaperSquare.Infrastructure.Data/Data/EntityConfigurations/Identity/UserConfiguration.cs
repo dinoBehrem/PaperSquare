@@ -12,6 +12,8 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(u => u.Id);
 
+        builder.Property(user => user.Email).IsRequired();
+
         builder.OwnsOne(u => u.PersonalInfo, pi =>
         {
             pi.Property(pi => pi.FirstName).IsRequired();

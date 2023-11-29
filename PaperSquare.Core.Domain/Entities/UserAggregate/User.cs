@@ -10,18 +10,21 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
 {
     public User() { }
 
-    public User(PersonalInfo personalInfo, string username, string email) : base(username)
+    private User(PersonalInfo personalInfo, string username, string email) : base(username)
     {
         PersonalInfo = personalInfo;
         UserName = username;
         Email = email;
         IsDeleted = false;
+
+        _verificationCodes.Add(VerificationCode.Create(email));
     }
 
     #region Properties
 
     public PersonalInfo PersonalInfo { get; private set; }
     public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes;
+    public IReadOnlyCollection<UserRole> Roles => _roles;
 
     #endregion Properties     
 
@@ -49,8 +52,7 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     #region Navigation
 
     public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens;
-    public IReadOnlyCollection<UserClaim> Claims => _claims;
-    public ICollection<UserRole> Roles => _roles;
+    public IReadOnlyCollection<UserClaim> Claims => _claims;   
     public ICollection<UserLogin> Logins => _logins;
     public ICollection<UserToken> Tokens => _tokens;
     public ICollection<UserGenre> Genres => _genres;
@@ -79,6 +81,13 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     #endregion Audit
 
     #region Behaviour
+
+    public static User Create(PersonalInfo personalInfo, string username, string email)
+    {
+        var user = new User(personalInfo, username, email);
+
+        return user;
+    }
 
     public void VerifyAccount(string code)
     {

@@ -10,6 +10,7 @@ using PaperSquare.Core.Application;
 using Serilog;
 using PaperSquare.Infrastructure.Data;
 using PaperSquare.API;
+using PaperSquare.Infrastructure.AzureBlobStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,7 @@ builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
 builder.Services.AddDataDependencies();
 builder.Services.AddApplicationDependencies();
+builder.Services.AddAzureBlobStorageDependencies(builder.Configuration);
 
 var app = builder.Build();
 

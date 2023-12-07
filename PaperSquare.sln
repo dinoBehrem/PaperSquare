@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.API", ".\PaperSquare.API\PaperSquare.API.csproj", "{942C9503-C91D-4880-8897-83C064CF3D64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.API", "PaperSquare.API\PaperSquare.API.csproj", "{942C9503-C91D-4880-8897-83C064CF3D64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.Core.Domain", ".\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Core.Domain", "PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj", "{0DBCA2EE-FBE3-44C7-AA65-EF3A8BE99191}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.Infrastructure.Data", ".\PaperSquare.Infrastructure.Data\PaperSquare.Infrastructure.Data.csproj", "{3602F3D4-4418-4832-B95B-10E3BB4CD21E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Infrastructure.Data", "PaperSquare.Infrastructure.Data\PaperSquare.Infrastructure.Data.csproj", "{3602F3D4-4418-4832-B95B-10E3BB4CD21E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.Core.Application", ".\PaperSquare.Core.Application\PaperSquare.Core.Application.csproj", "{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Core.Application", "PaperSquare.Core.Application\PaperSquare.Core.Application.csproj", "{C49EBD1C-B66F-4566-8749-1B51D9A5A7F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.UnitTests", ".\PaperSquare.UnitTests\PaperSquare.UnitTests.csproj", "{530BCD9D-15B4-4DC8-A748-FD4FE149F042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.UnitTests", "PaperSquare.UnitTests\PaperSquare.UnitTests.csproj", "{530BCD9D-15B4-4DC8-A748-FD4FE149F042}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.IntegrationTest", ".\PaperSquare.IntegrationTest\PaperSquare.IntegrationTest.csproj", "{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.IntegrationTest", "PaperSquare.IntegrationTest\PaperSquare.IntegrationTest.csproj", "{83DEDD7A-E9CE-4AB1-968D-F68580C43B0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B5F73FFE-3CFA-4B83-B317-3206F23347FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = ".\PaperSquare.Shared", ".\PaperSquare.Shared\PaperSquare.Shared.csproj", "{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaperSquare.Shared", "PaperSquare.Shared\PaperSquare.Shared.csproj", "{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{9B7AD0CE-D792-4AB6-9871-E9BB04B1A72D}"
 EndProject
@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		Features.md = Features.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperSquare.Infrastructure.MailService", "PaperSquare.Infrastructure.MailService\PaperSquare.Infrastructure.MailService.csproj", "{6BFB58DE-9347-4E38-A48D-F80AEF7D679F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C1D0B23-BD5D-49DD-88B9-D959537CC61D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BFB58DE-9347-4E38-A48D-F80AEF7D679F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BFB58DE-9347-4E38-A48D-F80AEF7D679F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BFB58DE-9347-4E38-A48D-F80AEF7D679F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BFB58DE-9347-4E38-A48D-F80AEF7D679F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{10F46F92-0939-4BBD-8E8C-C564E76F9FBF} = {9B7AD0CE-D792-4AB6-9871-E9BB04B1A72D}
 		{70EF3E76-C847-4216-BB07-4B0AECA21E2D} = {9B7AD0CE-D792-4AB6-9871-E9BB04B1A72D}
 		{4B7180E4-667D-4332-82C7-E251F22EA6D7} = {9B7AD0CE-D792-4AB6-9871-E9BB04B1A72D}
+		{6BFB58DE-9347-4E38-A48D-F80AEF7D679F} = {10F46F92-0939-4BBD-8E8C-C564E76F9FBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F66A398-BB57-4B7F-84A5-8D9E1156692E}

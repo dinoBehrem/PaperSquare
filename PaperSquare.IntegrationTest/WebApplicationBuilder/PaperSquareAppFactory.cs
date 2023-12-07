@@ -63,7 +63,7 @@ public class PaperSquareAppFactory<TEntryPoint> : WebApplicationFactory<Program>
             for (int i = 1; i <= 10; i++)
             {
                 // TO DO: 
-                dbContext.Users.Add(new User(PersonalInfo.Create($"First name -- {i}", $"Last name -- {i}", new DateTime(1,1, 2000 - i)), $"userName -- {i}", $"testuser{i}@example.com"));
+                dbContext.Users.Add(User.Create(PersonalInfo.Create($"First name -- {i}", $"Last name -- {i}", new DateTime(1,1, 2000 - i)), $"userName -- {i}", $"testuser{i}@example.com"));
             }
         }
 

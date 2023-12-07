@@ -13,13 +13,9 @@ public static class UserEndpoints
             .WithOpenApi();
 
         group.MapGetAllUsers();
-
-        group.MapGetUserById();       
-        
+        group.MapGetUserById();
         group.MapCreateUser();
-
         group.MapUpdateUser();
-
         group.MapDeleteUser();
 
         return routes;

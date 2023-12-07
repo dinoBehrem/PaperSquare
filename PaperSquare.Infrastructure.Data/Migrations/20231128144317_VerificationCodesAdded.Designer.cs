@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PaperSquare.Infrastructure.Data.Data;
@@ -11,9 +12,11 @@ using PaperSquare.Infrastructure.Data.Data;
 namespace PaperSquare.Data.Migrations
 {
     [DbContext(typeof(PaperSquareDbContext))]
-    partial class PaperSquareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231128144317_VerificationCodesAdded")]
+    partial class VerificationCodesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +68,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors", (string)null);
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.Book", b =>
@@ -112,7 +115,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("SeriesId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookAuthor", b =>
@@ -152,7 +155,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookAuthors", (string)null);
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookGenre", b =>
@@ -192,7 +195,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookGenres", (string)null);
+                    b.ToTable("BookGenres");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookInShelf", b =>
@@ -238,7 +241,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookShelfId");
 
-                    b.ToTable("BookInShelves", (string)null);
+                    b.ToTable("BookInShelves");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookPublisher", b =>
@@ -301,7 +304,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("BookPublishers", (string)null);
+                    b.ToTable("BookPublishers");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookReview", b =>
@@ -347,7 +350,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookReviews", (string)null);
+                    b.ToTable("BookReviews");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookSeries", b =>
@@ -389,7 +392,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BookSeries", (string)null);
+                    b.ToTable("BookSeries");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookSeriesFollower", b =>
@@ -429,7 +432,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesFollowers", (string)null);
+                    b.ToTable("BookSeriesFollowers");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookSeriesReview", b =>
@@ -475,7 +478,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("BookSeriesId");
 
-                    b.ToTable("BookSeriesReview", (string)null);
+                    b.ToTable("BookSeriesReview");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.BookShelf", b =>
@@ -517,7 +520,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookShelves", (string)null);
+                    b.ToTable("BookShelves");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.Genre", b =>
@@ -553,7 +556,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.GroupMembership", b =>
@@ -596,7 +599,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupMemberships", (string)null);
+                    b.ToTable("GroupMemberships");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.GroupMembershipRequest", b =>
@@ -652,7 +655,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserGroupId");
 
-                    b.ToTable("GroupMembershipRequests", (string)null);
+                    b.ToTable("GroupMembershipRequests");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.Publisher", b =>
@@ -691,7 +694,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers", (string)null);
+                    b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.PublisherFollower", b =>
@@ -731,7 +734,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PublisherFollowers", (string)null);
+                    b.ToTable("PublisherFollowers");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.Quote", b =>
@@ -792,7 +795,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Quotes", (string)null);
+                    b.ToTable("Quotes");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.QuoteCollection", b =>
@@ -834,7 +837,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("QuoteCollections", (string)null);
+                    b.ToTable("QuoteCollections");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.Role", b =>
@@ -900,7 +903,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("UserGenres", (string)null);
+                    b.ToTable("UserGenres");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.Domain.UserGroup", b =>
@@ -939,7 +942,7 @@ namespace PaperSquare.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserGroups", (string)null);
+                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.UserAggregate.RefreshToken", b =>
@@ -1472,31 +1475,7 @@ namespace PaperSquare.Data.Migrations
 
             modelBuilder.Entity("PaperSquare.Core.Domain.Entities.UserAggregate.User", b =>
                 {
-                    b.OwnsOne("PaperSquare.Core.Domain.Entities.UserAggregate.User.PersonalInfo#PaperSquare.Core.Domain.PersonalInfo", "PersonalInfo", b1 =>
-                        {
-                            b1.Property<string>("UserId")
-                                .HasColumnType("text");
-
-                            b1.Property<DateTime>("Birthdate")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsMany("PaperSquare.Core.Domain.Entities.UserAggregate.User.VerificationCodes#PaperSquare.Core.Domain.Entities.UserAggregate.ValueObjects.VerificationCode", "VerificationCodes", b1 =>
+                    b.OwnsMany("PaperSquare.Core.Domain.Entities.UserAggregate.ValueObjects.VerificationCode", "VerificationCodes", b1 =>
                         {
                             b1.Property<string>("UserId")
                                 .HasColumnType("text");
@@ -1519,7 +1498,31 @@ namespace PaperSquare.Data.Migrations
 
                             b1.HasKey("UserId", "Id");
 
-                            b1.ToTable("VerificationCode", (string)null);
+                            b1.ToTable("VerificationCode");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("PaperSquare.Core.Domain.PersonalInfo", "PersonalInfo", b1 =>
+                        {
+                            b1.Property<string>("UserId")
+                                .HasColumnType("text");
+
+                            b1.Property<DateTime>("Birthdate")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

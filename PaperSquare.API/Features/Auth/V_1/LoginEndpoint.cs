@@ -12,7 +12,7 @@ public static class LoginEndpoint
     public static RouteGroupBuilder MapLogin(this RouteGroupBuilder group)
     {
         group.MapPost("/login", Login)
-           .Produces<AuthResponse>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+           .Produces<ApiSuccessResponse<AuthResponse>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json);
 
@@ -23,6 +23,6 @@ public static class LoginEndpoint
     {
         var result = await mediator.Send(login);
 
-        return Results.Ok(result.Value);
+        return Results.Ok(new ApiSuccessResponse<AuthResponse>(result.Value));
     }
 }

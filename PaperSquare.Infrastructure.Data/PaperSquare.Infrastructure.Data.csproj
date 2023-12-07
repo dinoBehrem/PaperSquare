@@ -27,8 +27,4 @@
     <ProjectReference Include="..\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

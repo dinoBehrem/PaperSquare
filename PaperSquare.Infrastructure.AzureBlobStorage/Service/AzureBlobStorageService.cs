@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using PaperSquare.Core.Application.Shared;
 using PaperSquare.Infrastructure.AzureBlobStorage.Models;
@@ -29,14 +30,47 @@ public sealed class AzureBlobStorageService : IAzureBlobStorageService
         await containerClient.CreateIfNotExistsAsync();
     }
 
-    public Task DeleteContainerAsync(string containerName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task RemoveBlobAsync(string blobName, string containerName)
+    public async Task DeleteContainerAsync(string containerName)
     {
         if (string.IsNullOrWhiteSpace(containerName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        var containerCLient = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        await containerCLient.DeleteIfExistsAsync();
+    }
+
+    public async Task<bool> DeleteBlobAsync(string blobName, string containerName)
+    {
+        if (string.IsNullOrWhiteSpace(containerName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        if (string.IsNullOrWhiteSpace(blobName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        var blob = containerClient.GetBlobClient(blobName);
+
+        var result = await blob.DeleteIfExistsAsync();
+
+        return result;
+    }
+
+    public async Task<string> UploadBlobAsync(string blobName, string containerName, IFormFile file)
+    {
+        if (string.IsNullOrWhiteSpace(containerName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        if (string.IsNullOrWhiteSpace(blobName))
         {
             throw new ArgumentNullException(nameof(containerName));
         }
@@ -44,17 +78,13 @@ public sealed class AzureBlobStorageService : IAzureBlobStorageService
         BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
 
         await containerClient.CreateIfNotExistsAsync();
-    }
 
-    public async Task UploadBlobAsync(string blobName, string containerName)
-    {
-        if (string.IsNullOrWhiteSpace(containerName))
-        {
-            throw new ArgumentNullException(nameof(containerName));
-        }
+        var blobClient = containerClient.GetBlobClient(blobName);
 
-        BlobContainerClient containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+        using var stream = file.OpenReadStream();
 
-        await containerClient.CreateIfNotExistsAsync();
+        var result = await blobClient.UploadAsync(stream);
+
+        return blobClient.Uri.ToString();
     }
 }

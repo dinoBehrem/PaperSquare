@@ -38,6 +38,7 @@
     <ProjectReference Include="..\PaperSquare.Core.Application\PaperSquare.Core.Application.csproj" />
     <ProjectReference Include="..\PaperSquare.Infrastructure.AzureBlobStorage\PaperSquare.Infrastructure.AzureBlobStorage.csproj" />
     <ProjectReference Include="..\PaperSquare.Infrastructure.Data\PaperSquare.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\PaperSquare.Infrastructure.MailService\PaperSquare.Infrastructure.MailService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

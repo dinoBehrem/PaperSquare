@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PaperSquare.Core.Application\PaperSquare.Core.Application.csproj" />
     <ProjectReference Include="..\PaperSquare.Core.Domain\PaperSquare.Core.Domain.csproj" />
+    <ProjectReference Include="..\PaperSquare.Infrastructure.MailService\PaperSquare.Infrastructure.MailService.csproj" />
   </ItemGroup>
 
 </Project>

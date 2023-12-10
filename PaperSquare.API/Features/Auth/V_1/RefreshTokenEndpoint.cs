@@ -12,7 +12,7 @@ public static class RefreshTokenEndpoint
     public static RouteGroupBuilder MapRefreshToken(this  RouteGroupBuilder group)
     {
         group.MapPost("/refresh-token", RefreshToken)
-           .Produces<AuthResponse>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
+           .Produces<ApiSuccessResponse<AuthResponse>>(StatusCodes.Status200OK, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)
            .Produces<ApiErrorResponse>(StatusCodes.Status404NotFound, MediaTypeNames.Application.Json);
 
@@ -23,6 +23,6 @@ public static class RefreshTokenEndpoint
     {
         var result = await mediator.Send(refreshToken);
 
-        return Results.Ok(result.Value);
+        return Results.Ok(new ApiSuccessResponse<AuthResponse>(result.Value));
     }
 }

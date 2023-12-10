@@ -32,7 +32,7 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
             return Result.Error("Passwords doesn`t match!");
         }
 
-        var user = new User(PersonalInfo.Create(request.firstName, request.lastName, new DateTime(2000, 1, 1)), request.username, request.email);
+        var user = User.Create(PersonalInfo.Create(request.firstName, request.lastName, new DateTime(2000, 1, 1)), request.username, request.email);
 
         var userCreationResult = await _userManager.CreateAsync(user, request.password);
 

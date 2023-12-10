@@ -8,10 +8,10 @@ namespace PaperSquare.Infrastructure.AzureBlobStorage;
 
 public static class DependencyInjector
 {
-    private const string SECTION = "BlobConnection";
+    private const string SECTION = "AzureBlobStorageOptions";
     public static IServiceCollection AddAzureBlobStorageDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<AzureBlobStorageOptions>(opt => configuration.GetSection(SECTION));
+        services.Configure<AzureBlobStorageOptions>(opt => configuration.GetSection(SECTION).Bind(opt));
 
         services.AddScoped<IAzureBlobStorageService, AzureBlobStorageService>();
 

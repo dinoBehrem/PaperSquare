@@ -1,5 +1,4 @@
 using AspNetCoreRateLimit;
-using FluentValidation.AspNetCore;
 using PaperSquare.API.Infrastructure.Auth;
 using PaperSquare.API.Infrastructure.Endpoints;
 using PaperSquare.API.Infrastructure.HttpContext;
@@ -10,6 +9,9 @@ using PaperSquare.Core.Application;
 using Serilog;
 using PaperSquare.Infrastructure.Data;
 using PaperSquare.API;
+using FluentValidation;
+using System.Reflection;
+using FluentValidation.AspNetCore;
 using PaperSquare.Infrastructure.AzureBlobStorage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +37,6 @@ builder.Services.AddDbContextConfiguration(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.SwaggerGenConfig();
 
-builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddIdentityConfig(builder.Configuration);
@@ -47,6 +48,7 @@ builder.Services.AddRateLimiting(builder.Configuration);
 builder.Services.AddExceptionConfig();
 builder.Services.AddDataDependencies();
 builder.Services.AddApplicationDependencies();
+builder.Services.AddMailDependencies(configuration);
 builder.Services.AddAzureBlobStorageDependencies(builder.Configuration);
 
 var app = builder.Build();

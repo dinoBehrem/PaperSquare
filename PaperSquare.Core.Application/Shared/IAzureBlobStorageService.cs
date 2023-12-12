@@ -11,4 +11,5 @@ public interface IAzureBlobStorageService
     // Methods for BlobContainerClient
     Task<string> UploadBlobAsync(string blobName, string containerName, IFormFile file);
     Task<bool> DeleteBlobAsync(string blobName, string containerName);
+    Task<byte[]> DownaloadBlobAsByteArrayAsync(string blobName, string containerName);
 }

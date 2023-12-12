@@ -87,4 +87,27 @@ public sealed class AzureBlobStorageService : IAzureBlobStorageService
 
         return blobClient.Uri.ToString();
     }
+    
+    public async Task<byte[]> DownaloadBlobAsByteArrayAsync(string blobName, string containerName)
+    {
+        if (string.IsNullOrWhiteSpace(containerName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        if (string.IsNullOrWhiteSpace(blobName))
+        {
+            throw new ArgumentNullException(nameof(containerName));
+        }
+
+        var container = _blobServiceClient.GetBlobContainerClient(containerName);
+
+        var blob = container.GetBlobClient(blobName);
+
+        using var stream = new MemoryStream();
+
+        await blob.DownloadToAsync(stream);
+
+        return stream.ToArray();
+    }
 }

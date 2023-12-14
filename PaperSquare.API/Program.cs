@@ -12,6 +12,7 @@ using PaperSquare.API;
 using FluentValidation;
 using System.Reflection;
 using FluentValidation.AspNetCore;
+using PaperSquare.Infrastructure.AzureBlobStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ builder.Services.AddExceptionConfig();
 builder.Services.AddDataDependencies();
 builder.Services.AddApplicationDependencies();
 builder.Services.AddMailDependencies(configuration);
+builder.Services.AddAzureBlobStorageDependencies(builder.Configuration);
 
 var app = builder.Build();
 

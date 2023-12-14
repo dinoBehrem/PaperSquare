@@ -26,7 +26,7 @@ public sealed class VerificationCode : ValueObject
 
     public static VerificationCode Create(string code)
     {
-        if(!string.IsNullOrWhiteSpace(code))
+        if(string.IsNullOrWhiteSpace(code))
         {
             throw new Exception($"Invalid validation code!");
         }

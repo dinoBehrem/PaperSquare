@@ -7,7 +7,39 @@ public abstract class Entity<TType> : IEquatable<Entity<TType>>
         Id = id;
     }
 
+
+    #region Properties
+
     public TType Id { get; private init; }
+
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;
+
+    #endregion Properties
+
+    #region Fields
+
+    private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+
+    #endregion Fields
+
+    #region Behaviour
+
+    protected void RaiseDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+    
+    protected void RemoveDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Remove(domainEvent);
+    }
+    
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
+    }
+
+    #endregion Behaviour
 
     #region Equatable
 

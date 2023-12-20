@@ -1,18 +1,17 @@
-﻿using MimeKit;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace PaperSquare.Infrastructure.MailService.Models;
 
 public sealed class EmailData
 {
-    public MailboxAddress Recipient { get; init;  }
+    public List<string> Recipients { get; init;  }
     public string Subject { get; init; }
     public string Content { get; init; }
     public IFormFileCollection? Attachments { get; set; }
 
-    public EmailData(MailboxAddress recipient, string subject, string content)
+    public EmailData(List<string> recipient, string subject, string content)
     {
-        Recipient = recipient;
+        Recipients = recipient;
         Subject = subject;
         Content = content;
     }

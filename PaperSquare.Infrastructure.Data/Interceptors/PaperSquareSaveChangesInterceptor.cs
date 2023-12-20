@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MimeKit;
+using PaperSquare.Core.Application.Shared;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Infrastructure.MailService.Models;
-using PaperSquare.Infrastructure.MailService.Service;
 
 namespace PaperSquare.Infrastructure.Data.Interceptors;
 

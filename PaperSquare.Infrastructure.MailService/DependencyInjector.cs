@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PaperSquare.Core.Application.Shared;
 using PaperSquare.Infrastructure.MailService;
-using PaperSquare.Infrastructure.MailService.Service;
 
 namespace PaperSquare.Infrastructure.Data;
 

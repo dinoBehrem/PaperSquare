@@ -11,7 +11,7 @@ internal sealed class UserCreatedDomainEventHandler : INotificationHandler<UserC
     private readonly IMailService _mailService;
     private readonly IAzureBlobStorageService _azureBlobStorageService;
     private const string containerName = "mail-templates";
-    private const string blobName = "welcome-email";
+    private const string blobName = "verify-email.html";
     private const string mailSubject = "Verification email!";
 
     public UserCreatedDomainEventHandler(IMailService mailService, IAzureBlobStorageService azureBlobStorageService)
@@ -24,9 +24,9 @@ internal sealed class UserCreatedDomainEventHandler : INotificationHandler<UserC
     {
         var template = await _azureBlobStorageService.DownaloadBlobAsByteArrayAsync(blobName, containerName);
 
-        string content = Encoding.UTF8.GetString(template, 0, template.Length);
+        string content = Encoding.UTF8.GetString(template);
 
-        string mailTemplate = String.Format(content, @event.username, @event.verificationCode);
+        string mailTemplate = String.Format(content, @event.username, @event.verificationCode.Code);
 
         EmailData email = new EmailData(new List<string> { @event.mail }, mailSubject, mailTemplate);
 

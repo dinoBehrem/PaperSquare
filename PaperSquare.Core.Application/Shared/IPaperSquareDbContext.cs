@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaperSquare.Core.Domain.Entities.Domain;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
+using PaperSquare.Core.Domain.Primitives;
 
 namespace PaperSquare.Core.Application.Shared;
 
@@ -30,6 +31,7 @@ public interface IPaperSquareDbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<UserToken> UserTokens { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

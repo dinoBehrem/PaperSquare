@@ -22,9 +22,9 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     #region Properties
 
     public PersonalInfo PersonalInfo { get; private set; }
-    public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes;
-    public IReadOnlyCollection<UserRole> Roles => _roles;
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;
+    public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes.ToList();
+    public IReadOnlyCollection<UserRole> Roles => _roles.ToList();
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
 
     #endregion Properties     
 
@@ -86,6 +86,8 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     public static User Create(PersonalInfo personalInfo, string username, string email)
     {
         var user = new User(personalInfo, username, email);
+
+        // TO DO: Genereate radom 6 digit code
 
         var verificationCode = VerificationCode.Create(email);
 
@@ -151,6 +153,11 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     private void AddDomainEvent(IDomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
+    }
+    
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
     }
 
     #endregion Behaviour

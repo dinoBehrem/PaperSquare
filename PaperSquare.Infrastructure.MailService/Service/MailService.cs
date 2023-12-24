@@ -7,9 +7,9 @@ namespace PaperSquare.Infrastructure.MailService.Service;
 
 internal sealed class MailService : IMailService
 {
-    private readonly EmailConfiguration _mailSettings;
+    private readonly EmailOptions _mailSettings;
 
-    public MailService(IOptions<EmailConfiguration> mailSettings)
+    public MailService(IOptions<EmailOptions> mailSettings)
     {
         _mailSettings = mailSettings.Value;
     }

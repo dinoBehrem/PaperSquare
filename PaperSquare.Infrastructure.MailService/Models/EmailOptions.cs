@@ -1,6 +1,6 @@
 ﻿namespace PaperSquare.Infrastructure.MailService;
 
-public sealed class EmailConfiguration
+public sealed class EmailOptions
 {
     public string? DisplayName { get; set; }
     public string? From { get; set; }

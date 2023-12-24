@@ -9,10 +9,9 @@ using PaperSquare.Core.Application;
 using Serilog;
 using PaperSquare.Infrastructure.Data;
 using PaperSquare.API;
-using FluentValidation;
-using System.Reflection;
 using FluentValidation.AspNetCore;
 using PaperSquare.Infrastructure.AzureBlobStorage;
+using PaperSquare.API.Infrastructure.Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +49,7 @@ builder.Services.AddDataDependencies();
 builder.Services.AddApplicationDependencies();
 builder.Services.AddMailDependencies(configuration);
 builder.Services.AddAzureBlobStorageDependencies(builder.Configuration);
+builder.Services.AddQuartzConfiguration();
 
 var app = builder.Build();
 

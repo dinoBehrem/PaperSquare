@@ -69,7 +69,6 @@ internal sealed class MailService : IMailService
         email.To.AddRange(emailData.Recipients.Select(r => new MailboxAddress(r, r)));
 
         // Set the mail content
-
         var body = new BodyBuilder();
 
         email.Subject = emailData.Subject;
@@ -78,7 +77,6 @@ internal sealed class MailService : IMailService
         email.Body = body.ToMessageBody();
 
         // Send email
-
         using (var smtpClient = new MailKit.Net.Smtp.SmtpClient())
         {
             try

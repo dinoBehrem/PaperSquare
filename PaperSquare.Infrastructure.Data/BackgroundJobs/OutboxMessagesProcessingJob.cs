@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Infrastructure.Data.Data;
 using Quartz;
+using Serilog;
 
 namespace PaperSquare.Infrastructure.Data.BackgroundJobs;
 
@@ -12,11 +13,13 @@ public sealed class OutboxMessagesProcessingJob : IJob
 {
     private readonly PaperSquareDbContext _context;
     private readonly IPublisher _publisher;
+    private readonly ILogger _logger;
 
-    public OutboxMessagesProcessingJob(PaperSquareDbContext context, IPublisher publisher)
+    public OutboxMessagesProcessingJob(PaperSquareDbContext context, IPublisher publisher, ILogger logger)
     {
         _context = context;
         _publisher = publisher;
+        _logger = logger;
     }
 
     public async Task Execute(IJobExecutionContext context)
@@ -31,14 +34,16 @@ public sealed class OutboxMessagesProcessingJob : IJob
             {
                 TypeNameHandling = TypeNameHandling.All,
             });
-
-            // TO DO: Add logging if DomainEvent is null
-
+            
             if(domainEvent is not null)
             {
                 await _publisher.Publish(domainEvent, context.CancellationToken);
 
                 message.MarkAsProcessed();
+            }
+            else
+            {
+                _logger.Error($"Domain event is null for message {message.Id}! Type of domain event is {message.Type}!");
             }
         }
 

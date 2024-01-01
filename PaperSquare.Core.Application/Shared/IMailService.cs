@@ -1,8 +1,9 @@
 ﻿using PaperSquare.Infrastructure.MailService.Models;
 
-namespace PaperSquare.Infrastructure.MailService.Service;
+namespace PaperSquare.Core.Application.Shared;
 
 public interface IMailService
 {
     Task<bool> SendMailAsync(EmailData emailData);
+    Task<bool> SendVerificationMailsAsync(EmailData emailData);
 }

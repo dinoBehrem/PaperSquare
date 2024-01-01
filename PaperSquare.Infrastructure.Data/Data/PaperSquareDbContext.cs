@@ -4,6 +4,7 @@ using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Domain.Entities.Domain;
 using System.Reflection;
 using PaperSquare.Core.Application.Shared;
+using PaperSquare.Core.Domain.Primitives;
 
 namespace PaperSquare.Infrastructure.Data.Data;
 
@@ -40,6 +41,7 @@ public class PaperSquareDbContext : IdentityDbContext<User, Role, string, UserCl
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<UserToken> UserTokens { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

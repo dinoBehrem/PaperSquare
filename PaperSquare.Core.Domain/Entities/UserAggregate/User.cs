@@ -3,6 +3,7 @@ using PaperSquare.Core.Domain.Primitives;
 using PaperSquare.Core.Domain.Entities.Domain;
 using System.Security.Cryptography;
 using PaperSquare.Core.Domain.Entities.UserAggregate.ValueObjects;
+using PaperSquare.Core.Domain.Entities.UserAggregate.Events;
 
 namespace PaperSquare.Core.Domain.Entities.UserAggregate;
 
@@ -15,16 +16,15 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
         PersonalInfo = personalInfo;
         UserName = username;
         Email = email;
-        IsDeleted = false;
-
-        _verificationCodes.Add(VerificationCode.Create(email));
+        IsDeleted = false;        
     }
 
     #region Properties
 
     public PersonalInfo PersonalInfo { get; private set; }
-    public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes;
-    public IReadOnlyCollection<UserRole> Roles => _roles;
+    public IReadOnlyCollection<VerificationCode> VerificationCodes => _verificationCodes.ToList();
+    public IReadOnlyCollection<UserRole> Roles => _roles.ToList();
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
 
     #endregion Properties     
 
@@ -46,6 +46,7 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     private readonly List<PublisherFollower> _publishers = new List<PublisherFollower>();
     private readonly List<BookReview> _bookReviewws = new List<BookReview>();
     private readonly List<BookSeriesReview> _bookSeriesReviewws = new List<BookSeriesReview>();
+    private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
 
     #endregion Fields
 
@@ -85,6 +86,14 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     public static User Create(PersonalInfo personalInfo, string username, string email)
     {
         var user = new User(personalInfo, username, email);
+
+        // TO DO: Genereate radom 6 digit code
+
+        var verificationCode = VerificationCode.Create(email);
+
+        user._verificationCodes.Add(verificationCode);
+
+        user.AddDomainEvent(new UserCreatedDomainEvent(username, verificationCode, email));
 
         return user;
     }
@@ -139,6 +148,16 @@ public sealed class User : IdentityUser, IAggregateRoot, ISoftDelete, IAuditable
     public void MarkAsDeleted()
     {
         IsDeleted = true;
+    }
+
+    private void AddDomainEvent(IDomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+    
+    public void ClearDomainEvents()
+    {
+        _domainEvents.Clear();
     }
 
     #endregion Behaviour

@@ -3,7 +3,7 @@ using PaperSquare.Infrastructure.Features.UserManagement.Dto;
 
 namespace PaperSquare.Core.Application.Features.UserManagement.Commands.CreateUser;
 
-internal sealed class CreateUserCommandValidator: AbstractValidator<CreateUserCommand>
+internal sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator()
     {

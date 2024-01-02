@@ -13,7 +13,6 @@ namespace PaperSquare.API.Infrastructure.Middlewares
 
         public static IApplicationBuilder UseMiddlewareHandlers(this IApplicationBuilder app)
         {
-
             app.UseMiddleware<ExceptionMiddleware>();
 
             return app;

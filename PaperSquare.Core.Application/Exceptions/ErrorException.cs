@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace PaperSquare.Core.Application.Exceptions;
 
-namespace PaperSquare.Infrastructure.Exceptions
+public class ErrorException : CustomException
 {
-    public class ErrorException: CustomException
+    public ErrorException(string message) : base(message)
     {
-        public ErrorException(string message): base(message)
-        {
-            
-        }
+
     }
 }

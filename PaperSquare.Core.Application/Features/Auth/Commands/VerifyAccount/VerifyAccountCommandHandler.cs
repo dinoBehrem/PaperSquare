@@ -3,11 +3,11 @@ using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using PaperSquare.Core.Application.Exceptions;
 using PaperSquare.Core.Application.Features.JWT.Dto;
 using PaperSquare.Core.Application.Shared.Dto;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Permissions;
-using PaperSquare.Infrastructure.Exceptions;
 using System.Security.Claims;
 
 namespace PaperSquare.Core.Application.Features.Auth.Commands.VerifyAccount;

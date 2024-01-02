@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PaperSquare.API.Shared;
-using PaperSquare.Infrastructure.Exceptions;
+using PaperSquare.Core.Application.Exceptions;
 using Serilog;
 using System.Net;
 
@@ -60,6 +60,11 @@ public class ExceptionMiddleware : IMiddleware
             case IdentityResultErrorException exc:
                 errorResponse.StatusCode = HttpStatusCode.InternalServerError;
                 errorResponse.Messages.Add($"Identity error!");
+                break;
+                
+            case CommandValidationException exc:
+                errorResponse.StatusCode = HttpStatusCode.BadRequest;
+                errorResponse.ValidationErrors = exc.ValidationErrors;
                 break;
 
             case CustomException exc:

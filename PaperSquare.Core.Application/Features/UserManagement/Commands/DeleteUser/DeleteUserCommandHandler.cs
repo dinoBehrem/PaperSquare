@@ -1,13 +1,13 @@
 ﻿using Ardalis.Result;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using PaperSquare.Core.Application.Exceptions;
 using PaperSquare.Core.Application.Features.UserManagement.Dto;
 using PaperSquare.Core.Application.Mapper.UserMappings;
 using PaperSquare.Core.Application.Shared;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 using PaperSquare.Core.Infrastructure.CurrentUserAccessor;
 using PaperSquare.Core.Permissions;
-using PaperSquare.Infrastructure.Exceptions;
 
 namespace PaperSquare.Core.Application.Features.UserManagement.Commands.DeleteUser;
 

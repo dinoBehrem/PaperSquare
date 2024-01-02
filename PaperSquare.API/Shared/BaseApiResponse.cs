@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.ObjectModel;
+using System.Net;
 
 namespace PaperSquare.API.Shared;
 
@@ -29,6 +30,7 @@ public sealed class ApiErrorResponse : BaseApiResponse
     public List<string> Messages { get; set; } = new();
     public string? Exception { get; set; }
     public string? SupportMesage { get; set; }
+    public IReadOnlyDictionary<string, IEnumerable<string>>? ValidationErrors { get; set; }
 
     public ApiErrorResponse(HttpStatusCode statusCode = HttpStatusCode.InternalServerError, bool isSuccess = false) : base(statusCode, isSuccess) { }
 }

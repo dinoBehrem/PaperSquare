@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
-namespace PaperSquare.Infrastructure.Exceptions
+namespace PaperSquare.Core.Application.Exceptions;
+
+public class UnatuhorizedAccessException : CustomException
 {
-    public class UnatuhorizedAccessException : CustomException
+    public UnatuhorizedAccessException(string message) : base(message, null, HttpStatusCode.Unauthorized)
     {
-        public UnatuhorizedAccessException(string message): base(message, null, HttpStatusCode.Unauthorized)
-        {
-            
-        }
+
     }
 }

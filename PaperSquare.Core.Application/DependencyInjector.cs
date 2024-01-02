@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using PaperSquare.API.Middlewares.CommandValidation;
 using PaperSquare.Core.Application.Repositories;
 using PaperSquare.Core.Domain.Entities.UserAggregate;
 using System.Reflection;
@@ -12,9 +14,11 @@ public static class DependencyInjector
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjector).Assembly));
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CommandValidationPipelineBehaviour<,>));
 
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddValidatorsFromAssembly(typeof(DependencyInjector).Assembly, includeInternalTypes: true);
+
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
